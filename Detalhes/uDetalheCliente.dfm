@@ -2108,7 +2108,7 @@ object frmDetalheCliente: TfrmDetalheCliente
       object Label17: TLabel
         Left = 2
         Top = 441
-        Width = 47
+        Width = 49
         Height = 18
         Anchors = [akLeft, akBottom]
         Caption = 'Total:'
@@ -2118,7 +2118,6 @@ object frmDetalheCliente: TfrmDetalheCliente
         Font.Name = 'Verdana'
         Font.Style = []
         ParentFont = False
-        ExplicitTop = 486
       end
       object lblTotal: TLabel
         Left = 80

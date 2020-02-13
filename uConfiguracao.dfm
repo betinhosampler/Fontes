@@ -3,7 +3,6 @@ inherited frmConfiguracao: TfrmConfiguracao
   Caption = 'Configura'#231#245'es '
   ClientHeight = 649
   ClientWidth = 872
-  ExplicitTop = -284
   ExplicitWidth = 878
   ExplicitHeight = 673
   PixelsPerInch = 96
@@ -1893,6 +1892,10 @@ inherited frmConfiguracao: TfrmConfiguracao
         TabOrder = 0
         object pgConfigNFCEACBREmitente: TTabSheet
           Caption = 'Dados NFCe'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox4: TGroupBox
             Left = 3
             Top = 3
@@ -3176,6 +3179,10 @@ inherited frmConfiguracao: TfrmConfiguracao
         object pgConfigNFCEACBRArquivos: TTabSheet
           Caption = 'Arquivos'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object sbPathNFe: TSpeedButton
             Left = 240
             Top = 130
@@ -3440,6 +3447,10 @@ inherited frmConfiguracao: TfrmConfiguracao
         object pgConfigNFCEACBREmail: TTabSheet
           Caption = 'Email'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label100: TLabel
             Left = 8
             Top = 8
@@ -4211,6 +4222,10 @@ inherited frmConfiguracao: TfrmConfiguracao
             object TabSheet6: TTabSheet
               Caption = 'Sw.House'
               ImageIndex = 1
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object Label135: TLabel
                 Left = 12
                 Top = 10
@@ -4364,6 +4379,10 @@ inherited frmConfiguracao: TfrmConfiguracao
             end
             object TabSheet5: TTabSheet
               Caption = 'ACBrRFD.INI'
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object Panel4: TPanel
                 Left = 0
                 Top = 415
@@ -4469,6 +4488,10 @@ inherited frmConfiguracao: TfrmConfiguracao
         object TabSheet9: TTabSheet
           Caption = 'Redu'#231#227'o Z'
           ImageIndex = 6
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label146: TLabel
             Left = 3
             Top = 39
@@ -4527,6 +4550,10 @@ inherited frmConfiguracao: TfrmConfiguracao
         object tbsMenuFiscal: TTabSheet
           Caption = 'Menu Fiscal'
           ImageIndex = 6
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object grpMenuFiscalOpcoes: TGroupBox
             Left = 0
             Top = 0
@@ -4670,6 +4697,10 @@ inherited frmConfiguracao: TfrmConfiguracao
               Visible = False
               object tbsMenuFiscalTipoData: TTabSheet
                 Caption = 'Emiss'#227'o por intervalo de data'
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
                 object Label148: TLabel
                   Left = 15
                   Top = 15
@@ -4707,6 +4738,10 @@ inherited frmConfiguracao: TfrmConfiguracao
               object tbsMenuFiscalTipoCOO: TTabSheet
                 Caption = 'Emiss'#227'o por intervalo de COO'
                 ImageIndex = 1
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
                 object Label150: TLabel
                   Left = 15
                   Top = 15
@@ -6304,6 +6339,10 @@ inherited frmConfiguracao: TfrmConfiguracao
     object pgPDV: TTabSheet
       Caption = 'PDV'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox13: TGroupBox
         Left = 3
         Top = 3
@@ -6480,6 +6519,10 @@ inherited frmConfiguracao: TfrmConfiguracao
     object pgBalcao: TTabSheet
       Caption = 'Balc'#227'o'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox14: TGroupBox
         Left = 3
         Top = 3
@@ -8523,11 +8566,12 @@ inherited frmConfiguracao: TfrmConfiguracao
         object grpVenda: TGroupBox
           Left = 3
           Top = 341
-          Width = 770
+          Width = 766
           Height = 98
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Impress'#227'o em produ'#231#227'o (Cozinha/Bar/Balc'#227'o)'
           TabOrder = 33
+          ExplicitWidth = 770
           object lbl4: TLabel
             Left = 27
             Top = 38
@@ -10627,6 +10671,10 @@ inherited frmConfiguracao: TfrmConfiguracao
       Caption = 'Casa Noturna'
       ImageIndex = 14
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object rgDocClienteCNoturna: TRadioGroup
         Left = 3
         Top = 3
@@ -10874,8 +10922,8 @@ inherited frmConfiguracao: TfrmConfiguracao
             object lMensagemOperador: TLabel
               Left = 1
               Top = 1
-              Width = 358
-              Height = 88
+              Width = 168
+              Height = 19
               Align = alClient
               Alignment = taCenter
               Caption = 'lMensagemOperador'
@@ -10883,8 +10931,6 @@ inherited frmConfiguracao: TfrmConfiguracao
               ParentColor = False
               Layout = tlCenter
               WordWrap = True
-              ExplicitWidth = 168
-              ExplicitHeight = 19
             end
             object Label171: TLabel
               Left = 0
@@ -10928,8 +10974,8 @@ inherited frmConfiguracao: TfrmConfiguracao
             object lMensagemCliente: TLabel
               Left = 1
               Top = 1
-              Width = 358
-              Height = 132
+              Width = 150
+              Height = 19
               Align = alClient
               Alignment = taCenter
               Caption = 'lMensagemCliente'
@@ -10937,8 +10983,6 @@ inherited frmConfiguracao: TfrmConfiguracao
               ParentColor = False
               Layout = tlCenter
               WordWrap = True
-              ExplicitWidth = 150
-              ExplicitHeight = 19
             end
           end
         end
@@ -11778,7 +11822,7 @@ inherited frmConfiguracao: TfrmConfiguracao
     Top = 560
   end
   object repTesteImpressao: TfrxReport
-    Version = '5.2.3'
+    Version = '5.1.5'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]

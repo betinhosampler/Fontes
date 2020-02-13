@@ -34,10 +34,7 @@ type
       edSenha: TEdit;
       lbEmpresa: TLabel;
       btnEntrar: TAdvGlowButton;
-      lbVersao: TLabel;
       JvAutoComplete: TJvLookupAutoComplete;
-      Label3: TLabel;
-      Label4: TLabel;
     cboUsuario: TComboBox;
       procedure FormKeyPress(Sender: TObject; var Key: Char);
       procedure cbEmpresaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -259,10 +256,6 @@ end;
 
 procedure TfrmLogin.FormCreate(Sender: TObject);
 begin
-  try    // Carrega a imagem, conforme o diretorio e o nome do arquivo
-    //imgLogin.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'\imagens\fundologin.jpg');
-    except end;
-     lbVersao.Caption := 'Versão ' + GetFileVersion(ParamStr(0));
   CarregarUsuarios();
 end;
 

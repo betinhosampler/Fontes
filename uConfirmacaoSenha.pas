@@ -5,15 +5,13 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Uni, Vcl.Imaging.jpeg,
-  Vcl.ExtCtrls, AdvGlowButton, JvAutoComplete;
+  Vcl.ExtCtrls, AdvGlowButton, JvAutoComplete, dxGDIPlusClasses;
 
 type
   TfrmConfirmacaoSenha = class(TForm)
     edUsuario: TEdit;
     edSenha: TEdit;
     imgFundo: TImage;
-    Label3: TLabel;
-    Label1: TLabel;
     btCancela: TAdvGlowButton;
     btConfirma: TAdvGlowButton;
     JvAutoComplete: TJvLookupAutoComplete;
@@ -22,6 +20,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     constructor Create(sender : tcomponent ; campo_permissao : string); reintroduce;
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     campo_permissao : string;
@@ -107,6 +106,11 @@ begin
         edUsuario.SetFocus;
       end;
    end;
+end;
+
+procedure TfrmConfirmacaoSenha.FormDestroy(Sender: TObject);
+begin
+   tag:=0;
 end;
 
 procedure TfrmConfirmacaoSenha.FormKeyPress(Sender: TObject; var Key: Char);

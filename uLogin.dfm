@@ -4,8 +4,8 @@ object frmLogin: TfrmLogin
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Infor Gourmet'
-  ClientHeight = 253
-  ClientWidth = 735
+  ClientHeight = 297
+  ClientWidth = 734
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -24,18 +24,19 @@ object frmLogin: TfrmLogin
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 735
-    Height = 253
+    Width = 734
+    Height = 297
     Align = alClient
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = -1
+    ExplicitWidth = 735
+    ExplicitHeight = 253
     object imgLogin: TImage
       Left = 1
       Top = 1
-      Width = 733
-      Height = 251
+      Width = 732
+      Height = 295
       Align = alClient
       ParentShowHint = False
       Picture.Data = {
@@ -1865,6 +1866,8 @@ object frmLogin: TfrmLogin
       Transparent = True
       ExplicitLeft = 0
       ExplicitTop = 2
+      ExplicitWidth = 733
+      ExplicitHeight = 251
     end
     object lbEmpresa: TLabel
       Left = 24
@@ -1879,61 +1882,16 @@ object frmLogin: TfrmLogin
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object lbVersao: TLabel
-      Left = 639
-      Top = 263
-      Width = 96
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'Vers'#227'o X.XX.X.X'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -11
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label3: TLabel
-      Left = 9
-      Top = 2
-      Width = 127
-      Height = 18
-      Caption = 'Infor Gourmet'
-      Color = clWindow
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
-      Font.Name = 'Verdana'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label4: TLabel
-      Left = 1
-      Top = 259
-      Width = 137
-      Height = 18
-      Caption = 'Elite Tecnologia'
-      Color = clWindow
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
-      Font.Name = 'Verdana'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      Visible = False
-    end
     object edSenha: TEdit
-      Left = 497
-      Top = 145
-      Width = 224
-      Height = 33
+      Left = 495
+      Top = 171
+      Width = 226
+      Height = 38
       BorderStyle = bsNone
       Color = 14211288
       Font.Charset = ANSI_CHARSET
       Font.Color = clNavy
-      Font.Height = -19
+      Font.Height = -21
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       MaxLength = 30
@@ -1962,9 +1920,9 @@ object frmLogin: TfrmLogin
     end
     object btnEntrar: TAdvGlowButton
       Left = 537
-      Top = 183
+      Top = 216
       Width = 141
-      Height = 27
+      Height = 33
       Hint = 'Confirmar cesso ao Sistema'
       BorderStyle = bsNone
       Caption = 'Entrar'
@@ -2007,9 +1965,9 @@ object frmLogin: TfrmLogin
     end
     object cboUsuario: TComboBox
       Left = 460
-      Top = 103
+      Top = 122
       Width = 261
-      Height = 31
+      Height = 37
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2023,7 +1981,7 @@ object frmLogin: TfrmLogin
       Ctl3D = True
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
+      Font.Height = -24
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentCtl3D = False
