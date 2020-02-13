@@ -226,7 +226,6 @@ type
     qrImpressaoCozinhaObsite_001: TIntegerField;
     qrImpressaoCozinhaObsobservacao: TWideStringField;
     qrImpressaoCozinhaObsord: TIntegerField;
-    MadExceptionHandler1: TMadExceptionHandler;
     rbReimprimirCupom: TdxBarLargeButton;
     qrImpressaoCozinhaitem_fracionado: TIntegerField;
     dxBarButton7: TdxBarButton;
@@ -241,7 +240,6 @@ type
     dxBarButton9: TdxBarButton;
     dxBarLargeButton68: TdxBarLargeButton;
     btTouch: TdxBarLargeButton;
-    ACBrPosPrinter1: TACBrPosPrinter;
     dxBarLargeButton70: TdxBarLargeButton;
     dxBarLargeButton71: TdxBarLargeButton;
     dxBarManager1Bar13: TdxBar;
@@ -341,6 +339,8 @@ type
     dxBarLargeButton46: TdxBarLargeButton;
     dxBarLargeButton50: TdxBarLargeButton;
     dxBarLargeButton51: TdxBarLargeButton;
+    ACBrPosPrinter1: TACBrPosPrinter;
+    MadExceptionHandler1: TMadExceptionHandler;
     procedure act_SairExecute(Sender: TObject);
     procedure act_LogoffExecute(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);

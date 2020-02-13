@@ -1,6 +1,11 @@
 program EliteFood;
 
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
   Forms,
   SysUtils,
   uMenu in 'uMenu.pas' {frmMenu},
