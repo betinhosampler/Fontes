@@ -30,31 +30,27 @@ type
       cxLookAndFeelController1: TcxLookAndFeelController;
       cbEmpresa: TComboBox;
       Panel1: TPanel;
-    imgLogin: TImage;
+      imgLogin: TImage;
       edSenha: TEdit;
-      edUsuario: TEdit;
-      Label1: TLabel;
-      Label2: TLabel;
-    lbEmpresa: TLabel;
-    btnEntrar: TAdvGlowButton;
-    btnCancel: TAdvGlowButton;
-    lbVersao: TLabel;
-    JvAutoComplete: TJvLookupAutoComplete;
-    Label3: TLabel;
-    Label4: TLabel;
+      lbEmpresa: TLabel;
+      btnEntrar: TAdvGlowButton;
+      lbVersao: TLabel;
+      JvAutoComplete: TJvLookupAutoComplete;
+      Label3: TLabel;
+      Label4: TLabel;
+    cboUsuario: TComboBox;
       procedure FormKeyPress(Sender: TObject; var Key: Char);
       procedure cbEmpresaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
       procedure FormShow(Sender: TObject);
       procedure btnEntrarClick(Sender: TObject);
       procedure btnCancelClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    function Valida_Usuario(sUsuario, sSenha: String): Boolean;
-
+      procedure FormCreate(Sender: TObject);
+      function Valida_Usuario(sUsuario, sSenha: String): Boolean;
    private
-      public
+      procedure CarregarUsuarios();
+   public
       { Public declarations }
       procedure VerificarLiberacao;
-
    end;
 
 type
@@ -267,6 +263,7 @@ begin
     //imgLogin.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'\imagens\fundologin.jpg');
     except end;
      lbVersao.Caption := 'Versão ' + GetFileVersion(ParamStr(0));
+  CarregarUsuarios();
 end;
 
 
@@ -347,10 +344,10 @@ procedure TfrmLogin.btnEntrarClick(Sender: TObject);
 var
    qrSenha: TUniQuery;
 begin
-  if Trim(edUsuario.Text) = '' then
+  if Trim(cboUsuario.Text) = '' then
   begin
     Application.MessageBox(PChar('Favor informar o Usuário.'), PChar('Atenção'), MB_OK);
-    edUsuario.SetFocus;
+    cboUsuario.SetFocus;
     Abort;
   end;
   if edSenha.Text = '' then
@@ -359,17 +356,17 @@ begin
     edSenha.SetFocus;
     Abort;
   end;
-  if (cbEmpresa.ItemIndex = 0) and (edUsuario.Text <> 'ADMIN') then
+  if (cbEmpresa.ItemIndex = 0) and (cboUsuario.Text <> 'ADMIN') then
   begin
     Application.MessageBox(PChar('Favor selecionar a Empresa.'), PChar('Atenção'), MB_OK);
     cbEmpresa.SetFocus;
     Abort;
   end;
   //
-  if not(Valida_Usuario(Trim(edUsuario.Text), edSenha.Text)) then
+  if not(Valida_Usuario(Trim(cboUsuario.Text), edSenha.Text)) then
   begin
     Application.MessageBox('Usuário não permitido.', 'Atenção', 0 + 64);
-    edUsuario.SetFocus;
+    cboUsuario.SetFocus;
     Abort;
   end;
   //
@@ -410,6 +407,27 @@ begin
     RecProj.sEMP := TEmpresa(cbEmpresa.Items.Objects[cbEmpresa.ItemIndex]).sEMP;
   end;
   ModalResult := mrOk;
+end;
+
+procedure TfrmLogin.CarregarUsuarios;
+var oQry:TUniQuery;
+begin
+  oQry:= TUniQuery.Create(nil);
+  try
+      oQry.Connection:= frmMenu.Conexao;
+      oQry.Close;
+      oQry.SQL.Text:= 'SELECT USU_003 FROM USUARIOS';
+      oQry.Open;
+      cboUsuario.Clear;
+      oQry.Prior;
+      while not oQry.Eof do
+      begin
+         cboUsuario.Items.Add(oQry.FieldByName('USU_003').AsString);
+         oQry.Next;
+      end;
+  finally
+    oQry.Free;
+  end;
 end;
 
 end.
