@@ -30,8 +30,6 @@ object frmLogin: TfrmLogin
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 735
-    ExplicitHeight = 253
     object imgLogin: TImage
       Left = 1
       Top = 1

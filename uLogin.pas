@@ -256,6 +256,7 @@ end;
 
 procedure TfrmLogin.FormCreate(Sender: TObject);
 begin
+  frmLogin.Caption:= 'Versão ' + GetFileVersion(ParamStr(0));
   CarregarUsuarios();
 end;
 
