@@ -8,7 +8,22 @@ uses
   cxLookAndFeelPainters, cxContainer, cxEdit, cxTextEdit, cxCurrencyEdit,
   cxDBEdit, Data.DB, Vcl.StdCtrls, Vcl.DBCtrls, AdvGroupBox, MemDS, DBAccess,
   Uni, AdvGlowButton, Vcl.ExtCtrls, AdvPanel, uControleDeliveryFechamento,
-  Vcl.Buttons;
+  Vcl.Buttons, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue, cxCheckBox,uFuncoes;
 
 type
   TfrmControleDeliveryFinaliza = class(TForm)
@@ -71,12 +86,14 @@ type
     MemoCupomTEF3: TMemo;
     MemoCupomTEF2: TMemo;
     btn1: TBitBtn;
+    ckImprimirCupom: TcxCheckBox;
     procedure btCancelaClick(Sender: TObject);
     procedure btConfirmaClick(Sender: TObject);
     constructor Create(sender : Tcomponent ; id_venda : integer);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btAlterarFormaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     id_venda : integer;
@@ -143,6 +160,11 @@ begin
 
 end;
 
+procedure TfrmControleDeliveryFinaliza.FormShow(Sender: TObject);
+begin
+   ckImprimirCupom.Checked:= LerBooleanConfig('PRE_FECHAMENTODELIVERYCKIMPCUPOM', frmMenu.cdsCFG.FileName);
+end;
+
 procedure TfrmControleDeliveryFinaliza.btAlterarFormaClick(Sender: TObject);
 begin
   qrVenda.post;
@@ -170,23 +192,20 @@ begin
     abort;
   end;
 
-  confirma:= Application.MessageBox('Confirmar a finalização da venda?', 'Atenção', MB_ICONQUESTION + MB_YESNO) = mrYes;
+  frmControleDeliveryFechamento.venda_concluida:=true;
+  frmControleDeliveryFechamento.id_entregador := qrVenda.FieldByName('id_entregador').asinteger;
+  frmControleDeliveryFechamento.nome_entregador := cbEntregador.Text;
+  frmControleDeliveryFechamento.ckImprimirCupom.Checked:= ckImprimirCupom.Checked;
+  frmControleDeliveryFechamento.btConfirma.Click;
 
-  if confirma then
-  begin
-    frmControleDeliveryFechamento.venda_concluida:=true;
-    frmControleDeliveryFechamento.id_entregador := qrVenda.FieldByName('id_entregador').asinteger;
-    frmControleDeliveryFechamento.nome_entregador := cbEntregador.Text;
-    frmControleDeliveryFechamento.btConfirma.Click;
+  qrVenda.FieldByName('data_entrega').AsDateTime :=  Date + time;
+  if qrVenda.FieldByName('data_saida').IsNull then
+    qrVenda.FieldByName('data_saida').AsDateTime :=  Date + time;
 
-    qrVenda.FieldByName('data_entrega').AsDateTime :=  Date + time;
-    if qrVenda.FieldByName('data_saida').IsNull then
-      qrVenda.FieldByName('data_saida').AsDateTime :=  Date + time;
+  qrVenda.Post;
+  tag:=1;
+  close;
 
-    qrVenda.Post;
-    tag:=1;
-    close;
-  end;
 end;
 
 end.

@@ -17,6 +17,7 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
   Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 16
   object AdvPanel1: TAdvPanel
@@ -52,6 +53,7 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
     StatusBar.Font.Name = 'Tahoma'
     StatusBar.Font.Style = []
     Text = ''
+    ExplicitTop = -3
     DesignSize = (
       661
       305)
@@ -321,6 +323,8 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
     ParentBackground = False
     TabOrder = 1
     TabStop = True
+    ExplicitLeft = -56
+    ExplicitTop = 300
     object btCancela: TAdvGlowButton
       AlignWithMargins = True
       Left = 542
@@ -394,6 +398,13 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
       Appearance.ColorMirrorDisabled = 11974326
       Appearance.ColorMirrorDisabledTo = 15921906
       MinButtonSizeState = bsLabel
+    end
+    object ckImprimirCupom: TcxCheckBox
+      Left = 288
+      Top = 0
+      Align = alBottom
+      Caption = 'Imprimir cupom'
+      TabOrder = 2
     end
   end
   object MemoCupomTEF1: TMemo
@@ -540,7 +551,7 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
       'from venda v '
       'left join usuarios u on u.usu_001=v.id_entregador'
       'where v.ven_001=:id_venda and emp_001=:id_empresa')
-    Left = 160
+    Left = 112
     Top = 304
     ParamData = <
       item
@@ -645,7 +656,7 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
   object dsVenda: TDataSource
     AutoEdit = False
     DataSet = qrVenda
-    Left = 112
+    Left = 64
     Top = 304
   end
   object qrEntregador: TUniQuery
@@ -657,7 +668,7 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
       'from usuarios '
       'where sit_001 = 4 '
       'and b_funcao_entregador')
-    Left = 224
+    Left = 176
     Top = 304
     object qrEntregadorid_usuario: TIntegerField
       DisplayLabel = 'C'#243'digo'
@@ -674,7 +685,7 @@ object frmControleDeliveryFinaliza: TfrmControleDeliveryFinaliza
   object dsEntregador: TDataSource
     AutoEdit = False
     DataSet = qrEntregador
-    Left = 304
+    Left = 208
     Top = 304
   end
 end
