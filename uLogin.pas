@@ -256,7 +256,7 @@ end;
 
 procedure TfrmLogin.FormCreate(Sender: TObject);
 begin
-  frmLogin.Caption:= 'Versão ' + GetFileVersion(ParamStr(0));
+  frmLogin.Caption:= frmLogin.Caption + ' Versão ' + GetFileVersion(ParamStr(0));
   CarregarUsuarios();
 end;
 
@@ -326,7 +326,7 @@ begin
   end;
 
   FreeAndNil(qrEmpresa);
-  VerificarLiberacao;
+ // VerificarLiberacao;
 end;
 
 procedure TfrmLogin.btnCancelClick(Sender: TObject);
