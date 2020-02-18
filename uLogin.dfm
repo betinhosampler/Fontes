@@ -1879,10 +1879,11 @@ object frmLogin: TfrmLogin
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
     object edSenha: TEdit
       Left = 495
-      Top = 171
+      Top = 172
       Width = 226
       Height = 38
       BorderStyle = bsNone
@@ -1895,7 +1896,7 @@ object frmLogin: TfrmLogin
       MaxLength = 30
       ParentFont = False
       PasswordChar = '*'
-      TabOrder = 0
+      TabOrder = 1
     end
     object cbEmpresa: TComboBox
       Left = 24
@@ -1913,7 +1914,8 @@ object frmLogin: TfrmLogin
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 1
+      TabOrder = 2
+      Visible = False
       OnKeyDown = cbEmpresaKeyDown
     end
     object btnEntrar: TAdvGlowButton
@@ -1939,7 +1941,7 @@ object frmLogin: TfrmLogin
       ParentFont = False
       ParentShowHint = False
       ShowHint = False
-      TabOrder = 2
+      TabOrder = 3
       TabStop = True
       OnClick = btnEntrarClick
       Appearance.BorderColor = clNavy
@@ -1963,7 +1965,7 @@ object frmLogin: TfrmLogin
     end
     object cboUsuario: TComboBox
       Left = 460
-      Top = 122
+      Top = 121
       Width = 261
       Height = 37
       Margins.Left = 0
@@ -1985,8 +1987,7 @@ object frmLogin: TfrmLogin
       ParentCtl3D = False
       ParentFont = False
       Sorted = True
-      TabOrder = 3
-      OnKeyDown = cbEmpresaKeyDown
+      TabOrder = 0
     end
   end
   object cxLookAndFeelController1: TcxLookAndFeelController
