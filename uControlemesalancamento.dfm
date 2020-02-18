@@ -3,9 +3,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
   Caption = 'Lan'#231'amento de produtos'
   ClientHeight = 661
   ClientWidth = 1001
-  KeyPreview = True
   OnCreate = FormCreate
-  OnKeyDown = FormKeyDown
   OnShow = FormShow
   ExplicitWidth = 1007
   ExplicitHeight = 689
@@ -18,37 +16,11 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     ExplicitHeight = 606
     FullHeight = 600
     object Label5: TLabel
-      Left = 878
+      Left = 324
       Top = 4
       Width = 48
       Height = 16
       Caption = 'Gar'#231'om'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label1: TLabel
-      Left = 470
-      Top = 4
-      Width = 84
-      Height = 16
-      Caption = 'Observa'#231#245'es'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label7: TLabel
-      Left = 758
-      Top = 4
-      Width = 74
-      Height = 16
-      Caption = 'Impressora'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -13
@@ -689,32 +661,6 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       Brush.Color = clGradientActiveCaption
       Pen.Color = clNavy
     end
-    object Label3: TLabel
-      Left = 322
-      Top = 4
-      Width = 35
-      Height = 16
-      Caption = 'Qtde.'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label4: TLabel
-      Left = 389
-      Top = 4
-      Width = 34
-      Height = 16
-      Caption = 'Valor'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object Panel8: TPanel
       Left = 0
       Top = 555
@@ -726,7 +672,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       BevelOuter = bvNone
       Color = 5654808
       ParentBackground = False
-      TabOrder = 7
+      TabOrder = 3
       DesignSize = (
         1001
         51)
@@ -805,7 +751,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       BevelOuter = bvNone
       Color = 9209117
       ParentBackground = False
-      TabOrder = 8
+      TabOrder = 4
       object DBText9: TDBText
         Left = 160
         Top = 3
@@ -955,58 +901,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       OnKeyPress = edCodProdutoKeyPress
       Width = 150
     end
-    object edQuantidade: TJvValidateEdit
-      Left = 322
-      Top = 23
-      Width = 63
-      Height = 27
-      CriticalPoints.MaxValueIncluded = False
-      CriticalPoints.MinValueIncluded = False
-      DisplayFormat = dfFloatFixed
-      DecimalPlaces = 3
-      EditText = '0,000'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      HasMaxValue = True
-      MaxValue = 999.000000000000000000
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 1
-      OnChange = edQuantidadeChange
-      OnKeyPress = edQuantidadeKeyPress
-      DataConnector.DataSource = jvdsBuscaItem
-      DataConnector.DataField = 'quantidade'
-    end
-    object edValor: TJvValidateEdit
-      Left = 389
-      Top = 23
-      Width = 77
-      Height = 27
-      CriticalPoints.MaxValueIncluded = False
-      CriticalPoints.MinValueIncluded = False
-      DisplayFormat = dfFloatFixed
-      DecimalPlaces = 2
-      EditText = '0,00'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      HasMaxValue = True
-      HasMinValue = True
-      MaxValue = 9999.990000000000000000
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 2
-      OnChange = edValorChange
-      DataConnector.DataSource = jvdsBuscaItem
-      DataConnector.DataField = 'valor_unit'
-    end
     object edCodGarcom: TcxDBButtonEdit
-      Left = 878
+      Left = 324
       Top = 23
       TabStop = False
       DataBinding.DataField = 'id_garcom'
@@ -1031,35 +927,12 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       StyleDisabled.LookAndFeel.NativeStyle = True
       StyleFocused.LookAndFeel.NativeStyle = True
       StyleHot.LookAndFeel.NativeStyle = True
-      TabOrder = 5
+      TabOrder = 1
       OnEnter = edCodGarcomEnter
       Width = 67
     end
-    object cbImpressora: TComboBox
-      Left = 758
-      Top = 23
-      Width = 114
-      Height = 27
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 4
-      TabStop = False
-      OnEnter = cbImpressoraEnter
-      OnExit = cbImpressoraExit
-      Items.Strings = (
-        'Nenhum'
-        'Balc'#227'o'
-        'Cozinha'
-        'Bar'
-        'Salao'
-        'Ambiente')
-    end
     object btInserir: TAdvGlowButton
-      Left = 951
+      Left = 397
       Top = 9
       Width = 49
       Height = 41
@@ -1072,7 +945,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Height = -11
       NotesFont.Name = 'Tahoma'
       NotesFont.Style = []
-      TabOrder = 6
+      TabOrder = 2
       TabStop = True
       OnClick = btInserirClick
       Appearance.BorderColor = clNavy
@@ -1092,22 +965,6 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       Appearance.ColorMirrorCheckedTo = 16768988
       Appearance.ColorMirrorDisabled = 11974326
       Appearance.ColorMirrorDisabledTo = 15921906
-    end
-    object edObservacaoItem: TEdit
-      Left = 470
-      Top = 23
-      Width = 284
-      Height = 27
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      MaxLength = 200
-      ParentFont = False
-      TabOrder = 3
-      OnEnter = edObservacaoItemEnter
-      OnExit = edObservacaoItemExit
     end
     object btConfiguracoes: TAdvGlowButton
       AlignWithMargins = True
@@ -1134,7 +991,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 9
+      TabOrder = 5
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1178,7 +1035,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 10
+      TabOrder = 6
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1222,7 +1079,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 11
+      TabOrder = 7
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1266,7 +1123,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 12
+      TabOrder = 8
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1310,7 +1167,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 13
+      TabOrder = 9
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1354,7 +1211,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 14
+      TabOrder = 10
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1398,7 +1255,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 15
+      TabOrder = 11
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1442,7 +1299,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 16
+      TabOrder = 12
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1486,7 +1343,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 17
+      TabOrder = 13
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1530,7 +1387,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 18
+      TabOrder = 14
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1574,7 +1431,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 19
+      TabOrder = 15
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1618,7 +1475,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 20
+      TabOrder = 16
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1663,7 +1520,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 21
+      TabOrder = 17
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1707,7 +1564,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 22
+      TabOrder = 18
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1751,7 +1608,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 23
+      TabOrder = 19
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -1795,7 +1652,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       NotesFont.Style = []
       ParentFont = False
       Rounded = False
-      TabOrder = 24
+      TabOrder = 20
       Appearance.BorderColor = clNavy
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -2514,6 +2371,9 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       ImageIndex = 68
       OnExecute = acTransferenciamesacomandaExecute
     end
+    object actLancarObservacaoComplemento: TAction
+      Caption = 'actLancarObservacaoComplemento'
+    end
   end
   object ACBrBAL1: TACBrBAL
     Porta = 'COM1'
@@ -2889,7 +2749,6 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       ''
       '')
     AfterOpen = qrBuscaItemAfterOpen
-    OnCalcFields = qrBuscaItemCalcFields
     Left = 872
     Top = 176
     ParamData = <

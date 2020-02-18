@@ -350,45 +350,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label7: TLabel
-        Left = 247
-        Top = 4
-        Width = 35
-        Height = 16
-        Caption = 'Qtde.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label8: TLabel
-        Left = 333
-        Top = 4
-        Width = 34
-        Height = 16
-        Caption = 'Valor'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label11: TLabel
-        Left = 497
-        Top = 4
-        Width = 84
-        Height = 16
-        Caption = 'Observa'#231#245'es'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
       object DBText1: TDBText
         Left = 81
         Top = 29
@@ -396,34 +357,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         Height = 16
         DataField = 'descricao'
         DataSource = dsBuscaItem
-      end
-      object DBText6: TDBText
-        Left = 410
-        Top = 26
-        Width = 64
-        Height = 16
-        Alignment = taRightJustify
-        DataField = 'valor_total'
-        DataSource = dsBuscaItem
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label9: TLabel
-        Left = 412
-        Top = 4
-        Width = 64
-        Height = 16
-        Caption = 'Total item'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
       end
       object edCodProduto: TcxButtonEdit
         Left = 4
@@ -444,15 +377,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         OnExit = edCodProdutoExit
         Width = 62
       end
-      object edObservacaoItem: TEdit
-        Left = 497
-        Top = 26
-        Width = 260
-        Height = 22
-        Anchors = [akLeft, akTop, akRight]
-        MaxLength = 200
-        TabOrder = 3
-      end
       object btInserir: TAdvGlowButton
         Left = 765
         Top = 9
@@ -467,7 +391,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         NotesFont.Height = -11
         NotesFont.Name = 'Tahoma'
         NotesFont.Style = []
-        TabOrder = 4
+        TabOrder = 1
         TabStop = True
         OnClick = btInserirClick
         Appearance.BorderColor = clNavy
@@ -500,7 +424,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         Color = 14074285
         ParentBackground = False
         ParentColor = False
-        TabOrder = 6
+        TabOrder = 3
         object Label21: TLabel
           Left = 72
           Top = 9
@@ -624,7 +548,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         Color = 14074285
         ParentBackground = False
         ParentColor = False
-        TabOrder = 5
+        TabOrder = 2
         DesignSize = (
           227
           66)
@@ -737,7 +661,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         Width = 809
         Height = 284
         Anchors = [akLeft, akTop, akRight, akBottom]
-        TabOrder = 7
+        TabOrder = 4
         LookAndFeel.NativeStyle = True
         object cxGrid2DBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
@@ -869,7 +793,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         BorderColor = clNavy
         RoundEdges = True
         Anchors = [akTop, akRight]
-        TabOrder = 8
+        TabOrder = 5
         object Label20: TLabel
           Left = 10
           Top = 9
@@ -880,51 +804,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
             ' no item'#13#10'[F6] Finalizar venda'#13#10'[F8] Pedidos anteriores'#13#10'[F11] V' +
             'enda Fracionada'#13#10'[Ctrl+D] Desconto no item'
         end
-      end
-      object edValor: TJvValidateEdit
-        Tag = 1
-        Left = 333
-        Top = 26
-        Width = 70
-        Height = 24
-        Flat = False
-        ParentFlat = False
-        CriticalPoints.MaxValueIncluded = False
-        CriticalPoints.MinValueIncluded = False
-        DisplayFormat = dfFloatFixed
-        DecimalPlaces = 2
-        EditText = '0,00'
-        HasMaxValue = True
-        HasMinValue = True
-        MaxValue = 9999999.000000000000000000
-        ReadOnly = True
-        TabOrder = 2
-        OnExit = edDescontoValorExit
-        DataConnector.DataSource = JvdsBuscaItem
-        DataConnector.DataField = 'valor_unit'
-      end
-      object edQuantidade: TJvValidateEdit
-        Tag = 1
-        Left = 247
-        Top = 26
-        Width = 70
-        Height = 24
-        Flat = False
-        ParentFlat = False
-        CriticalPoints.MaxValueIncluded = False
-        CriticalPoints.MinValueIncluded = False
-        DisplayFormat = dfFloatFixed
-        DecimalPlaces = 3
-        EditText = '0,000'
-        HasMaxValue = True
-        HasMinValue = True
-        MaxValue = 999999.000000000000000000
-        ReadOnly = True
-        TabOrder = 1
-        OnChange = edQuantidadeChange
-        OnExit = edDescontoPercentExit
-        DataConnector.DataSource = JvdsBuscaItem
-        DataConnector.DataField = 'quantidade'
       end
     end
     object pgcontroldelivery: TAdvPageControl
@@ -952,10 +831,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         ColorTo = clNone
         TabColor = clBtnFace
         TabColorTo = clNone
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         DesignSize = (
           805
           211)
@@ -2825,7 +2700,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         'true'
       'where m.mat_004=:cod_ref and m.emp_001=:emp;')
     AfterOpen = qrBuscaItemAfterOpen
-    OnCalcFields = qrBuscaItemCalcFields
     Left = 168
     Top = 280
     ParamData = <
@@ -2966,7 +2840,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
   end
   object dsBuscaItem: TDataSource
     DataSet = qrBuscaItem
-    OnStateChange = dsBuscaItemStateChange
     Left = 376
     Top = 248
   end

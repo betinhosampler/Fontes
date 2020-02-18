@@ -1,11 +1,6 @@
 program EliteFood;
 
 uses
-  madExcept,
-  madLinkDisAsm,
-  madListHardware,
-  madListProcesses,
-  madListModules,
   Forms,
   SysUtils,
   uMenu in 'uMenu.pas' {frmMenu},
@@ -196,7 +191,11 @@ uses
   UTef in 'UTef.pas' {FTef: TDataModule},
   UGerenciaTef in 'UGerenciaTef.pas' {FGerenciaTef},
   UImpressaoCupom in 'UImpressaoCupom.pas' {FImpressaoCupom},
-  uEtiquetaProduto in 'uEtiquetaProduto.pas' {frmEtiquetaProduto};
+  uEtiquetaProduto in 'uEtiquetaProduto.pas' {frmEtiquetaProduto},
+  UVendaItemObservacaoComplemento in 'UVendaItemObservacaoComplemento.pas' {frmVendaItemObservacaoComplemento},
+  UObservacaoCadastro in 'UObservacaoCadastro.pas' {frmObservacaoCadastro},
+  uObservacaoEOpcionalLancamento in 'uObservacaoEOpcionalLancamento.pas',
+  uObservacaoEOpcionalParametros in 'uObservacaoEOpcionalParametros.pas';
 
 {$R *.res}
 

@@ -34,7 +34,8 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, uObservacaoEOpcionalLancamento,
+  uObservacaoEOpcionalParametros;
 
   type ItemVenda = Record
     id_venda : integer;
@@ -72,15 +73,9 @@ type
     dsBuscaItem: TDataSource;
     Label6: TLabel;
     edCodProduto: TcxButtonEdit;
-    Label7: TLabel;
-    Label8: TLabel;
-    Label11: TLabel;
-    edObservacaoItem: TEdit;
     qrBuscaItemquantidade: TFloatField;
     acPesquisaItem: TAction;
     DBText1: TDBText;
-    DBText6: TDBText;
-    Label9: TLabel;
     btInserir: TAdvGlowButton;
     qrInsereItem: TUniQuery;
     qrVendaItem: TUniQuery;
@@ -239,8 +234,6 @@ type
     cdsVendaItemFullredbasecalcicms: TFloatField;
     cdsVendaItemFullcso_codigo: TIntegerField;
     qrVendaobservacao: TWideStringField;
-    edValor: TJvValidateEdit;
-    edQuantidade: TJvValidateEdit;
     JvdsBuscaItem: TJvDataSource;
     qrVendacpf_cliente: TWideStringField;
     qrClientecli_004: TWideStringField;
@@ -391,7 +384,6 @@ type
     procedure btInserirClick(Sender: TObject);
     procedure AtualizaTotalVenda;
     procedure qrVendaAfterOpen(DataSet: TDataSet);
-    procedure qrBuscaItemCalcFields(DataSet: TDataSet);
     procedure qrVendaAfterPost(DataSet: TDataSet);
     procedure qrVendaCalcFields(DataSet: TDataSet);
     procedure aplicaDesconto(tipo : integer = 1);
@@ -407,7 +399,6 @@ type
     procedure MostraDadosLabelCliente;
     procedure dsVendaItemStateChange(Sender: TObject);
     procedure btEditarClienteClick(Sender: TObject);
-    procedure dsBuscaItemStateChange(Sender: TObject);
     procedure qrBuscaItemAfterOpen(DataSet: TDataSet);
     procedure qrVendab_taxa_entregaChange(Sender: TField);
     procedure cxDBCheckBox1Click(Sender: TObject);
@@ -489,7 +480,6 @@ begin
   end;
 
   CarregaParametrosConfig;
-  edValor.Enabled := bAlteraValorUnitarioItem and bAlteraValorUnitarioItemUsuario;
 
   //carrega as configurações da balança
   if bUtilizaBalanca then
@@ -792,7 +782,6 @@ begin
      if frmBuscaRegistro.Tag=1 then
        edCodProduto.Text:=frmBuscaRegistro.valor_retorno;
      frmBuscaRegistro.Free;
-     if edQuantidade.CanFocus then edQuantidade.SetFocus;
   end;
 end;
 
@@ -834,7 +823,6 @@ begin
           qrVendaItem.ReadOnly :=true;
         end;
         qrBuscaItem.Close;
-        edObservacaoItem.clear;
         edCodProduto.Clear;
         edCodProduto.SetFocus;
         qrVendaItem.Refresh;
@@ -1010,6 +998,11 @@ end;
 procedure TfrmControleDeliveryDetalheVenda.btInserirClick(Sender: TObject);
 var desconto, desconto_calc, total_calc : double;
     tipo_desconto: integer;
+
+    Params: TObservacaoEOpcionalParametros;
+
+    ObservacaoOpcional: TObservacaoEOpcionalLancamento;
+
 begin
   //valida os itens e insere
   if qrVenda.State in [dsInsert, dsEdit] then
@@ -1021,78 +1014,79 @@ begin
         Application.MessageBox('Não foi informado nenhum item a adicionar!', 'Atenção', MB_ICONINFORMATION + MB_OK);
         edCodProduto.SetFocus;
         abort;
-      end
-      else
-      begin
-      //valida quantidade e valor unitário
-        if qrBuscaItem.FieldByName('quantidade').IsNull or
-         (qrBuscaItem.FieldByName('quantidade').AsFloat<=0) or
-         (qrBuscaItem.FieldByName('quantidade').AsFloat>999999)  then
-        begin
-          Application.MessageBox('Quantidade inválida!', 'Atenção', MB_ICONINFORMATION + MB_OK);
-          if edQuantidade.CanFocus then edQuantidade.SetFocus;
-          abort;
-        end;
-        if (qrBuscaItem.FieldByName('valor_unit').IsNull)  or
-         (qrBuscaItem.FieldByName('valor_unit').AsFloat<=0) or
-         (qrBuscaItem.FieldByName('valor_unit').AsFloat>99999999) then
-        begin
-          Application.MessageBox('Valor unitário inválido!', 'Atenção', MB_ICONINFORMATION + MB_OK);
-          if edValor.CanFocus then edValor.SetFocus;
-            abort;
-        end;
       end;
 
-      qrInsereItem.ParamByName('emp').AsInteger := RecProj.iEmp;
-      qrInsereItem.ParamByName('id_venda').AsInteger := qrVenda.FieldByName('ven_001').AsInteger;
-      qrInsereItem.ParamByName('id_material').AsInteger:= qrBuscaItem.FieldByName('id_material').AsInteger;
-      qrInsereItem.ParamByName('quantidade').asFloat:= qrBuscaItem.FieldByName('quantidade').asfloat;
-      qrInsereItem.ParamByName('valor_unit').AsFloat:= qrBuscaItem.FieldByName('valor_unit').AsFloat;
-      qrInsereItem.ParamByName('valor_total').AsFloat:= qrBuscaItem.FieldByName('valor_total').AsFloat;
-      //qrInsereItem.ParamByName('hora').AsTime := Time;
-      qrInsereItem.ParamByName('observacao').AsString:=copy(edObservacaoItem.Text,0,200);
-      qrInsereItem.ParamByName('nro_item').AsInteger:=qrBuscaItem.FieldByName('ultimo_item').AsInteger+1;
-      qrInsereItem.ParamByName('cod_impressora').AsInteger:=qrBuscaItem.FieldByName('cod_impressora').AsInteger;
-      qrInsereItem.ParamByName('b_venda_tamanho').asBoolean:= qrBuscaItem.FieldByName('b_venda_tamanho').asBoolean;
-      qrInsereItem.ParamByName('tamanho').asstring:=qrBuscaItem.FieldByName('tamanho_padrao').asstring;
-      qrInsereItem.ParamByName('item_fracionado').value := null;
-      qrInsereItem.ParamByName('quantidade_impressao').asFloat:= qrBuscaItem.FieldByName('quantidade').asfloat;
-      qrInsereItem.ParamByName('desconto').asfloat :=0;
+      ObservacaoOpcional := TObservacaoEOpcionalLancamento.Create();
+      try
+        Params.IdMaterial          := qrBuscaItem.FieldByName('id_material').AsLargeInt;
+        Params.CodigoImpressora    := qrBuscaItem.FieldByName('cod_impressora').AsLargeInt;
+        Params.Quantidade          := qrBuscaItem.FieldByName('quantidade').AsFloat;
+        Params.Valor               := qrBuscaItem.FieldByName('valor_unit').AsFloat;
+        Params.PermiteAlterarValor := (bAlteraValorUnitarioItem and bAlteraValorUnitarioItemUsuario) or
+          qrBuscaItem.FieldByName('b_exige_alterar_preco_venda').AsBoolean;
 
-      //antes de postar, verifica se existe promoção
-      if BuscaPromocao(qrInsereItem.ParamByName('b_venda_tamanho').asBoolean,
-                       qrBuscaItem.FieldByName('tamanho_padrao').asstring,
-                       'D',
-                       qrBuscaItem.FieldByName('id_material').AsInteger,
-                       desconto, tipo_desconto) then
-      begin
-        calculaDescontoItem(tipo_desconto, desconto,
-                            qrBuscaItem.FieldByName('quantidade').asfloat,
-                            qrBuscaItem.FieldByName('valor_unit').AsFloat,
-                            0, desconto_calc, total_calc);
+        ObservacaoOpcional.Chamar_Tela_Observacao_Opcional(Params);
 
-        qrInsereItem.ParamByName('desconto').asfloat    := desconto_calc;
-        qrInsereItem.ParamByName('valor_total').AsFloat := total_calc;
+        if ObservacaoOpcional.Quantidade = 0 then
+          Abort;
+
+        qrInsereItem.ParamByName('emp').AsInteger := RecProj.iEmp;
+        qrInsereItem.ParamByName('id_venda').AsInteger := qrVenda.FieldByName('ven_001').AsInteger;
+        qrInsereItem.ParamByName('id_material').AsInteger:= qrBuscaItem.FieldByName('id_material').AsInteger;
+        qrInsereItem.ParamByName('quantidade').asFloat:= ObservacaoOpcional.Quantidade;
+        qrInsereItem.ParamByName('valor_unit').AsFloat:= ObservacaoOpcional.Valor;
+        qrInsereItem.ParamByName('valor_total').AsFloat:= ObservacaoOpcional.Quantidade * ObservacaoOpcional.Valor;
+        //qrInsereItem.ParamByName('hora').AsTime := Time;
+        qrInsereItem.ParamByName('observacao').AsString:= ObservacaoOpcional.Observacoes;
+        qrInsereItem.ParamByName('nro_item').AsInteger:=qrBuscaItem.FieldByName('ultimo_item').AsInteger+1;
+        qrInsereItem.ParamByName('cod_impressora').AsInteger:=  ObservacaoOpcional.CodigoImpressora;
+        qrInsereItem.ParamByName('b_venda_tamanho').asBoolean:= qrBuscaItem.FieldByName('b_venda_tamanho').asBoolean;
+        qrInsereItem.ParamByName('tamanho').asstring:=qrBuscaItem.FieldByName('tamanho_padrao').asstring;
+        qrInsereItem.ParamByName('item_fracionado').value := null;
+        qrInsereItem.ParamByName('quantidade_impressao').asFloat:= qrBuscaItem.FieldByName('quantidade').asfloat;
+        qrInsereItem.ParamByName('desconto').asfloat :=0;
+
+        //antes de postar, verifica se existe promoção
+        if BuscaPromocao(qrInsereItem.ParamByName('b_venda_tamanho').asBoolean,
+                         qrBuscaItem.FieldByName('tamanho_padrao').asstring,
+                         'D',
+                         qrBuscaItem.FieldByName('id_material').AsInteger,
+                         desconto, tipo_desconto) then
+        begin
+          calculaDescontoItem(tipo_desconto, desconto,
+                              qrBuscaItem.FieldByName('quantidade').asfloat,
+                              qrBuscaItem.FieldByName('valor_unit').AsFloat,
+                              0, desconto_calc, total_calc);
+
+          qrInsereItem.ParamByName('desconto').asfloat    := desconto_calc;
+          qrInsereItem.ParamByName('valor_total').AsFloat := total_calc;
+        end;
+
+        //Flag de item com exigência de valor mínimo de 70% do unitário
+        qrInsereItem.ParamByName('b_70pc_valor_unit').asboolean :=
+          qrBuscaItem.FieldByName('b_exige_70pc_valor_unit').Asboolean and
+          (qrBuscaItem.FieldByName('quantidade').AsFloat <0.7) and bExige70pc;
+
+        qrInsereItem.Execute;
+
+        if ObservacaoOpcional.Opcionais.Count > 0 then
+          ObservacaoOpcional.Inserir_Opcionais(qrVenda.FieldByName('ven_001').AsLargeInt,
+            qrBuscaItem.FieldByName('ultimo_item').AsLargeInt + 1);
+
+        frmmenu.AvisaEsoqueMinimo(qrBuscaItem.FieldByName('id_material').AsInteger,
+                                  'D', qrBuscaItem.FieldByName('quantidade').asfloat);
+
+        AtualizaTotalVenda;
+        qrBuscaItem.Close;
+
+        edCodProduto.Clear;
+        edCodProduto.SetFocus;
+        qrVendaItem.Refresh;
+        qrVendaItemOpcional.Refresh;
+        cxGrid2DBTableView1.ViewData.Expand(True);
+      finally
+        ObservacaoOpcional.Free();
       end;
-
-      //Flag de item com exigência de valor mínimo de 70% do unitário
-      qrInsereItem.ParamByName('b_70pc_valor_unit').asboolean :=
-        qrBuscaItem.FieldByName('b_exige_70pc_valor_unit').Asboolean and
-        (qrBuscaItem.FieldByName('quantidade').AsFloat <0.7) and bExige70pc;
-
-      qrInsereItem.Execute;
-
-      frmmenu.AvisaEsoqueMinimo(qrBuscaItem.FieldByName('id_material').AsInteger,
-                                'D', qrBuscaItem.FieldByName('quantidade').asfloat);
-
-      AtualizaTotalVenda;
-      qrBuscaItem.Close;
-      edObservacaoItem.clear;
-      edCodProduto.Clear;
-      edCodProduto.SetFocus;
-      qrVendaItem.Refresh;
-      qrVendaItemOpcional.Refresh;
-      cxGrid2DBTableView1.ViewData.Expand(True);
     end;
     if edCodProduto.CanFocus then edCodProduto.SetFocus;
   end;
@@ -1558,20 +1552,6 @@ begin
   if qrBuscaItem.State<>dsEdit then abort;
 end;
 
-procedure TfrmControleDeliveryDetalheVenda.dsBuscaItemStateChange(Sender: TObject);
-begin
-  if dsBuscaItem.State in [dsEdit, dsInsert] then
-  begin
-    edValor.readonly:=true;
-    edQuantidade.readonly:=true;
-  end
-  else
-  begin
-    edValor.readonly:=false;
-    edQuantidade.readonly:=false;
-  end
-end;
-
 procedure TfrmControleDeliveryDetalheVenda.dsClienteStateChange(Sender: TObject);
 begin
   ValidaBotoes;
@@ -1650,20 +1630,7 @@ begin
         end;
       end;
     end;
-
-    if (edValor.Enabled or edQuantidade.Enabled) and (not inserir)  then
-    begin
-      inserir := false;
-      if edValor.CanFocus then
-        edValor.SetFocus
-      else
-        if edQuantidade.canfocus then
-          edQuantidade.setfocus
-        else
-          inserir := true;
-    end
-    else
-      inserir := true;
+    inserir := true;
 
     (* =========================================================================
        O código abaixo esta comentado, pois se futuramente se desejar fazer a
@@ -1772,14 +1739,9 @@ end;
 procedure TfrmControleDeliveryDetalheVenda.qrBuscaItemAfterOpen(DataSet: TDataSet);
 var tamanho : string;
 begin
-  edValor.Enabled := bAlteraValorUnitarioItem and bAlteraValorUnitarioItemUsuario;
   if qrBuscaItem.RecordCount >0 then
   begin
-    if not edValor.Enabled then
-      edValor.Enabled := qrBuscaItem.FieldByName('b_exige_alterar_preco_venda').asboolean;
-
     qrBuscaItem.Edit;
-    edQuantidade.Enabled := true;
 
     if qrBuscaItem.FieldByName('b_venda_tamanho').AsBoolean then
     begin
@@ -1825,7 +1787,6 @@ begin
     begin
 
       try
-        edQuantidade.Enabled := false;
         // se houver conexão aberta, Fecha a conexão
         if ACBrBAL1.Ativo then ACBrBAL1.Desativar;
         // Conecta com a balança
@@ -1845,29 +1806,12 @@ begin
       if qrBuscaItem.FieldByName('quantidade').AsFloat <= 0 then
       begin
         qrBuscaItem.close;
-        edObservacaoItem.clear;
         edCodProduto.Clear;
         if edCodProduto.CanFocus then edCodProduto.SetFocus;
         abort;
       end;
     end;
-
-    if edQuantidade.CanFocus then
-      edQuantidade.SetFocus
-    else
-      if edValor.CanFocus then
-        edValor.setfocus
-      else
-        edObservacaoItem.SetFocus;
-
   end;
-end;
-
-procedure TfrmControleDeliveryDetalheVenda.qrBuscaItemCalcFields(DataSet: TDataSet);
-begin
-  qrBuscaItem.FieldByName('valor_total').AsFloat :=
-  qrBuscaItem.FieldByName('valor_unit').AsFloat *
-  qrBuscaItem.FieldByName('quantidade').AsFloat;
 end;
 
 procedure TfrmControleDeliveryDetalheVenda.qrBuscaItemquantidadeChange(

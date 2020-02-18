@@ -37,7 +37,7 @@ object frmVendaBalcao: TfrmVendaBalcao
   object DBText3: TDBText
     Tag = 1
     Left = 181
-    Top = 361
+    Top = 147
     Width = 90
     Height = 25
     AutoSize = True
@@ -50,38 +50,10 @@ object frmVendaBalcao: TfrmVendaBalcao
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label1: TLabel
-    Tag = 1
-    Left = 8
-    Top = 203
-    Width = 128
-    Height = 25
-    Caption = 'Valor Unit'#225'rio'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object Label2: TLabel
-    Tag = 1
-    Left = 8
-    Top = 133
-    Width = 108
-    Height = 25
-    Caption = 'Quantidade'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
   object Label3: TLabel
     Tag = 1
     Left = 8
-    Top = 358
+    Top = 144
     Width = 166
     Height = 29
     Caption = 'Total Item R$'
@@ -90,19 +62,6 @@ object frmVendaBalcao: TfrmVendaBalcao
     Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label11: TLabel
-    Left = 8
-    Top = 273
-    Width = 117
-    Height = 25
-    Caption = 'Observa'#231#245'es'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = []
     ParentFont = False
   end
   object Label12: TLabel
@@ -127,7 +86,7 @@ object frmVendaBalcao: TfrmVendaBalcao
     Height = 541
     Anchors = [akLeft, akTop, akBottom]
     BorderStyle = cxcbsNone
-    TabOrder = 4
+    TabOrder = 1
     LookAndFeel.NativeStyle = True
     object cxGrid2DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
@@ -274,73 +233,6 @@ object frmVendaBalcao: TfrmVendaBalcao
       end
     end
   end
-  object edValor: TJvValidateEdit
-    Tag = 1
-    Left = 8
-    Top = 234
-    Width = 174
-    Height = 33
-    CriticalPoints.MaxValueIncluded = False
-    CriticalPoints.MinValueIncluded = False
-    DisplayFormat = dfFloatFixed
-    DecimalPlaces = 2
-    EditText = '0,00'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    HasMaxValue = True
-    HasMinValue = True
-    MaxValue = 9999.990000000000000000
-    ParentFont = False
-    ReadOnly = True
-    TabOrder = 2
-    OnKeyDown = edValorKeyDown
-    DataConnector.DataSource = jvdsBuscaItem
-    DataConnector.DataField = 'valor_unit'
-  end
-  object edQuantidade: TJvValidateEdit
-    Tag = 1
-    Left = 8
-    Top = 164
-    Width = 174
-    Height = 33
-    CriticalPoints.MaxValueIncluded = False
-    CriticalPoints.MinValueIncluded = False
-    DisplayFormat = dfFloatFixed
-    DecimalPlaces = 3
-    EditText = '0,000'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    HasMaxValue = True
-    HasMinValue = True
-    MaxValue = 999.000000000000000000
-    ParentFont = False
-    ReadOnly = True
-    TabOrder = 1
-    OnKeyDown = edQuantidadeKeyDown
-    DataConnector.DataSource = jvdsBuscaItem
-    DataConnector.DataField = 'quantidade'
-  end
-  object edObservacaoItem: TEdit
-    Left = 8
-    Top = 304
-    Width = 389
-    Height = 33
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    MaxLength = 200
-    ParentFont = False
-    TabOrder = 3
-    OnKeyDown = edObservacaoItemKeyDown
-  end
   object pnTopo: TPanel
     Left = 0
     Top = 0
@@ -350,7 +242,7 @@ object frmVendaBalcao: TfrmVendaBalcao
     BevelOuter = bvNone
     Color = 5263440
     ParentBackground = False
-    TabOrder = 5
+    TabOrder = 2
     object DBText5: TDBText
       Left = 8
       Top = 5
@@ -376,7 +268,7 @@ object frmVendaBalcao: TfrmVendaBalcao
     BevelOuter = bvNone
     Color = 5263440
     ParentBackground = False
-    TabOrder = 6
+    TabOrder = 3
     DesignSize = (
       974
       87)
@@ -1065,9 +957,9 @@ object frmVendaBalcao: TfrmVendaBalcao
   end
   object AdvGroupBox1: TAdvGroupBox
     Left = 3
-    Top = 432
+    Top = 192
     Width = 394
-    Height = 130
+    Height = 370
     BorderColor = clNavy
     RoundEdges = True
     Anchors = [akLeft, akTop, akRight]
@@ -1078,7 +970,7 @@ object frmVendaBalcao: TfrmVendaBalcao
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 4
     object Label4: TLabel
       Tag = 1
       Left = 8

@@ -12,8 +12,10 @@ object frmModelo: TfrmModelo
   Font.Height = -13
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 16
   object pnPrincipal: TAdvPanel
@@ -32,7 +34,7 @@ object frmModelo: TfrmModelo
     ParentFont = False
     TabOrder = 0
     UseDockManager = True
-    Version = '2.4.1.0'
+    Version = '2.5.4.1'
     Caption.Color = clHighlight
     Caption.ColorTo = clNone
     Caption.Font.Charset = DEFAULT_CHARSET
@@ -40,6 +42,7 @@ object frmModelo: TfrmModelo
     Caption.Font.Height = -13
     Caption.Font.Name = 'Tahoma'
     Caption.Font.Style = []
+    Caption.Indent = 0
     ColorTo = 12691076
     DoubleBuffered = True
     StatusBar.Font.Charset = DEFAULT_CHARSET
@@ -61,6 +64,5 @@ object frmModelo: TfrmModelo
     FlowStyle = fsRightLeftTopBottom
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 399
   end
 end

@@ -2,9 +2,10 @@ inherited frmDetalheOpcional: TfrmDetalheOpcional
   Caption = 'Cadastro de Opcional'
   ClientHeight = 186
   ClientWidth = 543
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   ExplicitWidth = 549
-  ExplicitHeight = 215
+  ExplicitHeight = 214
   PixelsPerInch = 96
   TextHeight = 16
   inherited pnPrincipal: TAdvPanel

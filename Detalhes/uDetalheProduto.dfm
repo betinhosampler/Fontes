@@ -45,7 +45,6 @@ object frmDetalheProduto: TfrmDetalheProduto
     FlowStyle = fsRightLeftTopBottom
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 913
     object btCancelar: TAdvGlowButton
       AlignWithMargins = True
       Left = 808
@@ -304,7 +303,7 @@ object frmDetalheProduto: TfrmDetalheProduto
     Top = 0
     Width = 915
     Height = 575
-    ActivePage = pgDadosCadastro
+    ActivePage = pgOpcionais
     ActiveFont.Charset = DEFAULT_CHARSET
     ActiveFont.Color = clNavy
     ActiveFont.Height = -13
@@ -322,14 +321,12 @@ object frmDetalheProduto: TfrmDetalheProduto
     PersistPagesState.Enabled = False
     TabOrder = 1
     OnChange = pgControlChange
-    ExplicitWidth = 913
     object pgDadosCadastro: TAdvTabSheet
       Caption = 'Dados cadastrais'
       Color = 14997705
       ColorTo = 12691076
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       DesignSize = (
         907
         544)
@@ -571,7 +568,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -595,7 +592,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           ParentFont = False
           Properties.DecimalPlaces = 2
           Properties.DisplayFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -618,7 +615,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Color = 3342335
           Style.Font.Charset = DEFAULT_CHARSET
@@ -643,7 +640,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.DisplayFormat = 'R$ ,0.00;-R$ ,0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ReadOnly = True
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Color = 14997705
@@ -667,7 +664,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Color = 3342335
           Style.Font.Charset = DEFAULT_CHARSET
@@ -691,7 +688,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Color = 3342335
           Style.Font.Charset = DEFAULT_CHARSET
@@ -727,7 +724,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         TabOrder = 4
         TabStop = True
         Visible = False
-        ExplicitLeft = 639
         object Label24: TLabel
           Left = 7
           Top = 146
@@ -748,7 +744,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -771,7 +767,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -794,7 +790,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -817,7 +813,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -840,7 +836,7 @@ object frmDetalheProduto: TfrmDetalheProduto
           DataBinding.DataSource = dsDetalhe
           ParentFont = False
           Properties.EditFormat = '0.00'
-          Properties.MaxValue = 99999999.990000000000000000
+          Properties.MaxValue = 99999999.989999990000000000
           Properties.ValidationOptions = [evoShowErrorIcon]
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -971,7 +967,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         TabOrder = 3
         Transparent = True
         OnClick = ckVendaTamanhoClick
-        ExplicitLeft = 639
       end
       object AdvGroupBox3: TAdvGroupBox
         Left = 3
@@ -2033,7 +2028,6 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = 12691076
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       object AdvGroupBox1: TAdvGroupBox
         Left = 3
         Top = 3
@@ -2966,7 +2960,6 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = 12691076
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       DesignSize = (
         907
         544)
@@ -2978,7 +2971,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 0
         LookAndFeel.NativeStyle = True
-        ExplicitWidth = 748
         object cxGrid1DBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsProdutoComposicao
@@ -3047,7 +3039,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
-        ExplicitWidth = 748
         object DBText1: TDBText
           Left = 346
           Top = 47
@@ -3407,7 +3398,6 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = clNone
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       DesignSize = (
         907
         544)
@@ -3430,7 +3420,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         ParentColor = False
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 898
         object Label42: TLabel
           Left = 13
           Top = 22
@@ -3569,7 +3558,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 1
         LookAndFeel.NativeStyle = True
-        ExplicitWidth = 909
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsProdutoOpc
@@ -3618,14 +3606,13 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = 12691076
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       DesignSize = (
         907
         544)
       object DBCtrlGridImagens: TDBCtrlGrid
         Left = 156
         Top = 11
-        Width = 739
+        Width = 737
         Height = 520
         Anchors = [akLeft, akTop, akRight, akBottom]
         ColCount = 6
@@ -3638,7 +3625,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         SelectedColor = clWhite
         OnClick = DBCtrlGridImagensClick
         OnPaintPanel = DBCtrlGridImagensPaintPanel
-        ExplicitWidth = 737
         object imgProdutoLista: TImage
           Left = 0
           Top = 0
@@ -3743,7 +3729,6 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = clNone
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       DesignSize = (
         907
         544)
@@ -3767,7 +3752,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         ParentColor = False
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 902
         object lbl1: TLabel
           Left = 128
           Top = 120
@@ -3802,7 +3786,6 @@ object frmDetalheProduto: TfrmDetalheProduto
           BevelOuter = bvNone
           Color = 12691076
           TabOrder = 0
-          ExplicitWidth = 898
           DefaultCanvas = 'TGDIPlusCanvas'
           PrintMargins = (
             15
@@ -3853,7 +3836,6 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = clNone
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       object grDias: TAdvGroupBox
         Left = 5
         Top = -1
@@ -4290,7 +4272,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4313,7 +4295,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4336,7 +4318,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4359,7 +4341,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4382,7 +4364,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4405,7 +4387,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4446,7 +4428,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4469,7 +4451,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4492,7 +4474,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4515,7 +4497,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4538,7 +4520,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4561,7 +4543,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4602,7 +4584,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4625,7 +4607,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4648,7 +4630,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4671,7 +4653,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4694,7 +4676,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4717,7 +4699,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4758,7 +4740,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4781,7 +4763,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4804,7 +4786,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4827,7 +4809,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4850,7 +4832,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4873,7 +4855,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4914,7 +4896,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4937,7 +4919,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4960,7 +4942,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -4983,7 +4965,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5006,7 +4988,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5029,7 +5011,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5070,7 +5052,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5093,7 +5075,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5116,7 +5098,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5139,7 +5121,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5162,7 +5144,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5185,7 +5167,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5226,7 +5208,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5249,7 +5231,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5272,7 +5254,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5295,7 +5277,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5318,7 +5300,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5341,7 +5323,7 @@ object frmDetalheProduto: TfrmDetalheProduto
             DataBinding.DataSource = dsPromocao
             ParentFont = False
             Properties.EditFormat = '0.00'
-            Properties.MaxValue = 99999999.990000000000000000
+            Properties.MaxValue = 99999999.989999990000000000
             Properties.ValidationOptions = [evoShowErrorIcon]
             Style.Font.Charset = DEFAULT_CHARSET
             Style.Font.Color = clWindowText
@@ -5366,7 +5348,6 @@ object frmDetalheProduto: TfrmDetalheProduto
       ColorTo = 12691076
       TabColor = 14997705
       TabColorTo = clNone
-      ExplicitWidth = 905
       DesignSize = (
         907
         544)
@@ -5389,7 +5370,6 @@ object frmDetalheProduto: TfrmDetalheProduto
         ParentColor = False
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 830
         object Label7: TLabel
           Left = 3
           Top = 22

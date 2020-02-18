@@ -86,7 +86,6 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
         <Icon_MainIcon>EliteFood_Icon.ico</Icon_MainIcon>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BRCC_IncludePath>C:\LECHEFF\Fonte\Geral\FastMM;$(BRCC_IncludePath)</BRCC_IncludePath>
@@ -772,6 +771,16 @@
             <Form>frmEtiquetaProduto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UVendaItemObservacaoComplemento.pas">
+            <Form>frmVendaItemObservacaoComplemento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UObservacaoCadastro.pas">
+            <Form>frmObservacaoCadastro</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uObservacaoEOpcionalLancamento.pas"/>
+        <DCCReference Include="uObservacaoEOpcionalParametros.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -829,7 +838,7 @@
             </Delphi.Personality>
             <Deployment Version="2">
                 <DeployFile LocalName="COMP\LECHEFF.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="C:\OSFood\EliteFood.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="C:\EliteFood\EliteFood.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>EliteFood.exe</RemoteName>
                         <Overwrite>true</Overwrite>
