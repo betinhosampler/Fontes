@@ -278,30 +278,40 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
       '  From observacao'
       ' Where id_categoria = (Select cat_001'
       #9#9#9' From materiais'
-      #9#9#9'Where mat_001 = :param)')
+      #9#9#9'Where mat_001 = :param1)')
     Left = 632
     Top = 240
     ParamData = <
       item
-        DataType = ftUnknown
-        Name = 'param'
+        DataType = ftLargeint
+        Name = 'param1'
+        ParamType = ptInput
         Value = nil
       end>
   end
   object qryOpcionais: TUniQuery
     Connection = frmMenu.conexao
     SQL.Strings = (
-      'Select id_opcional as id, '
-      '       descricao || '#39' '#39' ||  valor as descricao '
-      '  From opcional'
-      ' Where id_empresa = :param'
-      '  ')
+      'Select o.id_opcional as id, '
+      '       o.descricao || '#39' '#39' ||  o.valor as descricao '
+      '  From materiais_opcional mo'
+      '  Join opcional o'
+      '    On mo.id_opcional = o.id_opcional'
+      ' Where o.id_empresa = :param1'
+      '   and mo.id_empresa = :param1'
+      '   and id_material = :param2')
     Left = 352
     Top = 200
     ParamData = <
       item
         DataType = ftLargeint
-        Name = 'param'
+        Name = 'param1'
+        ParamType = ptInput
+        Value = nil
+      end
+      item
+        DataType = ftLargeint
+        Name = 'param2'
         ParamType = ptInput
         Value = nil
       end>

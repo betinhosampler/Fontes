@@ -66,7 +66,7 @@ type
     FIdMaterial: Integer;
 
     procedure Atualizar_Tabela(ATabela: TUniQuery);
-    procedure Carregar(ATabela: TUniQuery; AParam: Integer);
+    procedure Carregar(ATabela: TUniQuery; AParam1: Integer; AParam2: Integer = 0);
     procedure Preencher(ACheckList: TCheckListBox; ATabela: TUniQuery);
 
   end;
@@ -123,10 +123,14 @@ begin
   Close();
 end;
 
-procedure TfrmVendaItemObservacaoComplemento.Carregar(ATabela: TUniQuery; AParam: Integer);
+procedure TfrmVendaItemObservacaoComplemento.Carregar(ATabela: TUniQuery; AParam1: Integer; AParam2: Integer = 0);
 begin
   ATabela.Close();
-  ATabela.ParamByName('param').AsLargeInt := AParam;
+  ATabela.ParamByName('param1').AsLargeInt := AParam1;
+
+  if AParam2 > 0 then
+    ATabela.ParamByName('param2').AsLargeInt := AParam2;
+
   ATabela.Open();
 end;
 
@@ -171,7 +175,7 @@ begin
 
   FIdMaterial := AParametros.IdMaterial;
 
-  Carregar(qryOpcionais, RecProj.iEmp);
+  Carregar(qryOpcionais, RecProj.iEmp, FIdMaterial);
   Carregar(qryObservacoes, FIdMaterial);
 
   Preencher(chklstOpcionais, qryOpcionais);
