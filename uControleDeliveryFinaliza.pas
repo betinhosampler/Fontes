@@ -196,6 +196,7 @@ begin
   frmControleDeliveryFechamento.id_entregador := qrVenda.FieldByName('id_entregador').asinteger;
   frmControleDeliveryFechamento.nome_entregador := cbEntregador.Text;
   frmControleDeliveryFechamento.ckImprimirCupom.Checked:= ckImprimirCupom.Checked;
+  frmControleDeliveryFechamento.bImprimeCupomFechamento:= ckImprimirCupom.Checked;
   frmControleDeliveryFechamento.btConfirma.Click;
 
   qrVenda.FieldByName('data_entrega').AsDateTime :=  Date + time;

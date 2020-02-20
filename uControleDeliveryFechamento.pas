@@ -358,13 +358,13 @@ type
     procedure btn1Click(Sender: TObject);
   private
     { Private declarations }
-    bTaxaAdicional, bImprimeCupomFechamento, bUtilizaGaveta,
+    bTaxaAdicional, bUtilizaGaveta,
     cede_troco_enregador, suprimir_cabecalho_rodape_cupom, imprimir_cozinha,
     nfce_contingencia, sugerir_nfce_contingencia, bCaixinha : boolean;
     sMensagemTxServico, sCamImpDelivery : string;
   public
     { Public declarations }
-    venda_concluida : boolean;
+    venda_concluida, bImprimeCupomFechamento: boolean;
     id_entregador : integer;
     nome_entregador : string;
 
