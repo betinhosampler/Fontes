@@ -108,7 +108,7 @@ var
 begin
   for I := 0 to ATela.chklstObservacoes.Items.Count -1 do
     if ATela.chklstObservacoes.Checked[I] then
-      FObservacoes := FObservacoes + ATela.chklstObservacoes.Items[I] + ',';
+      FObservacoes := FObservacoes + Trim(ATela.chklstObservacoes.Items[I]) + ',';
 
   if Length(Trim(FObservacoes)) > 0  then
   begin

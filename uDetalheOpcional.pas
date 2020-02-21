@@ -23,7 +23,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, cxGroupBox, cxRadioGroup;
+  dxSkinXmas2008Blue, cxGroupBox, cxRadioGroup, Funcao_DB;
 
 type
   TfrmDetalheOpcional = class(TfrmModeloCadastroSimples)
@@ -39,6 +39,9 @@ type
     qrCadastroid_empresa: TIntegerField;
     grTipo: TcxDBRadioGroup;
     qrCadastrotipo: TIntegerField;
+
+    constructor Create(sender : TComponent; id_material: Int64); reintroduce; overload;
+
     procedure qrCadastroNewRecord(DataSet: TDataSet);
     procedure qrCadastroAfterPost(DataSet: TDataSet);
     procedure btNovoClick(Sender: TObject);
@@ -46,6 +49,11 @@ type
     procedure btSalvarClick(Sender: TObject);
   private
     { Private declarations }
+    FTemMaterialVinculadoPeloFrente: Boolean;
+    FIdMaterial: Int64;
+
+    procedure Inserir_Materiais_Opcional();
+
   public
     { Public declarations }
   end;
@@ -57,7 +65,7 @@ implementation
 
 {$R *.dfm}
 
-uses uMenu, Funcao_DB, uFuncoes;
+uses uMenu, uFuncoes;
 
 procedure TfrmDetalheOpcional.btNovoClick(Sender: TObject);
 begin
@@ -78,6 +86,15 @@ begin
   end;
 
   inherited;
+
+  Inserir_Materiais_Opcional();
+end;
+
+constructor TfrmDetalheOpcional.Create(sender: TComponent; id_material: Int64);
+begin
+  Create(sender, 'id_opcional', 'id_situacao');
+  FIdMaterial                     := id_material;
+  FTemMaterialVinculadoPeloFrente := True;
 end;
 
 procedure TfrmDetalheOpcional.FormShow(Sender: TObject);
@@ -94,6 +111,25 @@ begin
     grTipo.Visible:= False;
     Self.Height   := 150;
   end;
+end;
+
+procedure TfrmDetalheOpcional.Inserir_Materiais_Opcional;
+var
+  Insert: String;
+
+begin
+  //Criado método para inserir o registro opcional e já vincular ao produto cadastrado
+  //diretamente pelo Frente ao lançar opcional e observação nos módulos de venda
+   if (FIdMaterial > 0) and FTemMaterialVinculadoPeloFrente then
+   begin
+     Insert := Format(
+       'insert into materiais_opcional'#13#10 +
+       '     values (%d, %d, %d, %d)', [FIdMaterial,
+        RecProj.iEmp,
+        qrCadastro.FieldByName('id_opcional').AsInteger, 0]);
+
+     ExecutaComandoSQL(Insert);
+   end;
 end;
 
 procedure TfrmDetalheOpcional.qrCadastroAfterPost(DataSet: TDataSet);

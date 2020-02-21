@@ -15,54 +15,90 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
   OldCreateOrder = False
   Position = poScreenCenter
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
+  DesignSize = (
+    907
+    483)
   PixelsPerInch = 96
   TextHeight = 13
-  object Label8: TLabel
-    Left = 10
-    Top = 407
-    Width = 165
+  object lblCadastrarOpcionais: TLabel
+    Left = 836
+    Top = 101
+    Width = 63
     Height = 18
-    Caption = 'Cadastrar Complementos'
+    Alignment = taRightJustify
+    BiDiMode = bdLeftToRight
+    Caption = 'Cadastrar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
+    ParentBiDiMode = False
     ParentFont = False
-    OnClick = Label8Click
+    OnClick = lblCadastrarOpcionaisClick
   end
-  object Label9: TLabel
-    Left = 746
-    Top = 405
-    Width = 153
+  object lblCadastrarObservacoes: TLabel
+    Left = 836
+    Top = 258
+    Width = 63
     Height = 18
-    Caption = 'Cadastrar Observa'#231#245'es'
+    Caption = 'Cadastrar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
     ParentFont = False
-    OnClick = Label9Click
+    OnClick = lblCadastrarObservacoesClick
   end
   object Label1: TLabel
-    Left = 11
-    Top = 7
-    Width = 233
+    Left = 0
+    Top = 0
+    Width = 907
     Height = 19
-    Caption = 'Adicionar Produto ao Pedido'
+    Align = alTop
+    Caption = 'Adicionar %s ao Pedido'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ExplicitWidth = 195
   end
-  object GroupBox1: TGroupBox
-    Left = 8
-    Top = 32
-    Width = 891
+  object lblOpcionais: TLabel
+    Left = 14
+    Top = 101
+    Width = 61
+    Height = 18
+    Caption = 'Opcionais'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsUnderline]
+    ParentFont = False
+  end
+  object lblObservacoes: TLabel
+    Left = 12
+    Top = 258
+    Width = 85
+    Height = 18
+    Caption = 'Observa'#231#245'es'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsUnderline]
+    ParentFont = False
+  end
+  object grpbxDadosProduto: TGroupBox
+    Left = 0
+    Top = 19
+    Width = 907
     Height = 81
+    Align = alTop
     Caption = 'Informa'#231#245'es do Produto'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -239,36 +275,37 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
     Appearance.ColorMirrorDisabledTo = 15921906
   end
   object chklstObservacoes: TCheckListBox
-    Left = 488
-    Top = 119
-    Width = 411
-    Height = 282
+    Left = 8
+    Top = 279
+    Width = 891
+    Height = 138
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = 2
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
-    ItemHeight = 19
     ParentFont = False
     Sorted = True
     TabOrder = 2
+    OnClick = chklstOpcionaisClick
     OnKeyPress = chklstObservacoesKeyPress
   end
   object chklstOpcionais: TCheckListBox
     Left = 8
     Top = 119
-    Width = 474
-    Height = 282
-    Columns = 2
+    Width = 891
+    Height = 138
+    Columns = 4
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
-    ItemHeight = 19
     ParentFont = False
     TabOrder = 1
+    OnClick = chklstOpcionaisClick
   end
   object qryObservacoes: TUniQuery
     Connection = frmMenu.conexao
@@ -313,6 +350,27 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
         DataType = ftLargeint
         Name = 'param2'
         ParamType = ptInput
+        Value = nil
+      end>
+  end
+  object qryMaterial: TUniQuery
+    Connection = frmMenu.conexao
+    SQL.Strings = (
+      'select mat_003'
+      '  from materiais'
+      ' where mat_001 = :id_material'
+      '   and emp_001 = :id_empresa')
+    Left = 184
+    Top = 160
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'id_material'
+        Value = nil
+      end
+      item
+        DataType = ftUnknown
+        Name = 'id_empresa'
         Value = nil
       end>
   end

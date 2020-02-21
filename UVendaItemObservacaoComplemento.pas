@@ -28,7 +28,7 @@ uses
 
 type
   TfrmVendaItemObservacaoComplemento = class(TForm)
-    GroupBox1: TGroupBox;
+    grpbxDadosProduto: TGroupBox;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -36,8 +36,8 @@ type
     edtCategoria: TEdit;
     btnConfirmar: TAdvGlowButton;
     btnCancel: TAdvGlowButton;
-    Label8: TLabel;
-    Label9: TLabel;
+    lblCadastrarOpcionais: TLabel;
+    lblCadastrarObservacoes: TLabel;
     chklstObservacoes: TCheckListBox;
     qryObservacoes: TUniQuery;
     chklstOpcionais: TCheckListBox;
@@ -46,12 +46,15 @@ type
     edQuantidade: TJvValidateEdit;
     cbbImpressora: TComboBox;
     edtValor: TJvValidateEdit;
+    lblOpcionais: TLabel;
+    lblObservacoes: TLabel;
+    qryMaterial: TUniQuery;
 
     constructor Create(ASender : TComponent; AParametros: TObservacaoEOpcionalParametros);
 
     destructor destroy; override;
-    procedure Label9Click(Sender: TObject);
-    procedure Label8Click(Sender: TObject);
+    procedure lblCadastrarObservacoesClick(Sender: TObject);
+    procedure lblCadastrarOpcionaisClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnCancelClick(Sender: TObject);
     procedure edQuantidadeChange(Sender: TObject);
@@ -62,9 +65,12 @@ type
     procedure cbbImpressoraChange(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure chklstObservacoesKeyPress(Sender: TObject; var Key: Char);
+    procedure chklstOpcionaisClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FIdMaterial: Integer;
 
+    procedure Abrir_Produto();
     procedure Atualizar_Tabela(ATabela: TUniQuery);
     procedure Carregar(ATabela: TUniQuery; AParam1: Integer; AParam2: Integer = 0);
     procedure Preencher(ACheckList: TCheckListBox; ATabela: TUniQuery);
@@ -79,6 +85,16 @@ implementation
 
 
 {$R *.dfm}
+
+procedure TfrmVendaItemObservacaoComplemento.Abrir_Produto;
+begin
+  qryMaterial.Close();
+  qryMaterial.ParamByName('id_material').AsLargeInt := FIdMaterial;
+  qryMaterial.ParamByName('id_empresa').AsLargeInt  := RecProj.iEmp;
+  qryMaterial.Open();
+
+  Label1.Caption := StringReplace(Label1.Caption, '%s', qryMaterial.FieldByName('mat_003').AsString, [rfReplaceAll]);
+end;
 
 procedure TfrmVendaItemObservacaoComplemento.Atualizar_Tabela(ATabela: TUniQuery);
 begin
@@ -169,12 +185,21 @@ begin
     btnConfirmarClick(Sender);
 end;
 
+procedure TfrmVendaItemObservacaoComplemento.chklstOpcionaisClick(
+  Sender: TObject);
+begin
+  if TCheckListBox(Sender).ItemIndex >= 0 then
+    TCheckListBox(Sender).Checked[TCheckListBox(Sender).ItemIndex] :=
+      not TCheckListBox(Sender).Checked[TCheckListBox(Sender).ItemIndex];
+end;
+
 constructor TfrmVendaItemObservacaoComplemento.Create(ASender: TComponent; AParametros: TObservacaoEOpcionalParametros);
 begin
   inherited Create(ASender);
 
   FIdMaterial := AParametros.IdMaterial;
 
+  Abrir_Produto();
   Carregar(qryOpcionais, RecProj.iEmp, FIdMaterial);
   Carregar(qryObservacoes, FIdMaterial);
 
@@ -195,6 +220,9 @@ begin
 
   if Assigned(qryOpcionais) then
     FreeAndNil(qryOpcionais);
+
+  if Assigned(qryMaterial) then
+    FreeAndNil(qryMaterial);
 
   inherited;
 end;
@@ -271,14 +299,41 @@ begin
     Perform(WM_NEXTDLGCTL, 0, 0);
 end;
 
-procedure TfrmVendaItemObservacaoComplemento.Label8Click(Sender: TObject);
+procedure TfrmVendaItemObservacaoComplemento.FormShow(Sender: TObject);
+begin
+  Self.Width  := Trunc((Screen.Width * 90) / 100);
+  Self.Height := Trunc((Screen.Height * 90) / 100);
+
+  lblOpcionais.Top           := grpbxDadosProduto.Top + grpbxDadosProduto.Height + 5;
+  lblCadastrarOpcionais.Top  := lblOpcionais.Top;
+  lblCadastrarOpcionais.Left := Self.Width - lblCadastrarOpcionais.Width - 20;
+
+  chklstOpcionais.Top    := lblOpcionais.Top + lblOpcionais.Height + 5;
+  chklstOpcionais.Width  := Trunc((Self.Width * 98) /100);
+  chklstOpcionais.Height := Trunc((Self.Height * 33) /100);
+
+  lblObservacoes.Top           := chklstOpcionais.Top + chklstOpcionais.Height + 5;
+  lblCadastrarObservacoes.Top  := lblObservacoes.Top;
+  lblCadastrarObservacoes.Left := lblCadastrarOpcionais.Left;
+
+  chklstObservacoes.Top    := lblObservacoes.Top + lblObservacoes.Height + 5;
+  chklstObservacoes.Height := chklstOpcionais.Height;
+  chklstObservacoes.Width  := chklstOpcionais.Width;
+
+  btnCancel.Left    := Self.Width - btnCancel.Width - 20;
+  btnCancel.Top     := Self.Height - btnCancel.Height - 30;
+  btnConfirmar.Left := btnCancel.Left - btnConfirmar.Width - 20;
+  btnConfirmar.Top  := btnCancel.Top;
+end;
+
+procedure TfrmVendaItemObservacaoComplemento.lblCadastrarOpcionaisClick(Sender: TObject);
 var
   Opcionais: TfrmDetalheOpcional;
 
 begin
   Hide();
   try
-    Opcionais := TfrmDetalheOpcional.Create(nil, 'id_opcional', 'id_situacao');
+    Opcionais := TfrmDetalheOpcional.Create(nil, FIdMaterial);
     Opcionais.ShowModal();
     FreeAndNil(Opcionais);
   finally
@@ -288,7 +343,7 @@ begin
   end;
 end;
 
-procedure TfrmVendaItemObservacaoComplemento.Label9Click(Sender: TObject);
+procedure TfrmVendaItemObservacaoComplemento.lblCadastrarObservacoesClick(Sender: TObject);
 var
   Formulario: TfrmObservacaoCadastro;
 
