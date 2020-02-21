@@ -266,10 +266,15 @@ var
 begin
   qraux := Tuniquery.Create(self);
   qraux.Connection := frmMenu.conexao;
-  str_sql := format('select coalesce(numero_cupom, 0)+1 from venda where ven_024=''B'' and emp_001=%d order by ven_001 desc', [recproj.iEmp]);
+  //str_sql := format('select coalesce(numero_cupom, 0)+1 from venda where ven_024=''B'' and emp_001=%d order by ven_001 desc', [recproj.iEmp]);
+  str_sql := 'SELECT numero_cupom +1  FROM sequenciabalcao where id=1';
   ExecutaConsultaSQL(qraux, str_sql);
-  if qraux.RecordCount > 1 then
-    result := qraux.Fields[0].asinteger
+  if qraux.RecordCount >= 1 then
+  begin
+    result := qraux.Fields[0].asinteger;
+    str_sql := Format('UPDATE sequenciabalcao SET numero_cupom=%d  WHERE id = 1',[result]);
+    ExecutaComandoSQL(str_sql);
+  end
   else
     result := 1
 end;

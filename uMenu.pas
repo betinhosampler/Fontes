@@ -3270,6 +3270,7 @@ var
   nome_server, msg: string;
 begin
   result := False;
+  conexao.Connected:= False;
   //
   if Not DirectoryExists(ExtractFilePath(application.ExeName) + 'CONF') then
     ForceDirectories(ExtractFilePath(application.ExeName) + 'CONF');
