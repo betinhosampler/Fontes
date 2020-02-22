@@ -3,7 +3,7 @@ unit uPosPrinterConfiguraSerial;
 interface
 
 uses
-  ACBrDevice,
+  ACBrDevice, ACBrDeviceSerial,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons;
 

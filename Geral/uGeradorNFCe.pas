@@ -1260,8 +1260,8 @@ begin
 
     with FACBrNFe.NotasFiscais.Add.NFe do
     begin
-      Ide.cNF := numero_nfce;
-      //Ide.cNF := GerarCodigoDFe(numero_nfce);
+      //Ide.cNF := numero_nfce;
+      Ide.cNF := GerarCodigoDFe(numero_nfce);
       // Caso não seja preenchido será gerado um número aleatório pelo componente
       Ide.natOp := 'VENDA';
       Ide.modelo := 65;
@@ -1877,7 +1877,7 @@ begin
       end;
     end;
 
-    FACBrNFe.DANFE.ImprimeEmUmaLinha     := true;
+//    FACBrNFe.DANFE.ImprimeEmUmaLinha     := true;
 //    FACBrNFe.DANFE.TributosSeparadamente := false;
 
 //    FACBrNFe.DANFE.vTroco   := self.totalTroco;

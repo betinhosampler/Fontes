@@ -35,7 +35,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, uObservacaoEOpcionalLancamento,
-  uObservacaoEOpcionalParametros;
+  uObservacaoEOpcionalParametros, ACBrDeviceSerial;
 
   type ItemVenda = Record
     id_venda : integer;

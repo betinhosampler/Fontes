@@ -29,7 +29,7 @@ uses
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, uObservacaoEOpcionalLancamento,
-  uObservacaoEOpcionalParametros;
+  uObservacaoEOpcionalParametros, ACBrDeviceSerial;
 
 type
   TfrmVendaBalcao = class(TForm)

@@ -32,7 +32,7 @@ uses
   dxGDIPlusClasses, System.Actions, Vcl.ActnList, acbrbal, acbrdevice, ACBrBase,
   System.math,
   JvDataSource, Datasnap.Provider, Datasnap.DBClient, Vcl.Menus, cxLabel,
-  cxDBLabel, uObservacaoEOpcionalLancamento, uObservacaoEOpcionalParametros;
+  cxDBLabel, uObservacaoEOpcionalLancamento, uObservacaoEOpcionalParametros, ACBrDeviceSerial;
 
 type
   TfrmControlemesalancamento = class(TfrmModelo)

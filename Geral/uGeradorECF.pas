@@ -10,7 +10,7 @@ uses
   ACBrECF, ACBrTEFD, ACBrTEFDClass, ACBrECFClass , UNI, System.Math,
   system.SysUtils, ACBrDevice, System.Variants, Vcl.Forms, System.Classes,
   system.TypInfo, Vcl.Controls, Winapi.Windows, System.DateUtils,
-  System.StrUtils, Datasnap.DBClient, Data.DB;
+  System.StrUtils, Datasnap.DBClient, Data.DB, ACBrDeviceSerial;
 
 
 type TECF = Class(TACBrECF)

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFrmModelo, Vcl.ExtCtrls, AdvPanel,
   AdvGlowButton, ACBrBase, ACBrBAL, ACBrDevice, dxGDIPlusClasses, Vcl.StdCtrls,
-  AdvGroupBox;
+  AdvGroupBox, ACBrDeviceSerial;
 
 type
   TfrmControleMesaUtilitariosBalanca = class(TfrmModelo)
