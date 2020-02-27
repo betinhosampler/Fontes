@@ -31,7 +31,8 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, blcksock, ACBrDFeReport,
-  ACBrDFeDANFeReport;
+  ACBrDFeDANFeReport,
+  ACBrDFeUtil;
 
 type
   TfrmControleNotaFiscalSaida = class(TfrmModelo)
@@ -477,7 +478,8 @@ begin
   else
     NotaF.NFe.Ide.tpNF := tnSaida;
 
-  NotaF.NFe.Ide.cNF       := qrNotaSaida.FieldByName('numero').asinteger; //Caso não seja preenchido será gerado um número aleatório pelo componente
+ // NotaF.NFe.Ide.cNF       := qrNotaSaida.FieldByName('numero').asinteger; //Caso não seja preenchido será gerado um número aleatório pelo componente
+  NotaF.NFe.Ide.cNF       := GerarCodigoDFe(qrNotaSaida.FieldByName('numero').AsInteger);
   NotaF.NFe.Ide.natOp     := copy(qrNotaSaida.FieldByName('cfop_descricao').AsString, 0,60);
 
   //Se não for nota Normal não se aplica
