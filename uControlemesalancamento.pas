@@ -1146,7 +1146,9 @@ procedure TfrmControlemesalancamento.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = vk_return then
-    Perform(WM_NEXTDLGCTL, 0, 0)
+    Perform(WM_NEXTDLGCTL, 0, 0);
+  if Key = VK_F2 then
+   edCodProdutoExit(edCodProduto);
 end;
 
 procedure TfrmControlemesalancamento.acAlterarQuantidadeItemExecute

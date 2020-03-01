@@ -4,7 +4,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Venda'
-  ClientHeight = 643
+  ClientHeight = 651
   ClientWidth = 1051
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
   TextHeight = 16
   object pnBotoes: TFlowPanel
     Left = 0
-    Top = 594
+    Top = 602
     Width = 1051
     Height = 49
     Align = alBottom
@@ -31,6 +31,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
     FlowStyle = fsRightLeftTopBottom
     ParentBackground = False
     TabOrder = 0
+    ExplicitTop = 594
     object btCancelar: TAdvGlowButton
       AlignWithMargins = True
       Left = 944
@@ -295,7 +296,7 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
     Left = 0
     Top = 0
     Width = 1051
-    Height = 594
+    Height = 602
     Align = alClient
     BevelOuter = bvNone
     Color = 14997705
@@ -318,15 +319,16 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
     StatusBar.Font.Name = 'Tahoma'
     StatusBar.Font.Style = []
     Text = ''
+    ExplicitHeight = 594
     DesignSize = (
       1051
-      594)
+      602)
     FullHeight = 200
     object AdvGroupBox1: TAdvGroupBox
       Left = 3
       Top = 248
       Width = 1045
-      Height = 343
+      Height = 351
       BorderColor = clNavy
       RoundEdges = True
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -334,9 +336,10 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
+      ExplicitHeight = 343
       DesignSize = (
         1045
-        343)
+        351)
       object Label6: TLabel
         Left = 4
         Top = 2
@@ -659,10 +662,11 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         Left = 3
         Top = 56
         Width = 809
-        Height = 284
+        Height = 292
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 4
         LookAndFeel.NativeStyle = True
+        ExplicitHeight = 284
         object cxGrid2DBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsVendaItem
@@ -1219,10 +1223,6 @@ object frmControleDeliveryDetalheVenda: TfrmControleDeliveryDetalheVenda
         ColorTo = clNone
         TabColor = clBtnFace
         TabColorTo = clNone
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label29: TLabel
           Left = 3
           Top = 11

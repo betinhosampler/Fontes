@@ -5,6 +5,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
   ClientWidth = 1001
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitTop = -4
   ExplicitWidth = 1007
   ExplicitHeight = 689
   PixelsPerInch = 96
@@ -1013,7 +1014,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     object AdvGlowButton6: TAdvGlowButton
       AlignWithMargins = True
       Left = 114
-      Top = 132
+      Top = 279
       Width = 109
       Height = 46
       Margins.Left = 1
@@ -1056,8 +1057,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object btInserirItem: TAdvGlowButton
       AlignWithMargins = True
-      Left = 3
-      Top = 181
+      Left = 114
+      Top = 133
       Width = 109
       Height = 46
       Margins.Left = 1
@@ -1100,8 +1101,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object btTransf: TAdvGlowButton
       AlignWithMargins = True
-      Left = 3
-      Top = 230
+      Left = 2
+      Top = 329
       Width = 109
       Height = 46
       Margins.Left = 1
@@ -1188,8 +1189,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object AdvGlowButton8: TAdvGlowButton
       AlignWithMargins = True
-      Left = 3
-      Top = 279
+      Left = 114
+      Top = 425
       Width = 109
       Height = 46
       Margins.Left = 1
@@ -1232,8 +1233,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object AdvGlowButton1: TAdvGlowButton
       AlignWithMargins = True
-      Left = 114
-      Top = 279
+      Left = 3
+      Top = 425
       Width = 109
       Height = 46
       Margins.Left = 1
@@ -1277,7 +1278,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     object btCancelar: TAdvGlowButton
       AlignWithMargins = True
       Left = 3
-      Top = 328
+      Top = 230
       Width = 109
       Height = 46
       Margins.Left = 2
@@ -1364,8 +1365,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object AdvGlowButton4: TAdvGlowButton
       AlignWithMargins = True
-      Left = 114
-      Top = 181
+      Left = 3
+      Top = 278
       Width = 109
       Height = 46
       Margins.Left = 1
@@ -1373,6 +1374,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       Margins.Right = 1
       Margins.Bottom = 1
       Action = acDescontoItem
+      Caption = 'Desconto no item [F10]'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -11
@@ -1452,8 +1454,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object btFechar: TAdvGlowButton
       AlignWithMargins = True
-      Left = 114
-      Top = 377
+      Left = 3
+      Top = 181
       Width = 109
       Height = 46
       Margins.Left = 2
@@ -1496,8 +1498,8 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     end
     object AdvGlowButton3: TAdvGlowButton
       AlignWithMargins = True
-      Left = 3
-      Top = 426
+      Left = 114
+      Top = 181
       Width = 109
       Height = 46
       Margins.Left = 2
@@ -1542,7 +1544,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     object AdvGlowButton10: TAdvGlowButton
       AlignWithMargins = True
       Left = 114
-      Top = 426
+      Top = 377
       Width = 109
       Height = 46
       Margins.Left = 2
@@ -1698,7 +1700,7 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
     Left = 227
     Top = 83
     Width = 775
-    Height = 389
+    Height = 388
     Anchors = [akLeft, akTop, akBottom]
     PopupMenu = puPopupOpcoesItem
     TabOrder = 2
@@ -2246,12 +2248,12 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
   end
   object ActionList1: TActionList
     Images = frmMenu.ImgList24
-    Left = 592
-    Top = 72
+    Left = 816
+    Top = 16
     object acPreFechamentoImprimir: TAction
-      Caption = '&Pr'#233' fechamento [F5]'
+      Caption = '&Pr'#233' fechamento [Ctrl+G]'
       ImageIndex = 101
-      ShortCut = 116
+      ShortCut = 16455
       OnExecute = acPreFechamentoImprimirExecute
     end
     object acFecharMesa: TAction
@@ -2261,9 +2263,9 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       OnExecute = acFecharMesaExecute
     end
     object acTranferenciaMesa: TAction
-      Caption = 'Transferir mesa [F8]'
+      Caption = 'Transferir mesa [F12]'
       ImageIndex = 95
-      ShortCut = 119
+      ShortCut = 123
       OnExecute = acTranferenciaMesaExecute
     end
     object acJuntarMesas: TAction
@@ -2273,15 +2275,15 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       OnExecute = acJuntarMesasExecute
     end
     object acPagamentoAntecipado: TAction
-      Caption = '&Pagamento parcial [F10]'
+      Caption = '&Pagamento parcial [Ctrl+H]'
       ImageIndex = 73
-      ShortCut = 121
+      ShortCut = 16456
       OnExecute = acPagamentoAntecipadoExecute
     end
     object acCancelaMesa: TAction
-      Caption = 'Cancelar mesa [Ctrl+W]'
+      Caption = 'Cancelar mesa [F8]'
       ImageIndex = 80
-      ShortCut = 16471
+      ShortCut = 119
       OnExecute = acCancelaMesaExecute
     end
     object acPesquisarItem: TAction
@@ -2303,9 +2305,9 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       OnExecute = acDescontoItemExecute
     end
     object acObservacaoItem: TAction
-      Caption = 'Obs. no item [Ctrl+S]'
+      Caption = 'Obs. no item [F5]'
       ImageIndex = 97
-      ShortCut = 16467
+      ShortCut = 116
       OnExecute = acObservacaoItemExecute
     end
     object acReservarMesa: TAction
@@ -2338,21 +2340,21 @@ inherited frmControlemesalancamento: TfrmControlemesalancamento
       OnExecute = acInsereProdutoFracionadoExecute
     end
     object acOpcionaisItem: TAction
-      Caption = 'Opcionais [Ctrl+O]'
+      Caption = 'Opcionais [F4]'
       ImageIndex = 100
-      ShortCut = 16463
+      ShortCut = 115
       OnExecute = acOpcionaisItemExecute
     end
     object acTransferenciaItem: TAction
-      Caption = 'Transfer'#234'ncia de Item [Ctrl+T]'
+      Caption = 'Transfer'#234'ncia de Item [Ctrl+J]'
       ImageIndex = 99
-      ShortCut = 16468
+      ShortCut = 16458
       OnExecute = acTransferenciaItemExecute
     end
     object acAlterarQuantidadeItem: TAction
-      Caption = 'Alterar Quant. [Ctrl+Q]'
+      Caption = 'Alterar Quant. [Ctrl+I]'
       ImageIndex = 41
-      ShortCut = 16465
+      ShortCut = 16457
       OnExecute = acAlterarQuantidadeItemExecute
     end
     object acImpressaoCozinha: TAction

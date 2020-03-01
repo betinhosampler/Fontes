@@ -13,6 +13,7 @@ object frmVendaBalcao: TfrmVendaBalcao
   Font.Height = -12
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
@@ -384,99 +385,9 @@ object frmVendaBalcao: TfrmVendaBalcao
         Appearance.ColorMirrorDisabled = 11974326
         Appearance.ColorMirrorDisabledTo = 15921906
       end
-      object btInserirFracionado: TAdvGlowButton
-        AlignWithMargins = True
-        Left = 265
-        Top = 1
-        Width = 130
-        Height = 40
-        Margins.Left = 1
-        Margins.Top = 1
-        Margins.Right = 1
-        Margins.Bottom = 1
-        Action = acAbreBuscaCliente
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -12
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ImageIndex = 107
-        Images = frmMenu.ImgList24
-        NotesFont.Charset = DEFAULT_CHARSET
-        NotesFont.Color = clWindowText
-        NotesFont.Height = -11
-        NotesFont.Name = 'Tahoma'
-        NotesFont.Style = []
-        ParentFont = False
-        Rounded = False
-        TabOrder = 2
-        Appearance.BorderColor = clNavy
-        Appearance.BorderColorDisabled = clMaroon
-        Appearance.ColorChecked = 16111818
-        Appearance.ColorCheckedTo = 16367008
-        Appearance.ColorDisabled = 15921906
-        Appearance.ColorDisabledTo = 15921906
-        Appearance.ColorDown = 16111818
-        Appearance.ColorDownTo = 16367008
-        Appearance.ColorHot = 16117985
-        Appearance.ColorHotTo = 16372402
-        Appearance.ColorMirrorHot = 16107693
-        Appearance.ColorMirrorHotTo = 16775412
-        Appearance.ColorMirrorDown = 16102556
-        Appearance.ColorMirrorDownTo = 16768988
-        Appearance.ColorMirrorChecked = 16102556
-        Appearance.ColorMirrorCheckedTo = 16768988
-        Appearance.ColorMirrorDisabled = 11974326
-        Appearance.ColorMirrorDisabledTo = 15921906
-      end
-      object btTransferencia: TAdvGlowButton
-        AlignWithMargins = True
-        Left = 397
-        Top = 1
-        Width = 130
-        Height = 40
-        Margins.Left = 1
-        Margins.Top = 1
-        Margins.Right = 1
-        Margins.Bottom = 1
-        Action = acFecharVenda
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -12
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ImageIndex = 91
-        Images = frmMenu.ImgList24
-        NotesFont.Charset = DEFAULT_CHARSET
-        NotesFont.Color = clWindowText
-        NotesFont.Height = -11
-        NotesFont.Name = 'Tahoma'
-        NotesFont.Style = []
-        ParentFont = False
-        Rounded = False
-        TabOrder = 3
-        Appearance.BorderColor = clNavy
-        Appearance.BorderColorDisabled = clMaroon
-        Appearance.ColorChecked = 16111818
-        Appearance.ColorCheckedTo = 16367008
-        Appearance.ColorDisabled = 15921906
-        Appearance.ColorDisabledTo = 15921906
-        Appearance.ColorDown = 16111818
-        Appearance.ColorDownTo = 16367008
-        Appearance.ColorHot = 16117985
-        Appearance.ColorHotTo = 16372402
-        Appearance.ColorMirrorHot = 16107693
-        Appearance.ColorMirrorHotTo = 16775412
-        Appearance.ColorMirrorDown = 16102556
-        Appearance.ColorMirrorDownTo = 16768988
-        Appearance.ColorMirrorChecked = 16102556
-        Appearance.ColorMirrorCheckedTo = 16768988
-        Appearance.ColorMirrorDisabled = 11974326
-        Appearance.ColorMirrorDisabledTo = 15921906
-      end
       object btConfiguracoes: TAdvGlowButton
         AlignWithMargins = True
-        Left = 529
+        Left = 265
         Top = 1
         Width = 130
         Height = 40
@@ -500,6 +411,96 @@ object frmVendaBalcao: TfrmVendaBalcao
         ParentFont = False
         Rounded = False
         TabOrder = 4
+        Appearance.BorderColor = clNavy
+        Appearance.BorderColorDisabled = clMaroon
+        Appearance.ColorChecked = 16111818
+        Appearance.ColorCheckedTo = 16367008
+        Appearance.ColorDisabled = 15921906
+        Appearance.ColorDisabledTo = 15921906
+        Appearance.ColorDown = 16111818
+        Appearance.ColorDownTo = 16367008
+        Appearance.ColorHot = 16117985
+        Appearance.ColorHotTo = 16372402
+        Appearance.ColorMirrorHot = 16107693
+        Appearance.ColorMirrorHotTo = 16775412
+        Appearance.ColorMirrorDown = 16102556
+        Appearance.ColorMirrorDownTo = 16768988
+        Appearance.ColorMirrorChecked = 16102556
+        Appearance.ColorMirrorCheckedTo = 16768988
+        Appearance.ColorMirrorDisabled = 11974326
+        Appearance.ColorMirrorDisabledTo = 15921906
+      end
+      object AdvGlowButton6: TAdvGlowButton
+        AlignWithMargins = True
+        Left = 397
+        Top = 1
+        Width = 130
+        Height = 40
+        Margins.Left = 1
+        Margins.Top = 1
+        Margins.Right = 1
+        Margins.Bottom = 1
+        Action = acObservacaoItem
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ImageIndex = 97
+        Images = frmMenu.ImgList24
+        NotesFont.Charset = DEFAULT_CHARSET
+        NotesFont.Color = clWindowText
+        NotesFont.Height = -11
+        NotesFont.Name = 'Tahoma'
+        NotesFont.Style = []
+        ParentFont = False
+        Rounded = False
+        TabOrder = 7
+        Appearance.BorderColor = clNavy
+        Appearance.BorderColorDisabled = clMaroon
+        Appearance.ColorChecked = 16111818
+        Appearance.ColorCheckedTo = 16367008
+        Appearance.ColorDisabled = 15921906
+        Appearance.ColorDisabledTo = 15921906
+        Appearance.ColorDown = 16111818
+        Appearance.ColorDownTo = 16367008
+        Appearance.ColorHot = 16117985
+        Appearance.ColorHotTo = 16372402
+        Appearance.ColorMirrorHot = 16107693
+        Appearance.ColorMirrorHotTo = 16775412
+        Appearance.ColorMirrorDown = 16102556
+        Appearance.ColorMirrorDownTo = 16768988
+        Appearance.ColorMirrorChecked = 16102556
+        Appearance.ColorMirrorCheckedTo = 16768988
+        Appearance.ColorMirrorDisabled = 11974326
+        Appearance.ColorMirrorDisabledTo = 15921906
+      end
+      object btTransferencia: TAdvGlowButton
+        AlignWithMargins = True
+        Left = 529
+        Top = 1
+        Width = 130
+        Height = 40
+        Margins.Left = 1
+        Margins.Top = 1
+        Margins.Right = 1
+        Margins.Bottom = 1
+        Action = acFecharVenda
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ImageIndex = 91
+        Images = frmMenu.ImgList24
+        NotesFont.Charset = DEFAULT_CHARSET
+        NotesFont.Color = clWindowText
+        NotesFont.Height = -11
+        NotesFont.Name = 'Tahoma'
+        NotesFont.Style = []
+        ParentFont = False
+        Rounded = False
+        TabOrder = 3
         Appearance.BorderColor = clNavy
         Appearance.BorderColorDisabled = clMaroon
         Appearance.ColorChecked = 16111818
@@ -564,7 +565,7 @@ object frmVendaBalcao: TfrmVendaBalcao
         Appearance.ColorMirrorDisabled = 11974326
         Appearance.ColorMirrorDisabledTo = 15921906
       end
-      object AdvGlowButton4: TAdvGlowButton
+      object btInserirFracionado: TAdvGlowButton
         AlignWithMargins = True
         Left = 1
         Top = 43
@@ -574,13 +575,13 @@ object frmVendaBalcao: TfrmVendaBalcao
         Margins.Top = 1
         Margins.Right = 1
         Margins.Bottom = 1
-        Caption = 'Desconto no item [Ctrl+D]'
+        Action = acAbreBuscaCliente
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
-        ImageIndex = 79
+        ImageIndex = 107
         Images = frmMenu.ImgList24
         NotesFont.Charset = DEFAULT_CHARSET
         NotesFont.Color = clWindowText
@@ -589,8 +590,7 @@ object frmVendaBalcao: TfrmVendaBalcao
         NotesFont.Style = []
         ParentFont = False
         Rounded = False
-        TabOrder = 6
-        OnClick = acDescontoItemExecute
+        TabOrder = 2
         Appearance.BorderColor = clNavy
         Appearance.BorderColorDisabled = clMaroon
         Appearance.ColorChecked = 16111818
@@ -610,7 +610,7 @@ object frmVendaBalcao: TfrmVendaBalcao
         Appearance.ColorMirrorDisabled = 11974326
         Appearance.ColorMirrorDisabledTo = 15921906
       end
-      object AdvGlowButton6: TAdvGlowButton
+      object AdvGlowButton4: TAdvGlowButton
         AlignWithMargins = True
         Left = 133
         Top = 43
@@ -620,13 +620,13 @@ object frmVendaBalcao: TfrmVendaBalcao
         Margins.Top = 1
         Margins.Right = 1
         Margins.Bottom = 1
-        Action = acObservacaoItem
+        Caption = 'Desconto no item [F10]'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
-        ImageIndex = 97
+        ImageIndex = 79
         Images = frmMenu.ImgList24
         NotesFont.Charset = DEFAULT_CHARSET
         NotesFont.Color = clWindowText
@@ -635,7 +635,8 @@ object frmVendaBalcao: TfrmVendaBalcao
         NotesFont.Style = []
         ParentFont = False
         Rounded = False
-        TabOrder = 7
+        TabOrder = 6
+        OnClick = acDescontoItemExecute
         Appearance.BorderColor = clNavy
         Appearance.BorderColorDisabled = clMaroon
         Appearance.ColorChecked = 16111818
@@ -1685,9 +1686,9 @@ object frmVendaBalcao: TfrmVendaBalcao
       OnExecute = acCancelaItemExecute
     end
     object acObservacaoItem: TAction
-      Caption = 'Obs. no item [Ctrl+S]'
+      Caption = 'Obs. no item [F5]'
       ImageIndex = 97
-      ShortCut = 16467
+      ShortCut = 116
       OnExecute = acObservacaoItemExecute
     end
     object acInsereProdutoFracionado: TAction
@@ -1697,9 +1698,9 @@ object frmVendaBalcao: TfrmVendaBalcao
       OnExecute = acInsereProdutoFracionadoExecute
     end
     object acOpcionaisItem: TAction
-      Caption = 'Opcionais [Ctrl+O]'
+      Caption = 'Opcionais [F4]'
       ImageIndex = 100
-      ShortCut = 16463
+      ShortCut = 115
       OnExecute = acOpcionaisItemExecute
     end
     object acConsultarProduto: TAction
@@ -1709,9 +1710,9 @@ object frmVendaBalcao: TfrmVendaBalcao
       OnExecute = acConsultarProdutoExecute
     end
     object acAbreBuscaCliente: TAction
-      Caption = 'Cliente/CPF [F4]'
+      Caption = 'Cliente/CPF [F9]'
       ImageIndex = 107
-      ShortCut = 115
+      ShortCut = 120
       OnExecute = acAbreBuscaClienteExecute
     end
     object acAbreGaveta: TAction
@@ -1737,7 +1738,7 @@ object frmVendaBalcao: TfrmVendaBalcao
     object acDescontoitem: TAction
       Caption = 'acDescontoitem'
       ImageIndex = 79
-      ShortCut = 16452
+      ShortCut = 121
       OnExecute = acDescontoItemExecute
     end
   end
