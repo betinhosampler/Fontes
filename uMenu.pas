@@ -488,6 +488,8 @@ type
   private
     procedure Fechar_Filhos;
     procedure Chama_Login;
+    procedure Consultar_Cliente(AComCadastro: Boolean; AIdClienteOuIdVenda: Int64);
+
     function AbreDATABASE: boolean;
     procedure Ler_Menu(Menu: TMenuItem; Query: TUniQuery);
 
@@ -1727,6 +1729,30 @@ begin
   frmConfirmacaoSenha.ShowModal;
   result := frmConfirmacaoSenha.Tag = 1;
   FreeAndNil(frmConfirmacaoSenha);
+end;
+
+procedure TfrmMenu.Consultar_Cliente(AComCadastro: Boolean;
+  AIdClienteOuIdVenda: Int64);
+begin
+  qrImpressaoCozinhaCli.SQL.Clear();
+  qrImpressaoCozinhaCli.SQL.Add(IfThen(AComCadastro,
+    'SELECT cli_002,                      '#13#10 +
+    '       cep_003,                      '#13#10 +
+    '       cep_004                       '#13#10 +
+    '  FROM clientes                      '#13#10 +
+    ' WHERE cli_001 = :id_cliente_id_venda'#13#10 +
+    '   AND EMP_001 = :emp',
+    'SELECT Nome_Cliente as cli_002,              '#13#10 +
+    '       cast('''' as varchar(100)) as cep_003,'#13#10 +
+    '       cast('''' as varchar(100)) as cep_004 '#13#10 +
+    '  FROM VENDA                                 '#13#10 +
+    ' WHERE VEN_001 = :id_cliente_id_venda        '#13#10 +
+    '   AND EMP_001 = :emp'));
+
+  qrImpressaoCozinhaCli.Close;
+  qrImpressaoCozinhaCli.ParamByName('id_cliente_id_venda').AsLargeInt := AIdClienteOuIdVenda;
+  qrImpressaoCozinhaCli.ParamByName('EMP').AsInteger                  := RecProj.iEmp;
+  qrImpressaoCozinhaCli.Open;
 end;
 
 function Retorna_Situacao(Index: integer): String;
@@ -3566,11 +3592,10 @@ begin
         qrImpressaoCozinhaObs.ParamByName('EMP').AsInteger := RecProj.iEmp;
         qrImpressaoCozinhaObs.Open;
 
-        qrImpressaoCozinhaCli.Close;
-        qrImpressaoCozinhaCli.ParamByName('id_cliente').AsInteger :=
-          qr_aux1.FieldByName('cli_001').AsInteger;
-        qrImpressaoCozinhaCli.ParamByName('EMP').AsInteger := RecProj.iEmp;
-        qrImpressaoCozinhaCli.Open;
+        Consultar_Cliente(True, qr_aux1.FieldByName('cli_001').AsLargeInt);
+
+        if qrImpressaoCozinhaCli.RecordCount = 0 then
+          Consultar_Cliente(False, qr_aux1.FieldByName('ven_001').AsLargeInt);
 
         // imprime no relatorio grafico
 
