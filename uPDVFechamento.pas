@@ -564,7 +564,7 @@ begin
   qrCreceberFiado.Open;
 
   qrDadosCliente.Close;
-  qrDadosCliente.ParamByName('id_cliente').value := id_cliente;
+  qrDadosCliente.ParamByName('id_venda').value       := id_venda;
   qrDadosCliente.ParamByName('id_empresa').AsInteger := recproj.iEmp;
   qrDadosCliente.Open;
 

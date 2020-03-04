@@ -2410,7 +2410,7 @@ object frmPDVFechamento: TfrmPDVFechamento
     Top = 16
   end
   object RepFechaConta: TfrxReport
-    Version = '5.2.3'
+    Version = '5.1.5'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -4533,7 +4533,7 @@ object frmPDVFechamento: TfrmPDVFechamento
         DataType = ftInteger
         Name = 'nro_item'
         ParamType = ptInput
-        Value = 4
+        Value = 1
       end>
     object qrVendaItemOpcionalid_venda: TIntegerField
       FieldName = 'id_venda'
@@ -4639,7 +4639,7 @@ object frmPDVFechamento: TfrmPDVFechamento
     end
   end
   object repPainelSenha: TfrxReport
-    Version = '5.2.3'
+    Version = '5.1.5'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -4785,7 +4785,7 @@ object frmPDVFechamento: TfrmPDVFechamento
     end
   end
   object RepFechaConta2: TfrxReport
-    Version = '5.2.3'
+    Version = '5.1.5'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -6199,23 +6199,26 @@ object frmPDVFechamento: TfrmPDVFechamento
   object qrDadosCliente: TUniQuery
     Connection = frmMenu.conexao
     SQL.Strings = (
-      'select '
-      'cli_002 as nome, '
+      '   select coalesce(cli.cli_002, ven.nome_cliente) as nome, '
       
-        'cast(concat(cep_004, '#39' '#39', cli_008) as varchar(100)) as endereco,' +
-        ' '
-      'cep_003 as bairro, '
-      'cidade_desc, '
-      'cli_012 as telefone1,'
-      'cli_004 as cpf '
-      'from clientes where cli_001=:id_cliente and emp_001=:id_empresa')
+        '          cast(concat(cli.cep_004, '#39' '#39', cli.cli_008) as varchar(' +
+        '100)) as endereco, '
+      '          cli.cep_003 as bairro, '
+      '          cli.cidade_desc, '
+      '          cli.cli_012 as telefone1,'
+      '          cli.cli_004 as cpf '
+      '     from venda ven'
+      'left join clientes cli'
+      '       on cli.cli_001 = ven.cli_001 '
+      '    where ven.ven_001 = :id_venda'
+      '      and ven.emp_001 = :id_empresa')
     Active = True
     Left = 679
     Top = 13
     ParamData = <
       item
         DataType = ftUnknown
-        Name = 'id_cliente'
+        Name = 'id_venda'
         Value = nil
       end
       item
@@ -6281,27 +6284,5 @@ object frmPDVFechamento: TfrmPDVFechamento
       ShortCut = 16467
       OnExecute = Action2Execute
     end
-  end
-  object frxDesigner1: TfrxDesigner
-    DefaultScriptLanguage = 'PascalScript'
-    DefaultFont.Charset = DEFAULT_CHARSET
-    DefaultFont.Color = clWindowText
-    DefaultFont.Height = -13
-    DefaultFont.Name = 'Arial'
-    DefaultFont.Style = []
-    DefaultLeftMargin = 10.000000000000000000
-    DefaultRightMargin = 10.000000000000000000
-    DefaultTopMargin = 10.000000000000000000
-    DefaultBottomMargin = 10.000000000000000000
-    DefaultPaperSize = 9
-    DefaultOrientation = poPortrait
-    GradientEnd = 11982554
-    GradientStart = clWindow
-    TemplatesExt = 'fr3'
-    Restrictions = []
-    RTLLanguage = False
-    MemoParentFont = False
-    Left = 152
-    Top = 576
   end
 end
