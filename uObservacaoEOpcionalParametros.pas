@@ -11,7 +11,7 @@ type
     Quantidade,
     Valor: Double;
 
-    IdMaterial,
+    IdMaterial,idVenda,idItem,IdEmpresa,
     CodigoImpressora: Int64;
 
 //    Tipo: TObservacaoEOpcionalTipoLancamento;

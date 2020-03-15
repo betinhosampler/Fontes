@@ -29,7 +29,8 @@ uses
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, uObservacaoEOpcionalLancamento,
-  uObservacaoEOpcionalParametros, ACBrDeviceSerial;
+  uObservacaoEOpcionalParametros, ACBrDeviceSerial, System.ImageList,
+  Vcl.ImgList;
 
 type
   TfrmVendaBalcao = class(TForm)
@@ -182,6 +183,13 @@ type
     acMenu: TAction;
     qrBuscaItemtara_balanca: TFloatField;
     acDescontoitem: TAction;
+    il1: TImageList;
+    cxGridadd: TcxGridDBColumn;
+    cxGriddiminuir: TcxGridDBColumn;
+    cxGriddeletar: TcxGridDBColumn;
+    cxGridEditar: TcxGridDBColumn;
+    qrUpdateItem: TUniQuery;
+    actEditarObservacaoOpcional: TAction;
     constructor Create(sender: tcomponent); reintroduce;
     procedure NovoRegistro;
     procedure btnSairClick(Sender: TObject);
@@ -226,6 +234,17 @@ type
     procedure acDeliveryExecute(Sender: TObject);
     procedure acPdvExecute(Sender: TObject);
     procedure acMenuExecute(Sender: TObject);
+    procedure cxAddMaisPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure addPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
+    procedure diminuirPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure deletarPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure cxGridEditarPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure actEditarObservacaoOpcionalExecute(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     type
       componente_posicao = record
         indice: Integer;
@@ -241,6 +260,10 @@ type
     designed_width, designed_height, iTimeOutBalanca: integer;
     largura_cod_barras, largura_cod_barras_produto, cod_barras_digito_1: integer;
     Posicoes: TArray<componente_posicao>;
+    FEditar:Boolean;
+    procedure AlterarQtdItem();
+    procedure DiminuirQtdItem();
+    procedure EditarObservacaoOpcional();
   public
     { Public declarations }
   end;
@@ -345,6 +368,15 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TfrmVendaBalcao.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ADD then
+     AlterarQtdItem();
+  if Key = VK_SUBTRACT then
+     DiminuirQtdItem();
 end;
 
 procedure TfrmVendaBalcao.FormResize(Sender: TObject);
@@ -474,10 +506,47 @@ begin
   end;
 end;
 
+procedure TfrmVendaBalcao.cxAddMaisPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  qrVendaItem.FieldByName('id_venda').AsString;
+end;
+
 procedure TfrmVendaBalcao.cxGrid2DBTableView1StylesGetContentStyle(Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord; AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
 begin
   if ARecord.Values[cxGrid2DBTableView1Desconto.Index] <> 0 then
     AStyle := frmMenu.cxDesconto;
+end;
+
+procedure TfrmVendaBalcao.cxGridEditarPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+ begin
+  EditarObservacaoOpcional();
+end;
+
+procedure TfrmVendaBalcao.deletarPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+   acCancelaItemExecute(Self);
+end;
+
+procedure TfrmVendaBalcao.diminuirPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+   DiminuirQtdItem();
+end;
+
+procedure TfrmVendaBalcao.DiminuirQtdItem;
+  var str_sql:string;
+begin
+  if qrVendaItem.fieldbyname('QTDEVENDA').asinteger > 1 then
+  begin
+     str_sql :=
+          format('UPDATE VENDAITEM SET ite_002 = ite_002 - 1, ite_005 = (ite_002-1) * ite_003  where VEN_001=%d and emp_001=%d and ite_001= %d ',
+          [qrVenda.fieldbyname('ven_001').asinteger, recproj.iEmp,qrVendaItem.fieldbyname('nro_item').asinteger]);
+        ExecutaComandoSQL(str_sql);
+    qrVendaItem.RefreshRecord;
+  end;
 end;
 
 procedure TfrmVendaBalcao.dsVendaDataChange(Sender: TObject; Field: TField);
@@ -581,7 +650,7 @@ var qtde,valor_promocao,valor_happy : double;
     inserir :boolean;
     tecla_enter: word;
 begin
-
+  FEditar:=False;
   if key= vk_return then
   begin
       tecla_enter := vk_return;
@@ -623,6 +692,19 @@ begin
     end;
     edCodProduto.Clear;
   end;
+end;
+
+procedure TfrmVendaBalcao.EditarObservacaoOpcional;
+ var tecla_enter: Word;
+begin
+   FEditar:= True;
+   tecla_enter:= VK_RETURN;
+   qrBuscaItem.Close;
+   qrBuscaItem.parambyname('emp').AsInteger := recproj.iEmp;
+   qrBuscaItem.parambyname('cod_ref').asstring := qrVendaItem.FieldByName('id_material').AsString;
+   qrBuscaItem.parambyname('id_venda').asinteger := qrvenda.FieldByName('ven_001').AsInteger;
+   qrBuscaItem.Open;
+   edObservacaoItemKeyDown(self, tecla_enter, []);
 end;
 
 procedure TfrmVendaBalcao.edObservacaoItemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -667,6 +749,9 @@ begin
       Parametros.CodigoImpressora := qrBuscaItem.FieldByName('cod_impressora').AsLargeInt;
       Parametros.Quantidade       := qrBuscaItem.FieldByName('quantidade').AsFloat;
       Parametros.Valor            := qrBuscaItem.FieldByName('valor_unit').AsFloat;
+      Parametros.idVenda          := qrVendaItem.FieldByName('id_Venda').AsInteger;
+      Parametros.idItem           := qrVendaItem.FieldByName('nro_item').AsInteger;
+      Parametros.IdEmpresa        := qrVendaItem.FieldByName('id_empresa').AsInteger;
       Parametros.PermiteAlterarValor := (bAlteraValorUnitarioItem and bAlteraValorUnitarioItemUsuario) or
         qrBuscaItem.FieldByName('b_exige_alterar_preco_venda').AsBoolean;
 
@@ -676,7 +761,19 @@ begin
         Abort;
 
       //insere o item
-      InsereVendaItem(qrBuscaItem.FieldByName('id_material').AsInteger,
+      if FEditar then
+      begin
+        qrUpdateItem.Close;
+        qrUpdateItem.ParamByName('observacao').AsString  :=  ObservacaoOpcional.Observacoes;
+        qrUpdateItem.ParamByName('id_empresa').AsInteger :=  qrVenda.FieldByName('emp_001').AsInteger;
+        qrUpdateItem.ParamByName('id_venda').AsInteger   :=  qrVenda.FieldByName('ven_001').AsInteger;
+        qrUpdateItem.ParamByName('nro_item').AsInteger   :=  qrVendaItem.FieldByName('nro_item').AsInteger;
+        qrUpdateItem.Execute();
+        ObservacaoOpcional.Inserir_Opcionais(qrVenda.FieldByName('ven_001').AsInteger, qrBuscaItem.FieldByName('ultimo_item').AsInteger);
+      end
+      else
+      begin
+          InsereVendaItem(qrBuscaItem.FieldByName('id_material').AsInteger,
         qrBuscaItem.FieldByName('ultimo_item').AsInteger + 1, ObservacaoOpcional.Quantidade,
         ObservacaoOpcional.Valor, (ObservacaoOpcional.Quantidade * ObservacaoOpcional.Valor),
         qrBuscaItem.FieldByName('tamanho_padrao').asstring,
@@ -685,8 +782,10 @@ begin
         ObservacaoOpcional.CodigoImpressora,
         qrBuscaItem.FieldByName('id_categoria').AsInteger);
 
-      if ObservacaoOpcional.Opcionais.Count > 0 then
-        ObservacaoOpcional.Inserir_Opcionais(qrVenda.FieldByName('ven_001').AsInteger, qrBuscaItem.FieldByName('ultimo_item').AsInteger + 1);
+        if ObservacaoOpcional.Opcionais.Count > 0 then
+          ObservacaoOpcional.Inserir_Opcionais(qrVenda.FieldByName('ven_001').AsInteger, qrBuscaItem.FieldByName('ultimo_item').AsInteger + 1);
+      end;
+
 
       //informa o cliente apenas ao inserir , caso esteja configurado
       if bPedirClienteItem1 then
@@ -939,6 +1038,17 @@ begin
   frmBuscaRegistro.Free;
 end;
 
+procedure TfrmVendaBalcao.actEditarObservacaoOpcionalExecute(Sender: TObject);
+begin
+   EditarObservacaoOpcional();
+end;
+
+procedure TfrmVendaBalcao.addPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+   AlterarQtdItem();
+end;
+
 procedure TfrmVendaBalcao.acConsultarProdutoExecute(Sender: TObject);
 var
   str_sql: string;
@@ -1133,6 +1243,16 @@ begin
     else
       Application.MessageBox('Esta venda não possui itens!', 'Atenção', MB_ICONINFORMATION + MB_OK);
   end;
+end;
+
+procedure TfrmVendaBalcao.AlterarQtdItem;
+  var str_sql:string;
+begin
+  str_sql :=
+          format('UPDATE VENDAITEM SET ite_002 = ite_002 + 1,ite_005 = (ite_002 +1) * ite_003 where VEN_001=%d and emp_001=%d and ite_001= %d ',
+          [qrVenda.fieldbyname('ven_001').asinteger, recproj.iEmp,qrVendaItem.fieldbyname('nro_item').asinteger]);
+        ExecutaComandoSQL(str_sql);
+  qrVendaItem.RefreshRecord;
 end;
 
 procedure TfrmVendaBalcao.AtualizaTotalVenda;

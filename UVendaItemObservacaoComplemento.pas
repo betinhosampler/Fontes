@@ -49,6 +49,8 @@ type
     lblOpcionais: TLabel;
     lblObservacoes: TLabel;
     qryMaterial: TUniQuery;
+    qryObservacaoSelecionada: TUniQuery;
+    qryOpcionalSelecionado: TUniQuery;
 
     constructor Create(ASender : TComponent; AParametros: TObservacaoEOpcionalParametros);
 
@@ -74,7 +76,8 @@ type
     procedure Atualizar_Tabela(ATabela: TUniQuery);
     procedure Carregar(ATabela: TUniQuery; AParam1: Integer; AParam2: Integer = 0);
     procedure Preencher(ACheckList: TCheckListBox; ATabela: TUniQuery);
-
+    procedure MarcarObservacoesSelecionadas(AParametros: TObservacaoEOpcionalParametros);
+    procedure MarcarOpcionalSelecionadas(AParametros: TObservacaoEOpcionalParametros);
   end;
 
 var
@@ -211,6 +214,8 @@ begin
   edQuantidade.Text := FloatToStr(AParametros.Quantidade);
   edtValor.Text     := FloatToStr(AParametros.Valor);
   edtValor.Enabled  := AParametros.PermiteAlterarValor;
+  MarcarOpcionalSelecionadas(AParametros);
+  MarcarObservacoesSelecionadas(AParametros);
 end;
 
 destructor TfrmVendaItemObservacaoComplemento.destroy;
@@ -341,6 +346,64 @@ begin
     Preencher(chklstOpcionais, qryOpcionais);
     Show();
   end;
+end;
+
+procedure TfrmVendaItemObservacaoComplemento.MarcarObservacoesSelecionadas(
+  AParametros: TObservacaoEOpcionalParametros);
+  var ListaObsercaoes: TStringList;
+  i,i2: Integer;
+begin
+  qryObservacaoSelecionada.Close;
+  qryObservacaoSelecionada.ParamByName('id_empresa').AsInteger := AParametros.IdEmpresa;
+  qryObservacaoSelecionada.ParamByName('id_venda').AsInteger   := AParametros.idVenda;
+  qryObservacaoSelecionada.ParamByName('id_item').AsInteger    := AParametros.idItem;
+  qryObservacaoSelecionada.Open;
+  ListaObsercaoes:= TStringList.Create;
+  try
+    ListaObsercaoes.StrictDelimiter:= True;
+    ListaObsercaoes.Delimiter:=',';
+    ListaObsercaoes.DelimitedText:= qryObservacaoSelecionada.FieldByName('ite_006').AsString;
+    for i := 0 to ListaObsercaoes.Count -1 do
+    begin
+      for i2 := 0 to chklstObservacoes.Count -1 do
+      begin
+        if chklstObservacoes.Items[i2] = ListaObsercaoes[i] then
+        begin
+           chklstObservacoes.Checked[i2]:= true;
+           Continue;
+        end;
+      end;
+    end;
+  finally
+    ListaObsercaoes.Free;
+  end;
+end;
+
+procedure TfrmVendaItemObservacaoComplemento.MarcarOpcionalSelecionadas(
+  AParametros: TObservacaoEOpcionalParametros);
+var
+  i: Integer;
+begin
+  qryOpcionalSelecionado.Close;
+  qryOpcionalSelecionado.ParamByName('id_empresa').AsInteger := AParametros.IdEmpresa;
+  qryOpcionalSelecionado.ParamByName('id_venda').AsInteger   := AParametros.idVenda;
+  qryOpcionalSelecionado.ParamByName('id_item').AsInteger    := AParametros.idItem;
+  qryOpcionalSelecionado.Open;
+
+  while not qryOpcionalSelecionado.Eof do
+  begin
+    for i := 0 to chklstOpcionais.Count -1 do
+    begin
+      if chklstOpcionais.Items[i] = qryOpcionalSelecionado.FieldByName('descricao').AsString then
+      begin
+         chklstOpcionais.Checked[i]:= true;
+         Continue;
+      end;
+    end;
+    qryOpcionalSelecionado.Next;
+  end;
+
+
 end;
 
 procedure TfrmVendaItemObservacaoComplemento.lblCadastrarObservacoesClick(Sender: TObject);

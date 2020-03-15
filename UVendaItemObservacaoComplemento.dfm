@@ -294,7 +294,7 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
   end
   object chklstOpcionais: TCheckListBox
     Left = 8
-    Top = 119
+    Top = 125
     Width = 891
     Height = 138
     Columns = 4
@@ -316,8 +316,8 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
       ' Where id_categoria = (Select cat_001'
       #9#9#9' From materiais'
       #9#9#9'Where mat_001 = :param1)')
-    Left = 632
-    Top = 240
+    Left = 488
+    Top = 144
     ParamData = <
       item
         DataType = ftLargeint
@@ -337,8 +337,8 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
       ' Where o.id_empresa = :param1'
       '   and mo.id_empresa = :param1'
       '   and id_material = :param2')
-    Left = 352
-    Top = 200
+    Left = 360
+    Top = 136
     ParamData = <
       item
         DataType = ftLargeint
@@ -360,8 +360,8 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
       '  from materiais'
       ' where mat_001 = :id_material'
       '   and emp_001 = :id_empresa')
-    Left = 184
-    Top = 160
+    Left = 192
+    Top = 144
     ParamData = <
       item
         DataType = ftUnknown
@@ -371,6 +371,61 @@ object frmVendaItemObservacaoComplemento: TfrmVendaItemObservacaoComplemento
       item
         DataType = ftUnknown
         Name = 'id_empresa'
+        Value = nil
+      end>
+  end
+  object qryObservacaoSelecionada: TUniQuery
+    Connection = frmMenu.conexao
+    SQL.Strings = (
+      'Select ite_006 from vendaitem '
+      'where emp_001 = :id_empresa'
+      'and ven_001 =:id_venda '
+      'and ite_001= :id_item')
+    Left = 640
+    Top = 152
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'id_empresa'
+        Value = nil
+      end
+      item
+        DataType = ftUnknown
+        Name = 'id_venda'
+        Value = nil
+      end
+      item
+        DataType = ftUnknown
+        Name = 'id_item'
+        Value = nil
+      end>
+  end
+  object qryOpcionalSelecionado: TUniQuery
+    Connection = frmMenu.conexao
+    SQL.Strings = (
+      
+        'Select  o.descricao  || '#39' '#39' ||  o.valor as descricao from vendai' +
+        'temopcional vio'
+      'join opcional o on o.id_opcional = vio.id_opcional'
+      'where vio.id_empresa = :id_empresa'
+      'and vio.id_venda =:id_venda '
+      'and vio.id_vendaitem = :id_item')
+    Left = 776
+    Top = 152
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'id_empresa'
+        Value = nil
+      end
+      item
+        DataType = ftUnknown
+        Name = 'id_venda'
+        Value = nil
+      end
+      item
+        DataType = ftUnknown
+        Name = 'id_item'
         Value = nil
       end>
   end

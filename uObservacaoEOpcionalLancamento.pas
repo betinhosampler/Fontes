@@ -19,6 +19,9 @@ type
     FObservacoes: String;
 
     FOpcionais: TList<Int64>;
+    FIdItem: integer;
+    FIdVenda: integer;
+    FIdEmpresa: Integer;
 
     procedure Pegar_Observacoes(ATela: TfrmVendaItemObservacaoComplemento);
     procedure Pegar_Opcionais(ATela: TfrmVendaItemObservacaoComplemento);
@@ -33,6 +36,9 @@ type
 
     property CodigoImpressora: Integer read FCodigoImpressora;
     property IdMaterial: Integer read FIdMaterial;
+    property IdVenda: integer read FIdVenda;
+    property IdItem: integer read FIdItem;
+    property IdEmpresa: Integer read FIdEmpresa;
     property Opcionais: TList<Int64> read FOpcionais;
     property Observacoes: String read FObservacoes;
     property Quantidade: Double read FQuantidade;
@@ -69,6 +75,9 @@ begin
   FQuantidade       := 0;
   FObservacoes      := '';
   FIdMaterial       := -1;
+  FIdItem           := -1;
+  FIdVenda          := -1;
+  FIdEmpresa        := -1;
   FOpcionais        := TList<Int64>.Create();
 end;
 
