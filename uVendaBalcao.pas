@@ -545,6 +545,7 @@ begin
           format('UPDATE VENDAITEM SET ite_002 = ite_002 - 1, ite_005 = (ite_002-1) * ite_003  where VEN_001=%d and emp_001=%d and ite_001= %d ',
           [qrVenda.fieldbyname('ven_001').asinteger, recproj.iEmp,qrVendaItem.fieldbyname('nro_item').asinteger]);
         ExecutaComandoSQL(str_sql);
+    AtualizaTotalVenda();
     qrVendaItem.RefreshRecord;
   end;
 end;
@@ -1252,6 +1253,7 @@ begin
           format('UPDATE VENDAITEM SET ite_002 = ite_002 + 1,ite_005 = (ite_002 +1) * ite_003 where VEN_001=%d and emp_001=%d and ite_001= %d ',
           [qrVenda.fieldbyname('ven_001').asinteger, recproj.iEmp,qrVendaItem.fieldbyname('nro_item').asinteger]);
         ExecutaComandoSQL(str_sql);
+  AtualizaTotalVenda();
   qrVendaItem.RefreshRecord;
 end;
 

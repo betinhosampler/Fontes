@@ -2821,13 +2821,6 @@ begin
    FreeAndNil(qrAux);
 end;
 
-
-
-
-
-
-
-
 Function TotalVendaCliente(iVenda, iCliente: integer): Double;
 var
    qrAux: TUniQuery;
