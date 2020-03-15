@@ -825,8 +825,8 @@ begin
 
   if venda > 0 then
   begin
-    frmControleMesaRelatorios.ImprimeVenda(venda);
     MudaStatusVendaImpresso(venda);
+    frmControleMesaRelatorios.ImprimeVenda(venda);
     qrVendaMesa.Refresh;
   end;
 end;

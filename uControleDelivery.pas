@@ -495,7 +495,7 @@ begin
     begin
       if qrVendaDelivery.FieldByName('retirada_balcao').AsString='' then
       begin
-        frmControleDeliverySelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, qrVendaDelivery.FieldByName('id_venda').AsInteger);
+        frmControleDeliverySelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, qrVendaDelivery.FieldByName('id_venda').AsInteger, True);
         frmControleDeliverySelecaoEntregador.ShowModal;
         FreeAndNil(frmControleDeliverySelecaoEntregador);
 
@@ -872,7 +872,7 @@ begin
     begin
       if qrVendaDelivery.FieldByName('retirada_balcao').AsString='' then
       begin
-        frmControleDeliverySelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, qrVendaDelivery.FieldByName('id_venda').AsInteger);
+        frmControleDeliverySelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, qrVendaDelivery.FieldByName('id_venda').AsInteger, True);
         frmControleDeliverySelecaoEntregador.ShowModal;
         FreeAndNil(frmControleDeliverySelecaoEntregador);
         qrVendaDelivery.Refresh;
@@ -938,7 +938,7 @@ if qrVendaDelivery.Active then
     begin
       if qrVendaDelivery.FieldByName('retirada_balcao').AsString='' then
       begin
-        frmControleDeliverySelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, qrVendaDelivery.FieldByName('id_venda').AsInteger);
+        frmControleDeliverySelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, qrVendaDelivery.FieldByName('id_venda').AsInteger, True);
         frmControleDeliverySelecaoEntregador.ShowModal;
         FreeAndNil(frmControleDeliverySelecaoEntregador);
 

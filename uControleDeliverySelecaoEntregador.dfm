@@ -32,7 +32,7 @@ object frmControleDeliverySelecaoEntregador: TfrmControleDeliverySelecaoEntregad
     ParentFont = False
     TabOrder = 0
     UseDockManager = True
-    Version = '2.4.1.0'
+    Version = '2.5.4.1'
     Caption.Color = clHighlight
     Caption.ColorTo = clNone
     Caption.Font.Charset = DEFAULT_CHARSET
@@ -40,6 +40,7 @@ object frmControleDeliverySelecaoEntregador: TfrmControleDeliverySelecaoEntregad
     Caption.Font.Height = -13
     Caption.Font.Name = 'Tahoma'
     Caption.Font.Style = []
+    Caption.Indent = 0
     ColorTo = 12691076
     DoubleBuffered = True
     StatusBar.Font.Charset = DEFAULT_CHARSET
@@ -48,7 +49,6 @@ object frmControleDeliverySelecaoEntregador: TfrmControleDeliverySelecaoEntregad
     StatusBar.Font.Name = 'Tahoma'
     StatusBar.Font.Style = []
     Text = ''
-    ExplicitWidth = 587
     DesignSize = (
       805
       334)
@@ -841,7 +841,6 @@ object frmControleDeliverySelecaoEntregador: TfrmControleDeliverySelecaoEntregad
     FlowStyle = fsRightLeftTopBottom
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 587
     object btCancela: TAdvGlowButton
       AlignWithMargins = True
       Left = 686

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, MemDS, DBAccess,
-  Uni, frxClass, frxDBSet;
+  Uni, frxClass, frxDBSet, System.StrUtils;
 
 type
   TfrmControleMesaRelatorios = class(TForm)
@@ -109,6 +109,9 @@ type
     qrVendaMesaReptotal_itens: TFloatField;
     qrVendaItemOpcionaltipo: TIntegerField;
     qrVendaItemFracionadoOpcionaltipo: TIntegerField;
+    qrVendaMesaRepatendente: TWideStringField;
+    qrVendaMesaRepgarcom: TWideStringField;
+    qrVendaMesaRepcodigo_venda: TIntegerField;
     procedure ImprimeVenda(id_venda : integer ; pre_visualizar : boolean = false);
     procedure FormCreate(Sender: TObject);
     procedure qrVendaMesaRepCalcFields(DataSet: TDataSet);
@@ -272,10 +275,13 @@ begin
     end
     else
     begin
-      RepFechaConta.PrintOptions.Printer := sCamImpCaixa;
-      RepFechaConta.Variables['sMensagemTxServico'] := QuotedStr(sMensagemTxServico);
-      RepFechaConta.Variables['sMensagemCouvert'] := QuotedStr(sMensagemCouvert);
       RepFechaConta.LoadFromFile('C:\EliteFood\Relatorios\PREFECHAMENTO.fr3');
+      RepFechaConta.PrintOptions.Printer               := sCamImpCaixa;
+      RepFechaConta.Variables['sMensagemTxServico']    := QuotedStr(sMensagemTxServico);
+      RepFechaConta.Variables['sMensagemCouvert']      := QuotedStr(sMensagemCouvert);
+      RepFechaConta.Variables['sVersao']               := QuotedStr(GetFileVersion(ParamStr(0)));
+      RepFechaConta.Variables['sResponsavelImpressao'] := QuotedStr(IfThen(impressao_mobile, 'Garçom:', 'Atendente:'));
+
       RepFechaConta.PrepareReport;
 
       if pre_visualizar then

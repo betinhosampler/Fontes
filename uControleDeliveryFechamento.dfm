@@ -1036,66 +1036,101 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
   object qrVenda: TUniQuery
     Connection = frmMenu.conexao
     SQL.Strings = (
-      'select '
-      'v.ven_001 as id_venda, '
-      'v.ven_029 as nro_venda, '
-      '0.00 as valor_venda, '
-      'v.ven_008 as valor_tx,'
-      'v.dat_001_1 as data_abertura,'
-      'v.ven_007 as desconto,'
-      '0.00 as total_pago,'
-      '0.00 as valor_restante,'
-      '0.00 as valor_troco,'
-      'v.caixinha_entregador,'
+      '   select v.ven_001 as id_venda, '
+      '          v.ven_029 as nro_venda, '
+      '          0.00 as valor_venda, '
+      '          v.ven_008 as valor_tx,'
+      '          v.dat_001_1 as data_abertura,'
+      '          v.ven_007 as desconto,'
+      '          0.00 as total_pago,'
+      '          0.00 as valor_restante,'
+      '          0.00 as valor_troco,'
+      '          v.caixinha_entregador,'
+      '          coalesce(case '
+      '                     when ven_009=0.00 '
+      '                       then 0.00 '
+      '                     else ven_007/ven_009/0.01  '
+      '                   end,0.00) as desconto_percent,'
       
-        'coalesce(case when ven_009=0.00 then 0.00 else ven_007/ven_009/0' +
-        '.01  end,0.00) as desconto_percent,'
+        '          cast(coalesce(cl.cli_004, v.cpf_cliente) as varchar(10' +
+        '0)) as cpf_cliente,'
+      '          c.id_caixa,'
+      '          v.ven_027 as observacoes,'
+      '          cl.cli_002 as nome_cliente,'
+      '          v.sit_001,'
+      '          cl.cli_012 as telefone1,'
+      '          cl.cli_013 as telefone2,'
+      '          cl.celular1,'
+      '          cl.cep_004 as endereco,'
+      '          cl.cli_008 as endereco_numero,'
+      '          cl.cli_009 as endereco_complemento,'
+      '          cl.cep_003 as bairro,'
+      '          cl.cidade_desc as cidade,'
+      '          cl.cli_007 as endereco_referencia,'
+      '          (select usu_002'
+      '             from usuarios us'
       
-        'cast(coalesce(cl.cli_004, v.cpf_cliente) as varchar(100)) as cpf' +
-        '_cliente,'
-      'c.id_caixa,'
-      'v.ven_027 as observacoes,'
-      'cl.cli_002 as nome_cliente,'
-      'v.sit_001,'
-      'cl.cli_012 as telefone1,'
-      'cl.cli_013 as telefone2,'
-      'cl.celular1,'
-      'cl.cep_004 as endereco,'
-      'cl.cli_008 as endereco_numero,'
-      'cl.cli_009 as endereco_complemento,'
-      'cl.cep_003 as bairro,'
-      'cl.cidade_desc as cidade,'
-      'cl.cli_007 as endereco_referencia,'
-      'usu_002 as nome_entregador,'
-      'v.b_taxa_entrega,'
-      'coalesce(sum(i.desconto),  0.00) as valor_desconto_itens,'
-      'count (1) as nro_itens,'
-      'cl.cli_001 as id_cliente,'
-      'v.numero_cupom,'
-      'v.ven_024 as tipo_venda,'
-      'sum(i.ite_005)  as total_itens'
-      'from venda v '
-      'join caixa c on c.id_empresa = v.emp_001 and id_caixa=:id_caixa'
+        '            where v.id_entregador = us.usu_001) as nome_entregad' +
+        'or,'
+      '          v.b_taxa_entrega,'
       
-        'join clientes cl on cl.cli_001 = v.cli_001 and cl.emp_001=v.emp_' +
-        '001'
-      'left join usuarios e on v.id_entregador=e.usu_001'
-      
-        'join vendaitem i on i.ven_001=v.ven_001 and i.emp_001=v.emp_001 ' +
-        'and i.sit_001 in (4) '
-      'where v.ven_001 = :id_venda and v.emp_001=:emp'
-      'group by '
-      
-        'v.ven_001, v.ven_029, c.id_caixa, v.ven_008, v.ven_007, cl.cli_0' +
-        '02, cl.cli_004, v.sit_001, cl.cli_012,'
-      
-        'cl.cli_013, cl.celular1,cl.cep_004, cl.cli_007, cl.cli_008, cl.c' +
-        'li_009, cl.cep_003,cl.cidade_desc,'
-      'e.usu_002, v.b_taxa_entrega, cl.cli_001, v.numero_cupom,'
-      
-        'v.ven_009, v.ven_027, v.dat_001_1, v.nro_couvert_m, v.nro_couver' +
-        't_f, v.nro_pessoas, v.cpf_cliente,'
-      'v.ven_024, v.caixinha_entregador ')
+        '          coalesce(sum(i.desconto), 0.00) as valor_desconto_iten' +
+        's,'
+      '          count (1) as nro_itens,'
+      '          cl.cli_001 as id_cliente,'
+      '          v.numero_cupom,'
+      '          v.ven_024 as tipo_venda,'
+      '          sum(i.ite_005) as total_itens,'
+      '          (select usu_002'
+      '             from usuarios us'
+      '            where v.usu_001_1 = us.usu_001) as atendente'
+      '     from venda v '
+      '     join caixa c '
+      '       on c.id_empresa = v.emp_001  '
+      '      and id_caixa = :id_caixa'
+      '     join clientes cl '
+      '       on cl.cli_001 = v.cli_001 '
+      '      and cl.emp_001 = v.emp_001'
+      'left join usuarios e '
+      '       on v.id_entregador = e.usu_001'
+      '     join vendaitem i '
+      '       on i.ven_001 = v.ven_001 '
+      '      and i.emp_001 = v.emp_001 '
+      '      and i.sit_001 in (4) '
+      '    where v.ven_001 = :id_venda '
+      '      and v.emp_001 = :emp'
+      ' group by v.ven_001, '
+      '          v.ven_029, '
+      '          c.id_caixa, '
+      '          v.ven_008,'
+      '          v.ven_007, '
+      '          cl.cli_002, '
+      '          cl.cli_004, '
+      '          v.sit_001,  '
+      '          cl.cli_012,'
+      '          cl.cli_013, '
+      '          cl.celular1,'
+      '          cl.cep_004, '
+      '          cl.cli_007, '
+      '          cl.cli_008, '
+      '          cl.cli_009, '
+      '          cl.cep_003,'
+      '          cl.cidade_desc,'
+      '          e.usu_002, '
+      '          v.b_taxa_entrega, '
+      '          cl.cli_001, '
+      '          v.numero_cupom,'
+      '          v.ven_009, '
+      '          v.ven_027, '
+      '          v.dat_001_1, '
+      '          v.nro_couvert_m, '
+      '          v.nro_couvert_f, '
+      '          v.nro_pessoas, '
+      '          v.cpf_cliente,'
+      '          v.ven_024, '
+      '          v.caixinha_entregador,'
+      '          atendente,'
+      '          nome_entregador')
     ReadOnly = True
     Left = 462
     Top = 266
@@ -1199,9 +1234,10 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       Size = 10
     end
     object qrVendaendereco_complemento: TWideStringField
+      DisplayWidth = 80
       FieldName = 'endereco_complemento'
       ReadOnly = True
-      Size = 10
+      Size = 80
     end
     object qrVendabairro: TWideStringField
       FieldName = 'bairro'
@@ -1253,6 +1289,11 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
     end
     object qrVendacaixinha_entregador: TFloatField
       FieldName = 'caixinha_entregador'
+    end
+    object qrVendaatendente: TWideStringField
+      FieldName = 'atendente'
+      ReadOnly = True
+      Size = 30
     end
   end
   object dsVenda: TDataSource
@@ -1370,9 +1411,10 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       Size = 10
     end
     object cdsVendaendereco_complemento: TWideStringField
+      DisplayWidth = 80
       FieldName = 'endereco_complemento'
       ReadOnly = True
-      Size = 10
+      Size = 80
     end
     object cdsVendabairro: TWideStringField
       FieldName = 'bairro'
@@ -1424,6 +1466,11 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
     object cdsVendacaixinha_entregador: TFloatField
       FieldName = 'caixinha_entregador'
       currency = True
+    end
+    object cdsVendaatendente: TWideStringField
+      FieldName = 'atendente'
+      ReadOnly = True
+      Size = 30
     end
   end
   object qrAux1: TUniQuery
@@ -1517,7 +1564,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
     Top = 264
   end
   object RepFechaConta: TfrxReport
-    Version = '5.2.3'
+    Version = '5.1.5'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -1526,7 +1573,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
     PrintOptions.PrintOnSheet = 0
     PrintOptions.ShowDialog = False
     ReportOptions.CreateDate = 41784.595344467600000000
-    ReportOptions.LastChange = 43629.708212731480000000
+    ReportOptions.LastChange = 43905.093525810180000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1590,11 +1637,11 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       end
       item
         Name = 'sSisDev'
-        Value = ''
+        Value = Null
       end
       item
         Name = 'sSisVersao'
-        Value = ''
+        Value = Null
       end>
     Style = <>
     object Data: TfrxDataPage
@@ -1603,12 +1650,14 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
     end
     object Page1: TfrxReportPage
       PaperWidth = 80.000000000000000000
-      PaperHeight = 448.000000000000000000
+      PaperHeight = 324.000000000000000000
       PaperSize = 256
       LeftMargin = 4.500000000000000000
       RightMargin = 3.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
+      ShowTitleOnPreviousPage = False
+      TitleBeforeHeader = False
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         Font.Charset = DEFAULT_CHARSET
@@ -1640,7 +1689,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       object MasterData2: TfrxMasterData
         FillType = ftBrush
         Height = 15.118110240000000000
-        Top = 956.221090000000000000
+        Top = 1001.575450000000000000
         Width = 274.015925000000000000
         DataSet = dbPagamentos
         DataSetName = 'dbPagamentos'
@@ -1683,56 +1732,10 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           WordBreak = True
         end
       end
-      object Footer2: TfrxFooter
-        FillType = ftBrush
-        Height = 92.661410000000000000
-        Top = 1296.378790000000000000
-        Width = 274.015925000000000000
-        object Memo26: TfrxMemoView
-          Left = 11.338590000000000000
-          Top = 19.055039999999730000
-          Width = 226.771800000000000000
-          Height = 26.456710000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Memo.UTF8W = (
-            '[sMensagemTxServico]')
-          ParentFont = False
-        end
-        object Line5: TfrxLineView
-          Top = 46.409400000000010000
-          Width = 264.566929133858000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line6: TfrxLineView
-          Top = 90.645639999999960000
-          Width = 264.566929130000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Memo57: TfrxMemoView
-          Left = 11.338590000000000000
-          Top = 3.779529999999795000
-          Width = 226.771800000000000000
-          Height = 15.118120000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Memo.UTF8W = (
-            '[sEntregador]')
-          ParentFont = False
-        end
-      end
       object MasterData3: TfrxMasterData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 566.929500000000000000
+        Top = 623.622450000000000000
         Width = 274.015925000000000000
         DataSet = dbItensFechamento
         DataSetName = 'dbItensFechamento'
@@ -1817,7 +1820,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       object MasterData4: TfrxMasterData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 684.094930000000000000
+        Top = 740.787880000000000000
         Width = 274.015925000000000000
         DataSet = dbItensFracionadoFechamento
         DataSetName = 'dbItensFracionadoFechamento'
@@ -1902,7 +1905,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       object GroupHeader1: TfrxGroupHeader
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 642.520100000000000000
+        Top = 699.213050000000000000
         Width = 274.015925000000000000
         Condition = 'dbItensFracionadoFechamento."item_fracionado"'
         object Memo54: TfrxMemoView
@@ -1925,19 +1928,19 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Line12: TfrxLineView
           Top = 1.118119999999976000
-          Width = 264.566929133858000000
+          Width = 264.566929130000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
       end
       object Header1: TfrxHeader
         FillType = ftBrush
-        Height = 136.063080000000000000
-        Top = 797.480830000000000000
+        Height = 124.724490000000000000
+        Top = 854.173780000000000000
         Width = 274.015925000000000000
         object Line3: TfrxLineView
           Top = 5.795299999999997000
-          Width = 264.566929133858000000
+          Width = 264.566929130000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -1985,7 +1988,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Line4: TfrxLineView
           Top = 99.354360000000040000
-          Width = 264.566929133858000000
+          Width = 264.566929130000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2120,7 +2123,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Line10: TfrxLineView
           Top = 119.401670000000000000
-          Width = 264.566929133858000000
+          Width = 264.566929130000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2162,7 +2165,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       object GroupFooter1: TfrxGroupFooter
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 759.685530000000000000
+        Top = 816.378480000000000000
         Width = 274.015925000000000000
         Stretched = True
         object Memo55: TfrxMemoView
@@ -2189,7 +2192,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 604.724800000000000000
+        Top = 661.417750000000000000
         Width = 274.015925000000000000
         DataSet = dbItensOpcional
         DataSetName = 'dbItensOpcional'
@@ -2217,7 +2220,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       object DetailData2: TfrxDetailData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 721.890230000000000000
+        Top = 778.583180000000000000
         Width = 274.015925000000000000
         DataSet = dbItensFracionadoOpcional
         DataSetName = 'dbItensFracionadoOpcional'
@@ -2244,9 +2247,10 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       end
       object Footer1: TfrxFooter
         FillType = ftBrush
-        Height = 22.677180000000000000
-        Top = 994.016390000000000000
+        Height = 113.385900000000000000
+        Top = 1039.370750000000000000
         Width = 274.015925000000000000
+        PrintChildIfInvisible = True
         object Memo44: TfrxMemoView
           Left = 186.519790000000000000
           Top = 2.220469999999978000
@@ -2283,191 +2287,103 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
             'TROCO SOLICITADO')
           ParentFont = False
         end
-      end
-      object Header2: TfrxHeader
-        FillType = ftBrush
-        Height = 18.897650000000000000
-        Top = 1039.370750000000000000
-        Width = 274.015925000000000000
-        object Memo60: TfrxMemoView
-          Left = 3.779527560000000000
-          Top = 1.584964189999937000
-          Width = 79.613970650000000000
-          Height = 15.727721610000000000
+        object Memo26: TfrxMemoView
+          Left = 82.811070000000000000
+          Top = 36.354360000000040000
+          Width = 37.795300000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
-            'Documento')
+            'Senha:')
+          ParentFont = False
+        end
+        object Memo57: TfrxMemoView
+          Left = 46.338590000000000000
+          Top = 54.472479999999900000
+          Width = 105.826840000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'Infor Gourmet vers'#227'o')
+          ParentFont = False
+        end
+        object Memo60: TfrxMemoView
+          Left = 71.252010000000000000
+          Top = 73.370130000000010000
+          Width = 120.944960000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'www.inforsistema.net.br')
           ParentFont = False
         end
         object Memo61: TfrxMemoView
-          Left = 86.929190000000000000
-          Top = 1.584964189999937000
-          Width = 79.613970650000000000
-          Height = 15.727721610000000000
+          Left = 34.118120000000000000
+          Top = 91.488249999999880000
+          Width = 200.315090000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
-            'Vencimento')
+            'Volte Sempre, obrigado pela prefer'#234'ncia')
           ParentFont = False
         end
         object Memo62: TfrxMemoView
-          Left = 181.417440000000000000
-          Top = 1.584964189999937000
-          Width = 45.598200650000000000
-          Height = 15.727721610000000000
+          Left = 154.078850000000000000
+          Top = 54.692950000000110000
+          Width = 64.252010000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          HAlign = haRight
           Memo.UTF8W = (
-            'Valor')
+            '[sSisVersao]')
           ParentFont = False
-        end
-        object Line13: TfrxLineView
-          Top = 1.889754020000055000
-          Width = 257.007874020000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-      end
-      object MasterData5: TfrxMasterData
-        FillType = ftBrush
-        Height = 7.559060000000000000
-        Top = 1232.126780000000000000
-        Width = 274.015925000000000000
-        DataSet = dbEmpresa
-        DataSetName = 'dbEmpresa'
-        RowCount = 0
-        object Line14: TfrxLineView
-          Top = 3.338589999999840000
-          Width = 257.007874020000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-      end
-      object Footer3: TfrxFooter
-        FillType = ftBrush
-        Height = 83.711331110000000000
-        Top = 1126.299940000000000000
-        Width = 274.015925000000000000
-        object Line9: TfrxLineView
-          Top = 3.779530000000022000
-          Width = 257.007874020000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line15: TfrxLineView
-          Top = 64.795300000000000000
-          Width = 257.007874020000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Memo66: TfrxMemoView
-          Left = 6.089159790000000000
-          Top = 67.314986670000050000
-          Width = 244.829554440000000000
-          Height = 14.278224440000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Assinatura do Cliente')
-          ParentFont = False
-        end
-      end
-      object MasterData6: TfrxMasterData
-        FillType = ftBrush
-        Height = 22.677180000000000000
-        Top = 1080.945580000000000000
-        Width = 274.015925000000000000
-        DataSet = dbCreceberFiado
-        DataSetName = 'dbCreceberFiado'
-        RowCount = 0
-        object Line16: TfrxLineView
-          Left = 3.779530000000000000
-          Top = 14.897650000000110000
-          Width = 222.992270000000000000
-          Color = clBlack
-          Frame.Style = fsDot
-          Frame.Typ = [ftTop]
         end
         object Memo63: TfrxMemoView
-          Left = 3.779530000000000000
-          Top = 3.779530000000022000
-          Width = 79.370130000000000000
-          Height = 15.118110240000000000
-          AutoWidth = True
-          DataField = 'documento'
-          DataSet = dbCreceberFiado
-          DataSetName = 'dbCreceberFiado'
+          Left = 126.944960000000000000
+          Top = 35.795300000000000000
+          Width = 94.488186540000000000
+          Height = 15.118120000000000000
+          DataSet = dbPedido
+          DataSetName = 'dbPedido'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
-          Font.Style = []
-          Fill.BackColor = clWindow
+          Font.Style = [fsBold]
           Memo.UTF8W = (
-            '[dbCreceberFiado."documento"]')
+            '[dbPedido."nro_venda"]')
           ParentFont = False
         end
-        object Memo64: TfrxMemoView
-          Left = 86.929190000000000000
-          Top = 3.779530000000022000
-          Width = 79.370130000000000000
-          Height = 15.118110240000000000
-          AutoWidth = True
-          DataField = 'data_vencimento'
-          DataSet = dbCreceberFiado
-          DataSetName = 'dbCreceberFiado'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Fill.BackColor = clWindow
-          Memo.UTF8W = (
-            '[dbCreceberFiado."data_vencimento"]')
-          ParentFont = False
-        end
-        object Memo65: TfrxMemoView
-          Left = 177.637910000000000000
-          Top = 3.779530000000022000
-          Width = 49.133890000000000000
-          Height = 15.118110240000000000
-          AutoWidth = True
-          DataField = 'valor'
-          DataSet = dbCreceberFiado
-          DataSetName = 'dbCreceberFiado'
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Fill.BackColor = clWindow
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[dbCreceberFiado."valor"]')
-          ParentFont = False
+        object Line5: TfrxLineView
+          Top = 30.236239999999960000
+          Width = 264.566929130000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
         end
       end
       object MasterData8: TfrxMasterData
         FillType = ftBrush
         Height = 7.559060000000000000
-        Top = 257.008040000000000000
+        Top = 294.803340000000000000
         Width = 274.015925000000000000
         DataSet = dbAuxCabRod
         DataSetName = 'dbAuxCabRod'
@@ -2483,7 +2399,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       end
       object Header3: TfrxHeader
         FillType = ftBrush
-        Height = 117.165430000000000000
+        Height = 154.960730000000000000
         Top = 117.165430000000000000
         Width = 274.015925000000000000
         object Memo2: TfrxMemoView
@@ -2502,7 +2418,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo3: TfrxMemoView
           Left = 177.637910000000000000
-          Top = 17.999999999999990000
+          Top = 18.000000000000010000
           Width = 60.472480000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2516,7 +2432,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo4: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 17.999999999999990000
+          Top = 18.000000000000010000
           Width = 166.299320000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2544,7 +2460,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo6: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 48.236239999999990000
+          Top = 48.236239999999970000
           Width = 30.236240000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2558,7 +2474,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo7: TfrxMemoView
           Left = 41.574830000000000000
-          Top = 48.236239999999990000
+          Top = 48.236239999999970000
           Width = 196.535560000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2572,7 +2488,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo8: TfrxMemoView
           Left = 52.913420000000000000
-          Top = 65.472480000000000000
+          Top = 65.472479999999970000
           Width = 211.653680000000000000
           Height = 15.118120000000000000
           DataSet = dbPedido
@@ -2615,15 +2531,14 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           ParentFont = False
         end
         object Line8: TfrxLineView
-          Left = 11.338590000000000000
           Top = 64.252010000000000000
-          Width = 253.228510000000000000
+          Width = 264.566929133858000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo11: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 65.637785510000000000
+          Top = 65.637785509999970000
           Width = 41.574830000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2637,7 +2552,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo58: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 98.267780000000000000
+          Top = 98.267779999999970000
           Width = 41.574830000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2651,7 +2566,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo59: TfrxMemoView
           Left = 52.913420000000000000
-          Top = 98.267780000000000000
+          Top = 98.267779999999970000
           Width = 211.653680000000000000
           Height = 15.118120000000000000
           DataField = 'numero_cupom'
@@ -2666,28 +2581,71 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
             '[dbPedido."numero_cupom"]')
           ParentFont = False
         end
-      end
-      object MasterData7: TfrxMasterData
-        FillType = ftBrush
-        Height = 11.338590000000000000
-        Top = 1262.363020000000000000
-        Width = 274.015925000000000000
-        DataSet = dbAuxCabRod
-        DataSetName = 'dbAuxCabRod'
-        RowCount = 0
-        object Memo68: TfrxMemoView
-          Left = 6.299216670000000000
-          Top = 1.409451669999953000
-          Width = 20.787415000000000000
-          Height = 4.409451670000000000
+        object Memo27: TfrxMemoView
+          Left = 11.338590000000000000
+          Top = 117.165430000000000000
+          Width = 60.472480000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           Memo.UTF8W = (
-            '.')
+            'Atendente:')
+          ParentFont = False
+        end
+        object Memo69: TfrxMemoView
+          Left = 11.338590000000000000
+          Top = 136.063080000000000000
+          Width = 60.472480000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'Entregador:')
+          ParentFont = False
+        end
+        object Memo70: TfrxMemoView
+          Left = 75.590600000000000000
+          Top = 117.165430000000000000
+          Width = 196.535433070000000000
+          Height = 15.118120000000000000
+          DataSet = dbPedido
+          DataSetName = 'dbPedido'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[dbPedido."atendente"]')
+          ParentFont = False
+        end
+        object Memo71: TfrxMemoView
+          Left = 75.590600000000000000
+          Top = 136.063080000000000000
+          Width = 196.535433070000000000
+          Height = 15.118120000000000000
+          DataSet = dbPedido
+          DataSetName = 'dbPedido'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[dbPedido."nome_entregador"]')
+          ParentFont = False
         end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
-        Height = 257.008040000000000000
-        Top = 287.244280000000000000
+        Height = 275.905511810000000000
+        Top = 325.039580000000000000
         Width = 274.015925000000000000
         DataSet = dbEmpresa
         DataSetName = 'dbEmpresa'
@@ -2707,13 +2665,13 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           ParentFont = False
         end
         object Line1: TfrxLineView
-          Top = 236.456710000000000000
-          Width = 257.007869130000000000
+          Top = 255.496062989999900000
+          Width = 264.566929133858000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo12: TfrxMemoView
-          Top = 237.456710000000000000
+          Top = 256.251968503937000000
           Width = 117.165430000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2727,7 +2685,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo13: TfrxMemoView
           Left = 149.960629920000000000
-          Top = 237.456710000000000000
+          Top = 256.251968503937000000
           Width = 30.236240000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2742,7 +2700,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo14: TfrxMemoView
           Left = 182.960730000000000000
-          Top = 237.456710000000000000
+          Top = 256.251968503937000000
           Width = 26.456710000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2756,7 +2714,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo15: TfrxMemoView
           Left = 211.196970000000000000
-          Top = 237.456710000000000000
+          Top = 256.251968503937000000
           Width = 45.354360000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2770,8 +2728,8 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           ParentFont = False
         end
         object Line2: TfrxLineView
-          Top = 252.574830000000000000
-          Width = 257.007869130000000000
+          Top = 271.370078740000100000
+          Width = 264.566929133858000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2794,9 +2752,8 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           WordBreak = True
         end
         object Line11: TfrxLineView
-          Left = 11.338590000000000000
           Top = 4.000000000000000000
-          Width = 253.228510000000000000
+          Width = 264.566929133858000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2831,7 +2788,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         object Memo35: TfrxMemoView
           Left = 95.267780000000000000
           Top = 57.133890000000010000
-          Width = 56.692950000000000000
+          Width = 105.826840000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2839,7 +2796,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Memo.UTF8W = (
-            'COMPL.:')
+            'COMPLEMENTO:')
           ParentFont = False
         end
         object dbPedidoendereco_numero: TfrxMemoView
@@ -2860,9 +2817,9 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           ParentFont = False
         end
         object dbPedidoendereco_complemento: TfrxMemoView
-          Left = 150.181200000000000000
-          Top = 57.252009999999990000
-          Width = 113.385900000000000000
+          Left = 11.338582677165400000
+          Top = 74.370130000000010000
+          Width = 253.228510000000000000
           Height = 17.007874020000000000
           DataField = 'endereco_complemento'
           DataSet = dbPedido
@@ -2879,7 +2836,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo42: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 76.149659999999990000
+          Top = 94.866141732283490000
           Width = 56.692950000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2892,8 +2849,8 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
           ParentFont = False
         end
         object Memo43: TfrxMemoView
-          Left = 11.338582677165400000
-          Top = 94.267780000000010000
+          Left = 11.338582680000000000
+          Top = 113.007874015748000000
           Width = 56.692950000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2907,7 +2864,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object dbPedidobairro: TfrxMemoView
           Left = 69.811070000000000000
-          Top = 76.370130000000010000
+          Top = 94.866141732283490000
           Width = 192.755905510000000000
           Height = 17.007874020000000000
           DataField = 'bairro'
@@ -2926,7 +2883,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object dbPedidocidade: TfrxMemoView
           Left = 69.811070000000000000
-          Top = 94.267780000000010000
+          Top = 113.007874015748000000
           Width = 192.755905510000000000
           Height = 17.007874020000000000
           DataField = 'cidade'
@@ -2944,7 +2901,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo46: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 113.165430000000000000
+          Top = 131.905511811024000000
           Width = 170.078850000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2958,7 +2915,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object dbPedidoendereco_referencia: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 131.283550000000000000
+          Top = 150.047244090000000000
           Width = 253.228510000000000000
           Height = 17.007874020000000000
           DataField = 'endereco_referencia'
@@ -2976,7 +2933,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo18: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 150.960730000000000000
+          Top = 169.700787401575000000
           Width = 98.267780000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2990,7 +2947,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object dbPedidotelefone1: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 166.078850000000000000
+          Top = 184.818897637795000000
           Width = 83.149660000000000000
           Height = 15.118120000000000000
           DataField = 'telefone1'
@@ -3007,7 +2964,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo47: TfrxMemoView
           Left = 95.606370000000000000
-          Top = 166.078850000000000000
+          Top = 184.818897637795000000
           Width = 83.149660000000000000
           Height = 15.118120000000000000
           DataSet = dbPedido
@@ -3023,7 +2980,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo48: TfrxMemoView
           Left = 179.874150000000000000
-          Top = 166.078850000000000000
+          Top = 184.818897637795000000
           Width = 83.149660000000000000
           Height = 15.118120000000000000
           DataSet = dbPedido
@@ -3057,7 +3014,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object dbPedidoobservacoes: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 203.196970000000000000
+          Top = 222.236220472440900000
           Width = 253.228510000000000000
           Height = 30.236240000000000000
           DataField = 'observacoes'
@@ -3075,7 +3032,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo49: TfrxMemoView
           Left = 11.338590000000000000
-          Top = 184.299320000000000000
+          Top = 203.338582679999900000
           Width = 45.354360000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3089,7 +3046,7 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
         end
         object Memo50: TfrxMemoView
           Left = 60.472480000000000000
-          Top = 183.299320000000000000
+          Top = 203.338582679999900000
           Width = 204.094620000000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3139,7 +3096,11 @@ object frmControleDeliveryFechamento: TfrmControleDeliveryFechamento
       'valor_desconto_itens=valor_desconto_itens'
       'nro_itens=nro_itens'
       'id_cliente=id_cliente'
-      'numero_cupom=numero_cupom')
+      'numero_cupom=numero_cupom'
+      'tipo_venda=tipo_venda'
+      'total_itens=total_itens'
+      'caixinha_entregador=caixinha_entregador'
+      'atendente=atendente')
     OpenDataSource = False
     DataSet = cdsVenda
     BCDToCurrency = False

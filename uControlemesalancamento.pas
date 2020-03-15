@@ -1670,8 +1670,8 @@ begin
 
       if venda > 0 then
       begin
-        frmControleMesaRelatorios.ImprimeVenda(venda);
         MudaStatusVendaImpresso(venda);
+        frmControleMesaRelatorios.ImprimeVenda(venda);
         qrVendaMesa.Refresh;
         qrVendaMesa.Locate('nro_mesa;tipo_venda',
           vararrayof([numero, tipo_venda]), []);

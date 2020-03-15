@@ -9,7 +9,8 @@ uses
   cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, MemDS, DBAccess, Uni, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid, cxContainer, cxCheckBox, dxGDIPlusClasses;
+  cxClasses, cxGridCustomView, cxGrid, cxContainer, cxCheckBox, dxGDIPlusClasses,
+  System.StrUtils;
 
 type
   TfrmControleDeliverySelecaoEntregador = class(TForm)
@@ -28,11 +29,13 @@ type
     cxGrid1DBTableView1nome: TcxGridDBColumn;
     ckImprimeRecibo: TcxCheckBox;
     Image1: TImage;
-    constructor Create(sender : Tcomponent ; id_venda :integer);
+    constructor Create(sender : Tcomponent ; id_venda :integer; AExpedir: Boolean);
     procedure btCancelaClick(Sender: TObject);
     procedure btConfirmaClick(Sender: TObject);
   private
     { Private declarations }
+    FExpedir: Boolean;
+
     id_venda : integer;
   public
     { Public declarations }
@@ -55,14 +58,28 @@ end;
 
 procedure TfrmControleDeliverySelecaoEntregador.btConfirmaClick(
   Sender: TObject);
-var  str_sql : string;
+var
+  complemento_sql,
+  str_sql : string;
+
 begin
   if qrEntregador.Active then
   begin
     if qrEntregador.RecordCount>0 then
     begin
-      str_sql := format('update venda set id_entregador=%d, sit_001=6, data_saida=localtimestamp where ven_001=%d and emp_001=%d',[
-                         qrEntregador.FieldByName('id_usuario').AsInteger, id_venda, recproj.iEmp]);
+      complemento_sql := IfThen(FExpedir, ',sit_001 = 6, data_saida = localtimestamp', '');
+
+
+      str_sql := format(
+        'update venda              '#13#10 +
+        '   set id_entregador = %d '#13#10 +
+        '       %s                 '#13#10 +
+        ' where ven_001 = %d       '#13#10 +
+        '   and emp_001 = %d',
+        [qrEntregador.FieldByName('id_usuario').AsInteger,
+         complemento_sql,
+         id_venda,
+         recproj.iEmp]);
       ExecutaComandoSQL(str_sql);
     end
     else
@@ -71,9 +88,10 @@ begin
       abort;
     end;
   end;
+
   if ckImprimeRecibo.Checked then
   begin
-    frmControleDeliveryFechamento := TfrmControleDeliveryFechamento.Create(self,id_venda, false );
+    frmControleDeliveryFechamento := TfrmControleDeliveryFechamento.Create(self, id_venda, false );
     frmControleDeliveryFechamento.ImprimirRelatorio(true);
     frmControleDeliveryFechamento.Free;
   end;
@@ -82,12 +100,16 @@ begin
   close;
 end;
 
-constructor TfrmControleDeliverySelecaoEntregador.Create(sender : Tcomponent ; id_venda :integer);
+constructor TfrmControleDeliverySelecaoEntregador.Create(sender : Tcomponent ; id_venda :integer; AExpedir: Boolean);
 begin
   inherited Create(sender);
   self.id_venda := id_venda;
+  FExpedir      := AExpedir;
   qrEntregador.Open;
   qrEntregador.First;
+
+  Self.ckImprimeRecibo.Visible := AExpedir;
+  Self.ckImprimeRecibo.Checked := False;
 end;
 
 end.

@@ -92,7 +92,10 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       'valor_venda=valor_venda'
       'valor_tx=valor_tx'
       'valor_total_venda=valor_total_venda'
-      'total_itens=total_itens')
+      'total_itens=total_itens'
+      'atendente=atendente'
+      'garcom=garcom'
+      'codigo_venda=codigo_venda')
     DataSet = qrVendaMesaRep
     BCDToCurrency = False
     Left = 352
@@ -676,90 +679,146 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
   object qrVendaMesaRep: TUniQuery
     Connection = frmMenu.conexao
     SQL.Strings = (
-      'select '
-      'case when v.ven_024 ='#39'M'#39' then m.mes_001 else 0 end as id_mesa,'
-      'v.ven_001 as id_venda, '
+      '  select case '
+      '           when v.ven_024 ='#39'M'#39' '
+      '             then m.mes_001 '
+      '           else 0 '
+      '         end as id_mesa,'
+      '         v.ven_001 as id_venda, '
+      '         case '
+      '           when v.ven_024 = '#39'M'#39' '
+      '             then m.mes_003 '
+      '           else v.ven_026 '
+      '         end as nro_mesa, '
+      '         cast( case '
+      '                 when v.ven_024 ='#39'M'#39
+      '                   then m.mes_002'
+      '                 else concat('#39'COMANDA '#39', v.ven_026) '
+      '               end as varchar(40)) as descricao_mesa,'
+      '         v.ven_027 as obs_mesa,'
+      '         v.dat_001_1 as data_abertura,'
+      '         v.nro_pessoas,'
+      '         v.nro_couvert_m,'
+      '         v.nro_couvert_f,'
+      '         v.cpf_cliente,'
+      '         v.ven_024 as tipo_venda,'
+      '         coalesce(vpa.valor_antecipado, 0) as valor_antecipado,'
+      '         sum((I.ITE_005 + (I.ITE_005 * 0.1) * :flag_taxa_10)) + '
+      '           (case '
+      '              when :flag_couvert_mesa '
       
-        'case when v.ven_024 ='#39'M'#39' then m.mes_003 else v.ven_026 end as nr' +
-        'o_mesa, '
-      'cast( '
-      'case when v.ven_024 ='#39'M'#39
-      'then m.mes_002'
-      'else concat('#39'COMANDA '#39', v.ven_026) end'
-      'as varchar(40) ) as descricao_mesa,'
-      'v.ven_027 as obs_mesa,'
-      'v.dat_001_1 as data_abertura,'
-      'v.nro_pessoas,'
-      'v.nro_couvert_m,'
-      'v.nro_couvert_f,'
-      'v.cpf_cliente,'
-      'v.ven_024 as tipo_venda,'
-      'coalesce(vpa.valor_antecipado, 0) as valor_antecipado,'
-      'sum((I.ITE_005+(I.ITE_005 * 0.1) * :flag_taxa_10)) +'
+        '                then :valor_couvert_masc * coalesce(v.nro_couver' +
+        't_m, 0.00) '
+      '              else 0.00 '
+      '            end ) + '
+      '           (case '
+      '              when :flag_couvert_mesa '
       
-        '(case when :flag_couvert_mesa then :valor_couvert_masc * coalesc' +
-        'e(v.nro_couvert_m, 0.00) else 0.00 end )+ '
+        '                then :valor_couvert_fem * coalesce(v.nro_couvert' +
+        '_f, 0.00) '
+      '              else 0.00 '
+      '            end) as valor_total_venda,'
+      '         (case '
+      '            when :flag_couvert_mesa '
       
-        '(case when :flag_couvert_mesa then :valor_couvert_fem * coalesce' +
-        '(v.nro_couvert_f, 0.00) else 0.00 end) '
-      'as valor_total_venda,'
+        '              then :valor_couvert_masc * coalesce(v.nro_couvert_' +
+        'm, 0.00) '
+      '            else 0.00 '
+      '          end ) + '
+      '         (case '
+      '            when :flag_couvert_mesa '
       
-        '(case when :flag_couvert_mesa then :valor_couvert_masc * coalesc' +
-        'e(v.nro_couvert_m, 0.00) else 0.00 end )+ '
+        '              then :valor_couvert_fem * coalesce(v.nro_couvert_f' +
+        ', 0.00) '
+      '            else 0.00 '
+      '          end) as total_couvert,'
+      '          coalesce(sum(i.desconto), 0.00) as valor_desconto,'
       
-        '(case when :flag_couvert_mesa then :valor_couvert_fem * coalesce' +
-        '(v.nro_couvert_f, 0.00) else 0.00 end) as total_couvert,'
-      'coalesce(sum(i.desconto), 0.00) as valor_desconto,'
-      'coalesce(sum(i.desconto), 0.00) as valor_desconto_itens,'
+        '          coalesce(sum(i.desconto), 0.00) as valor_desconto_iten' +
+        's,'
       
-        'sum(i.ITE_005) as valor_venda, -- mantido por quest'#227'o de compati' +
-        'bilidade '
-      'sum(i.ite_005) as total_itens,'
+        '          sum(i.ITE_005) as valor_venda, -- mantido por quest'#227'o ' +
+        'de compatibilidade  '
+      '          sum(i.ite_005) as total_itens,'
       
-        'coalesce(sum(I.ITE_005 * 0.1 * :flag_taxa_10), 0.00) as valor_tx' +
-        ','
-      'count (1) as nro_itens,'
-      '(sum((I.ITE_005+(I.ITE_005 * 0.1) * :flag_taxa_10)) +'
+        '          coalesce(sum(I.ITE_005 * 0.1 * :flag_taxa_10), 0.00) a' +
+        's valor_tx,'
+      '          count(1) as nro_itens,'
+      '          (sum((I.ITE_005+(I.ITE_005 * 0.1) * :flag_taxa_10)) +'
+      '            (case '
+      '               when :flag_couvert_mesa '
       
-        '(case when :flag_couvert_mesa then :valor_couvert_masc * coalesc' +
-        'e(v.nro_couvert_m, 0.00) else 0.00 end )+ '
+        '                 then :valor_couvert_masc * coalesce(v.nro_couve' +
+        'rt_m, 0.00) '
+      '               else 0.00 '
+      '             end ) + '
+      '            (case '
+      '               when :flag_couvert_mesa '
       
-        '(case when :flag_couvert_mesa then :valor_couvert_fem * coalesce' +
-        '(v.nro_couvert_f, 0.00) else 0.00 end) '
-      '- coalesce(vpa.valor_antecipado, 0))/'
+        '                 then :valor_couvert_fem * coalesce(v.nro_couver' +
+        't_f, 0.00) '
+      '               else 0.00 '
+      '             end) - coalesce(vpa.valor_antecipado, 0))/'
+      '             case '
+      '               when coalesce(v.nro_pessoas, 1) < 1 '
+      '                 then 1 '
+      '               else v.nro_pessoas '
+      '             end as valor_pessoa,'
+      '          (select usu_002 '
+      #9'     from usuarios '
+      '            where usu_001 = (select usu_001_1 '
+      '                               from venda '
+      '                              where ven_001 = :id_venda'
       
-        'case when coalesce(v.nro_pessoas, 1)<1 then 1 else v.nro_pessoas' +
-        ' end'
-      'as valor_pessoa'
-      'from venda v'
+        '                                and emp_001 = :emp)) as atendent' +
+        'e,'
+      '          (select usu_002 '
+      #9'     from usuarios '
+      '            where usu_001 = (select usu_001_2 '
+      '                               from venda '
+      '                              where ven_001 = :id_venda'
+      '                                and emp_001 = :emp)) as garcom,'
+      '          v.ven_029 as codigo_venda'
+      '     from venda v'
       '-- uniao com as vendas em aberto e pre fechadas situacoes 8 e 21'
-      
-        'join vendaitem i on i.ven_001=v.ven_001 and i.emp_001=v.emp_001 ' +
-        'and i.sit_001 in (4)'
+      '     join vendaitem i '
+      '       on i.ven_001 = v.ven_001 '
+      '      and i.emp_001 = v.emp_001 '
+      '      and i.sit_001 in (4)'
       '-- uni'#227'o com pagamento antecipado'
-      
-        'left join ( select sum(valor) as valor_antecipado , vpa.id_venda' +
-        ' '
-      'from venda_pag_antecipado vpa '
-      
-        'join venda v on vpa.id_venda=v.ven_001 and  vpa.id_empresa=v.emp' +
-        '_001'
-      'where  v.sit_001 in (4,8,21,19)'
-      'group by vpa.id_venda ) vpa on vpa.id_venda=v.ven_001'
-      
-        'left join mesa m on (m.emp_001 = v.emp_001) and (m.mes_001 = v.v' +
-        'en_025) '
-      'where  v.emp_001 = :emp'
-      'and v.ven_001= :id_venda'
-      'and i.ite_005 >0.01'
-      'group by '
-      
-        'm.mes_001, v.ven_001, m.mes_003, m.mes_002, v.ven_027,v.dat_001_' +
-        '1, v.ven_024, v.ven_026,'
-      
-        'v.nro_pessoas, v.nro_couvert_m, v.nro_couvert_f, v.cpf_cliente, ' +
-        'vpa.valor_antecipado, v.ven_009'
-      '')
+      'left join ( select sum(valor) as valor_antecipado , '
+      '                   vpa.id_venda '
+      '              from venda_pag_antecipado vpa '
+      '              join venda v '
+      '                on vpa.id_venda = v.ven_001 '
+      '               and vpa.id_empresa = v.emp_001'
+      '             where v.sit_001 in (4, 8, 21, 19)'
+      '          group by vpa.id_venda ) vpa '
+      '       on vpa.id_venda = v.ven_001'
+      '     join usuarios u'
+      '       on v.usu_001_1 = u.usu_001'
+      'left join mesa m '
+      '       on (m.emp_001 = v.emp_001) '
+      '      and (m.mes_001 = v.ven_025) '
+      '    where v.emp_001 = :emp'
+      '      and v.ven_001 = :id_venda'
+      '      and i.ite_005 > 0.01'
+      ' group by m.mes_001, '
+      '          v.ven_001, '
+      '          m.mes_003, '
+      '          m.mes_002, '
+      '          v.ven_027,'
+      '          v.dat_001_1, '
+      '          v.ven_024, '
+      '          v.ven_026,'
+      '          v.nro_pessoas, '
+      '          v.nro_couvert_m, '
+      '          v.nro_couvert_f, '
+      '          v.cpf_cliente, '
+      '          vpa.valor_antecipado, '
+      '          v.ven_009,'
+      '          u.usu_002,'
+      '          v.ven_029')
     ReadOnly = True
     OnCalcFields = qrVendaMesaRepCalcFields
     Left = 80
@@ -787,14 +846,14 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       end
       item
         DataType = ftInteger
-        Name = 'emp'
-        ParamType = ptInput
-        Value = 1
+        Name = 'id_venda'
+        Value = 31
       end
       item
         DataType = ftInteger
-        Name = 'id_venda'
-        Value = 31
+        Name = 'emp'
+        ParamType = ptInput
+        Value = 1
       end>
     object DateTimeField1: TDateTimeField
       FieldKind = fkCalculated
@@ -889,6 +948,20 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
     object qrVendaMesaReptotal_itens: TFloatField
       FieldName = 'total_itens'
       ReadOnly = True
+    end
+    object qrVendaMesaRepatendente: TWideStringField
+      FieldName = 'atendente'
+      ReadOnly = True
+      Required = True
+      Size = 30
+    end
+    object qrVendaMesaRepgarcom: TWideStringField
+      FieldName = 'garcom'
+      ReadOnly = True
+      Size = 30
+    end
+    object qrVendaMesaRepcodigo_venda: TIntegerField
+      FieldName = 'codigo_venda'
     end
   end
   object qrVendaPagAntecipado: TUniQuery
@@ -1184,7 +1257,9 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       'cep_003=cep_003'
       'cep_004=cep_004'
       'emp_013=emp_013'
-      'emp_014=emp_014')
+      'emp_014=emp_014'
+      'tempo_espera_delivery=tempo_espera_delivery'
+      'celular=celular')
     DataSet = frmMenu.qrEmpresa
     BCDToCurrency = False
     Left = 440
@@ -1200,7 +1275,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
     PrintOptions.PrintOnSheet = 0
     PrintOptions.ShowDialog = False
     ReportOptions.CreateDate = 41784.595344467600000000
-    ReportOptions.LastChange = 43576.665136388890000000
+    ReportOptions.LastChange = 43905.607713622690000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1265,6 +1340,14 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       item
         Name = 'sMensagemCouvert'
         Value = Null
+      end
+      item
+        Name = 'sVersao'
+        Value = Null
+      end
+      item
+        Name = 'sResponsavelImpressao'
+        Value = ''
       end>
     Style = <>
     object Data: TfrxDataPage
@@ -1272,10 +1355,10 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 58.000000000000000000
-      PaperHeight = 448.000000000000000000
+      PaperWidth = 58.500000000000000000
+      PaperHeight = 322.000000000000000000
       PaperSize = 256
-      LeftMargin = 5.000000000000000000
+      LeftMargin = 3.000000000000000000
       RightMargin = 3.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
@@ -1286,13 +1369,13 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []
-        Height = 179.858380000000000000
+        Height = 236.551330000000000000
         ParentFont = False
         Top = 18.897650000000000000
-        Width = 188.976500000000000000
+        Width = 198.425325000000000000
         object Memo1: TfrxMemoView
           Left = 3.779527560000000000
-          Top = 3.779530000000001000
+          Top = 3.779530000000000000
           Width = 185.196970000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1322,7 +1405,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo3: TfrxMemoView
           Left = 122.944960000000000000
-          Top = 48.236240000000010000
+          Top = 48.236240000000000000
           Width = 60.472480000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1336,7 +1419,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo4: TfrxMemoView
           Left = 3.779527560000000000
-          Top = 48.236240000000010000
+          Top = 48.236240000000000000
           Width = 117.165430000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1404,8 +1487,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Memo9: TfrxMemoView
-          Left = 3.779527559055120000
-          Top = 111.708720000000000000
+          Left = 3.779527560000000000
+          Top = 131.708720000000000000
           Width = 37.795300000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1418,8 +1501,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Memo10: TfrxMemoView
-          Left = 3.779527559055120000
-          Top = 127.826840000000000000
+          Left = 3.779527560000000000
+          Top = 147.826840000000000000
           Width = 45.354360000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1432,8 +1515,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Memo11: TfrxMemoView
-          Left = 3.779527559055120000
-          Top = 143.944960000000000000
+          Left = 3.779527560000000000
+          Top = 163.944960000000000000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1446,14 +1529,14 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Line1: TfrxLineView
-          Top = 160.063080000000000000
-          Width = 257.007874015748000000
+          Top = 213.063080000000000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo12: TfrxMemoView
           Left = 3.779527560000000000
-          Top = 160.063080000000000000
+          Top = 216.063080000000000000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1467,8 +1550,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo13: TfrxMemoView
           Left = 85.929190000000000000
-          Top = 160.063080000000000000
-          Width = 34.015770000000010000
+          Top = 216.063080000000000000
+          Width = 34.015770000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1482,8 +1565,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo14: TfrxMemoView
           Left = 121.504020000000000000
-          Top = 160.063080000000000000
-          Width = 34.015770000000010000
+          Top = 216.063080000000000000
+          Width = 34.015770000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1497,7 +1580,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo15: TfrxMemoView
           Left = 157.756030000000000000
-          Top = 160.063080000000000000
+          Top = 216.063080000000000000
           Width = 30.236240000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1511,14 +1594,14 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Line2: TfrxLineView
-          Top = 175.748031500000000000
-          Width = 257.007874015748000000
+          Top = 234.748031500000000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo16: TfrxMemoView
           Left = 39.795300000000000000
-          Top = 111.708720000000000000
+          Top = 131.708720000000000000
           Width = 147.401670000000000000
           Height = 15.118120000000000000
           DataField = 'nomecliente'
@@ -1535,7 +1618,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo17: TfrxMemoView
           Left = 66.354360000000000000
-          Top = 127.826840000000000000
+          Top = 147.826840000000000000
           Width = 120.944960000000000000
           Height = 15.118120000000000000
           DataField = 'abertura'
@@ -1552,7 +1635,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo18: TfrxMemoView
           Left = 66.252010000000000000
-          Top = 143.944960000000000000
+          Top = 163.944960000000000000
           Width = 120.944960000000000000
           Height = 15.118120000000000000
           DataField = 'fechamento'
@@ -1569,24 +1652,110 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Line8: TfrxLineView
           Top = 94.488250000000000000
-          Width = 257.007874015748000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
+        end
+        object Memo27: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 178.740260000000000000
+          Width = 64.252010000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'Operador:')
+          ParentFont = False
+        end
+        object Memo46: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 195.078850000000000000
+          Width = 64.252010000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[sResponsavelImpressao]')
+          ParentFont = False
+        end
+        object Memo47: TfrxMemoView
+          Left = 71.031540000000000000
+          Top = 178.740260000000000000
+          Width = 117.165430000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[dbPedido."atendente"]')
+          ParentFont = False
+        end
+        object Memo48: TfrxMemoView
+          Left = 69.811070000000000000
+          Top = 194.858380000000000000
+          Width = 117.165430000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[dbPedido."garcom"]')
+          ParentFont = False
+        end
+        object Memo49: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 113.385900000000000000
+          Width = 37.795300000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'Venda:')
+          ParentFont = False
+        end
+        object Memo50: TfrxMemoView
+          Left = 45.133890000000000000
+          Top = 112.385826770000000000
+          Width = 120.944960000000000000
+          Height = 15.118120000000000000
+          DataSet = dbPedido
+          DataSetName = 'dbPedido'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial Black'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            '[dbPedido."codigo_venda"]')
+          ParentFont = False
         end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 260.787570000000000000
-        Width = 188.976500000000000000
+        Top = 317.480520000000000000
+        Width = 198.425325000000000000
         DataSet = dbItens
         DataSetName = 'dbItens'
         PrintIfDetailEmpty = True
         RowCount = 0
         Stretched = True
         object Memo20: TfrxMemoView
-          Left = 86.488149920000000000
-          Width = 32.125984250000000000
+          Left = 85.795275590551180000
+          Width = 34.015748031496060000
           Height = 15.118120000000000000
           DataField = 'vlrvenda'
           DataSet = dbItens
@@ -1605,7 +1774,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo22: TfrxMemoView
           Left = 156.283550000000000000
-          Width = 41.574830000000000000
+          Width = 30.236220472440940000
           Height = 15.118120000000000000
           DataField = 'valor_total'
           DataSet = dbItens
@@ -1642,7 +1811,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           WordBreak = True
         end
         object Memo21: TfrxMemoView
-          Left = 122.393664170000000000
+          Left = 121.322834645669300000
           Width = 34.015748030000000000
           Height = 15.118120000000000000
           DataField = 'qtdevenda'
@@ -1664,14 +1833,14 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       object MasterData2: TfrxMasterData
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 661.417750000000000000
-        Width = 188.976500000000000000
+        Top = 718.110700000000000000
+        Width = 198.425325000000000000
         DataSet = dbVendaPagAntecipado
         DataSetName = 'dbVendaPagAntecipado'
         PrintIfDetailEmpty = True
         RowCount = 0
         object dbVendaPagAntecipadodesc_forma: TfrxMemoView
-          Top = 2.559060000000045000
+          Top = 2.559060000000050000
           Width = 124.724490000000000000
           Height = 15.118110240000000000
           DataField = 'desc_formapag'
@@ -1709,20 +1878,21 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       end
       object ColumnFooter1: TfrxColumnFooter
         FillType = ftBrush
-        Height = 64.425170000000000000
-        Top = 740.787880000000000000
-        Width = 188.976500000000000000
+        Height = 102.220470000000000000
+        Top = 797.480830000000000000
+        Width = 198.425325000000000000
         object Line10: TfrxLineView
-          Top = 24.456710000000040000
-          Width = 181.417274020000000000
+          Top = 24.456710000000000000
+          Width = 188.976334020000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo26: TfrxMemoView
           Left = 16.559060000000000000
-          Top = 4.173160000000052000
+          Top = 4.173160000000000000
           Width = 162.519790000000000000
           Height = 15.118120000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1732,12 +1902,97 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
             '[sMensagemTxServico]')
           ParentFont = False
         end
+        object Memo51: TfrxMemoView
+          Left = 25.338590000000000000
+          Top = 27.236240000000000000
+          Width = 71.811070000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Senha:')
+          ParentFont = False
+        end
+        object Memo52: TfrxMemoView
+          Left = 97.488250000000000000
+          Top = 25.212598430000000000
+          Width = 71.811070000000000000
+          Height = 15.118120000000000000
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial Black'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            '[dbPedido."codigo_venda"]')
+          ParentFont = False
+        end
+        object Memo53: TfrxMemoView
+          Left = 19.338590000000000000
+          Top = 45.354360000000000000
+          Width = 105.826840000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Infor Gourmet vers'#227'o')
+          ParentFont = False
+        end
+        object Memo54: TfrxMemoView
+          Left = 125.724490000000000000
+          Top = 45.354360000000000000
+          Width = 49.133850940000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[sVersao]')
+          ParentFont = False
+        end
+        object Memo55: TfrxMemoView
+          Left = 36.795300000000000000
+          Top = 65.252010000000000000
+          Width = 221.102362200000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'www.inforsistema.net.br')
+          ParentFont = False
+        end
+        object Memo56: TfrxMemoView
+          Top = 83.149660000000000000
+          Width = 221.102362200000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            'Volte sempre, obrigado pela prefer'#234'ncia')
+          ParentFont = False
+        end
       end
       object MasterData3: TfrxMasterData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 377.953000000000000000
-        Width = 188.976500000000000000
+        Top = 434.645950000000000000
+        Width = 198.425325000000000000
         DataSet = dbItensFracionado
         DataSetName = 'dbItensFracionado'
         PrintIfDetailEmpty = True
@@ -1823,8 +2078,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       object GroupHeader1: TfrxGroupHeader
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 336.378170000000000000
-        Width = 188.976500000000000000
+        Top = 393.071120000000000000
+        Width = 198.425325000000000000
         Condition = 'dbItensFracionado."item_fracionado"'
         object Memo36: TfrxMemoView
           Left = 3.779527560000000000
@@ -1842,8 +2097,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Line5: TfrxLineView
-          Top = 1.118119999999976000
-          Width = 257.007874020000000000
+          Top = 1.118120000000000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -1851,8 +2106,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 298.582870000000000000
-        Width = 188.976500000000000000
+        Top = 355.275820000000000000
+        Width = 198.425325000000000000
         DataSet = dbItensOpcional
         DataSetName = 'dbItensOpcional'
         RowCount = 0
@@ -1878,8 +2133,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       object DetailData2: TfrxDetailData
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 415.748300000000000000
-        Width = 188.976500000000000000
+        Top = 472.441250000000000000
+        Width = 198.425325000000000000
         DataSet = dbItensFracionadoOpcional
         DataSetName = 'dbItensFracionadoOpcional'
         RowCount = 0
@@ -1905,8 +2160,8 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       object GroupFooter1: TfrxGroupFooter
         FillType = ftBrush
         Height = 15.118120000000000000
-        Top = 453.543600000000000000
-        Width = 188.976500000000000000
+        Top = 510.236550000000000000
+        Width = 198.425325000000000000
         object Memo42: TfrxMemoView
           Left = 3.779527560000000000
           Width = 173.858380000000000000
@@ -1929,18 +2184,18 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
       object Header1: TfrxHeader
         FillType = ftBrush
         Height = 145.504020000000000000
-        Top = 491.338900000000000000
-        Width = 188.976500000000000000
+        Top = 548.031850000000000000
+        Width = 198.425325000000000000
         PrintChildIfInvisible = True
         object Line3: TfrxLineView
-          Top = 4.968459999999993000
-          Width = 257.007874015748000000
+          Top = 4.968460000000000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo23: TfrxMemoView
-          Left = 3.779527559055120000
-          Top = 4.968459999999993000
+          Left = 3.779527560000000000
+          Top = 4.968460000000000000
           Width = 71.811070000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1954,7 +2209,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo24: TfrxMemoView
           Left = 3.779527559055120000
-          Top = 39.866109999999880000
+          Top = 39.866109999999900000
           Width = 109.606370000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1981,14 +2236,14 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Line4: TfrxLineView
-          Top = 94.559059999999990000
-          Width = 257.007874015748000000
+          Top = 94.559060000000000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo28: TfrxMemoView
           Left = 102.740260000000000000
-          Top = 4.968459999999993000
+          Top = 4.968459999999990000
           Width = 86.929190000000000000
           Height = 15.118120000000000000
           DataSet = dbPedido
@@ -2006,15 +2261,15 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Line7: TfrxLineView
-          Left = 99.842610000000010000
-          Top = 74.118120000000040000
-          Width = 86.929190000000000000
+          Left = 113.842610000000000000
+          Top = 74.118120000000000000
+          Width = 75.590551180000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo29: TfrxMemoView
           Left = 103.740260000000000000
-          Top = 39.645640000000010000
+          Top = 39.645640000000000000
           Width = 86.929190000000000000
           Height = 15.118120000000000000
           DataSet = dbPedido
@@ -2032,9 +2287,9 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
           ParentFont = False
         end
         object Memo30: TfrxMemoView
-          Left = 94.181199999999990000
-          Top = 73.440940000000010000
-          Width = 94.488250000000000000
+          Left = 94.181200000000000000
+          Top = 73.440940000000000000
+          Width = 94.488188980000000000
           Height = 22.677180000000000000
           DataSet = dbPedido
           DataSetName = 'dbPedido'
@@ -2053,7 +2308,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo31: TfrxMemoView
           Left = 3.779527559055120000
-          Top = 22.866109999999990000
+          Top = 22.866110000000000000
           Width = 98.267780000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2067,7 +2322,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo32: TfrxMemoView
           Left = 148.094646850000000000
-          Top = 23.086579999999970000
+          Top = 23.086580000000000000
           Width = 41.574803150000000000
           Height = 15.118120000000000000
           DataField = 'valor_desconto'
@@ -2150,7 +2405,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo37: TfrxMemoView
           Left = 3.779527559055120000
-          Top = 96.472479999999850000
+          Top = 96.472479999999900000
           Width = 94.488250000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2164,7 +2419,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo38: TfrxMemoView
           Left = 100.606370000000000000
-          Top = 96.472479999999850000
+          Top = 96.472479999999900000
           Width = 60.472480000000000000
           Height = 15.118120000000000000
           DataField = 'nro_itens'
@@ -2181,13 +2436,13 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Line6: TfrxLineView
           Top = 145.504020000000000000
-          Width = 257.007874015748000000
+          Width = 188.976377952755900000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo44: TfrxMemoView
-          Left = 3.779527559055120000
-          Top = 56.913420000000030000
+          Left = 3.779527560000000000
+          Top = 56.913420000000000000
           Width = 120.944960000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2201,7 +2456,7 @@ object frmControleMesaRelatorios: TfrmControleMesaRelatorios
         end
         object Memo45: TfrxMemoView
           Left = 104.740260000000000000
-          Top = 56.692950000000050000
+          Top = 56.692950000000100000
           Width = 86.929190000000000000
           Height = 15.118120000000000000
           DisplayFormat.FormatStr = '%2.2n'

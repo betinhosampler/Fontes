@@ -27,7 +27,7 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue, ACBrTEFDClass, Vcl.Buttons;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, ACBrTEFDClass, Vcl.Buttons, uControleDeliverySelecaoEntregador;
 
 type
   TfrmControleDeliveryFechamento = class(TForm)
@@ -309,6 +309,8 @@ type
     qrFormab_tef: TBooleanField;
     qrFormabandeira_cartao: TWideStringField;
     btn1: TBitBtn;
+    qrVendaatendente: TWideStringField;
+    cdsVendaatendente: TWideStringField;
     constructor Create (Sender : TComponent ; id_venda: integer; concluir_venda : boolean = false);
     procedure este1Click(Sender: TObject);
     procedure teste21Click(Sender: TObject);
@@ -362,6 +364,8 @@ type
     cede_troco_enregador, suprimir_cabecalho_rodape_cupom, imprimir_cozinha,
     nfce_contingencia, sugerir_nfce_contingencia, bCaixinha : boolean;
     sMensagemTxServico, sCamImpDelivery : string;
+
+    procedure Informar_Motoqueiro_Ao_Movimentar_Delivery(AIdVenda: Int64);
   public
     { Public declarations }
     venda_concluida, bImprimeCupomFechamento: boolean;
@@ -463,6 +467,7 @@ begin
   end
   else
   begin
+    RepFechaConta.LoadFromFile('C:\EliteFood\Relatorios\IMPRESSAODELIVERY.fr3');
     RepFechaConta.PrintOptions.Printer := sCamImpDelivery;
     RepFechaConta.Variables['sMensagemTxServico'] := QuotedStr(sMensagemTxServico);
     RepFechaConta.Variables['sSisDev'] := QuotedStr(recproj.sInfoDevSistema2);
@@ -480,9 +485,27 @@ begin
       else
         RepFechaConta.Variables['sMensagemRetBalcao'] := QuotedStr('RETIRADA NO BALCÃO');
     end;
-    RepFechaConta.LoadFromFile('C:\EliteFood\Relatorios\IMPRESSAODELIVERY.fr3');
     RepFechaConta.PrepareReport;
     for I := 1 to numero_vias do RepFechaConta.Print;
+  end;
+end;
+
+procedure TfrmControleDeliveryFechamento.Informar_Motoqueiro_Ao_Movimentar_Delivery(AIdVenda: Int64);
+var
+  SelecaoEntregador: TfrmControleDeliverySelecaoEntregador;
+
+begin
+  //Apenas informa o motoqueiro, o delivery ainda não está sendo finalizado.
+  SelecaoEntregador := TfrmControleDeliverySelecaoEntregador.Create(self, AIdVenda, False);
+  try
+    SelecaoEntregador.ShowModal();
+
+    cdsVenda.Close();
+    qrVenda.Close();
+    cdsVenda.Open();
+    qrVenda.Open();
+  finally
+    FreeAndNil(SelecaoEntregador);
   end;
 end;
 
@@ -807,6 +830,8 @@ begin
         ExecutaComandoSQL(str_sql, vararrayof([id_venda,RecProj.iEmp,valor,id_formapgto,obs ]));
         cdsParcelasPagamentos.Next;
       end;
+
+      Informar_Motoqueiro_Ao_Movimentar_Delivery(id_venda);
 
       //Muda o flag de pendende para impressão para cozinha
       if imprimir_cozinha then

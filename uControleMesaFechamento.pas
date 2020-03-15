@@ -331,6 +331,10 @@ type
     lMensagemCliente: TLabel;
     Action1: TAction;
     frxDesigner1: TfrxDesigner;
+    qrVendaMesaatendente: TWideStringField;
+    qrVendaMesagarcom: TWideStringField;
+    cdsVendaMesaatendente: TWideStringField;
+    cdsVendaMesagarcom: TWideStringField;
     constructor Create (Sender : TComponent ; id_venda: integer ; modo_touch : boolean = false);
     procedure este1Click(Sender: TObject);
     procedure teste21Click(Sender: TObject);
@@ -499,10 +503,11 @@ begin
   end
   else
   begin
-    RepFechaConta.PrintOptions.Printer := sCamImpCaixa;
-    RepFechaConta.Variables['sMensagemTxServico'] := QuotedStr(sMensagemTxServico);
-    RepFechaConta.Variables['sMensagemCouvert'] := QuotedStr(sMensagemCouvert);
     RepFechaConta.LoadFromFile('C:\EliteFood\Relatorios\FECHAMENTOMESA.fr3');
+    RepFechaConta.PrintOptions.Printer            := sCamImpCaixa;
+    RepFechaConta.Variables['sMensagemTxServico'] := QuotedStr(sMensagemTxServico);
+    RepFechaConta.Variables['sMensagemCouvert']   := QuotedStr(sMensagemCouvert);
+    RepFechaConta.Variables['sVersao']            := QuotedStr(GetFileVersion(ParamStr(0)));
     RepFechaConta.PrepareReport;
     //RepFechaConta.ShowReport;
 
